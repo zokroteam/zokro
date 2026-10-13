@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard - Zokro</title>
+<meta name="description" content="Top Zokro players worldwide. Play daily and climb the ranks!">
+<link rel="stylesheet" href="../assets/style.css">
+<style>.wrap{max-width:640px;margin:auto;padding:20px}table{width:100%;border-collapse:collapse;background:#151d33;border:1px solid #263154;border-radius:14px;overflow:hidden}td,th{padding:10px;border-bottom:1px solid #263154}.tabs button{background:#0d1531;color:#fff;border:1px solid #263154;border-radius:12px;padding:8px 14px;margin:3px;cursor:pointer}.tabs button.on{background:linear-gradient(90deg,#f5c451,#ff8a3d);color:#1a1000;font-weight:800}</style>
+</head>
+<body>
+<nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=6"></script></nav>
+<div class="wrap">
+<a href="./">← Home</a>
+<h1>🌍 Leaderboard</h1>
+<div class="tabs"><button class="on" onclick="load('Desert Daily',this)">💧 Desert Daily</button><button onclick="load('Stack the Dune 3D',this)">🧱 Stack 3D</button></div>
+<table id="lb"><tr><th>#</th><th>Player</th><th>Score</th></tr></table>
+<p style="color:var(--mut)">Log in to save your scores and appear here!</p>
+</div>
+<footer><p class="copy">© 2026 Zokro</p></footer>
+<script src="../assets/auth.js"></script>
+<script>
+function load(game,btn){
+  document.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('on');});
+  if(btn)btn.classList.add('on');
+  var tb=document.getElementById('lb');tb.innerHTML='<tr><th>#</th><th>Player</th><th>Score</th></tr>';
+  var iv=setInterval(function(){
+    if(!window.zkAuth||!window.zkAuth.ready)return;clearInterval(iv);
+    window.zkAuth.client.from('scores').select('score,profiles(username,avatar)').eq('game',game).order('score',{ascending:false}).limit(20).then(function(r){
+      (r.data||[]).forEach(function(s,i){
+        var p=s.profiles||{username:'?',avatar:'🎮'};
+        tb.innerHTML+='<tr><td>'+(i+1)+'</td><td>'+p.avatar+' '+p.username+'</td><td>'+s.score+'</td></tr>';
+      });
+      if(!(r.data||[]).length)tb.innerHTML+='<tr><td colspan=3>No scores yet — be the first!</td></tr>';
+    });
+  },400);
+}
+load('Desert Daily');
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zokro - Бесплатные онлайн-игры | Играть сейчас</title>
+<meta name="description" content="Zokro: бесплатные онлайн-игры мгновенно. Ежедневные челленджи, 3D-аркады и головоломки. Без регистрации и скачивания.">
+<link rel="alternate" hreflang="en" href="https://zokro.fun/en/">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="nav">
+<a class="logo" href="./">ZOK<b>RO</b></a>
+<div class="links"><a href="#games">Игры</a><a href="../en/request.html">Голос</a></div>
+<div class="search"><input id="q" placeholder="Поиск игр..." oninput="filter()"></div>
+<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=6"></script>
+<button class="cta" onclick="document.getElementById('games').scrollIntoView()">Играть</button>
+</nav>
+<section class="hero">
+<div class="spot">
+<div class="dunes"></div>
+<h1>Челлендж дня:<br><em>Desert Daily</em> 💧</h1>
+<p>100 воды. Растущая жара. 60 секунд. Один челлендж на весь мир сегодня.</p>
+<div class="count">⏳ Следующий через <b id="cd">--:--:--</b></div>
+<div style="position:relative"><a class="cta" style="text-decoration:none" href="../en/games/desert-daily.html">▶ Играть</a></div>
+</div>
+<div class="side2">
+<div class="streak"><div class="fl">🔥</div><b id="streak">0</b><div>дней подряд — заходи каждый день</div></div>
+<div class="vote"><h3 style="margin:0 0 6px">🗳 Решаешь ты</h3><p style="color:var(--mut);font-size:13px;margin:0 0 12px">Голосуй за следующую игру.</p><a class="cta" style="text-decoration:none;font-size:14px" href="../en/request.html">Голосовать</a></div>
+</div>
+</section>
+<section class="sec" id="games">
+<h2>⚡ Коллекция</h2>
+<p class="d">Оригиналы + лицензионные хиты скоро.</p>
+<main class="grid" id="grid">
+<a class="card" href="../en/games/desert-daily.html"><span class="ribbon">ДЕНЬ</span><div class="art a1">💧<span class="big-t">DESERT DAILY</span></div><div class="cbody"><h3>Desert Daily</h3><p>60 секунд выживания, новое каждый день.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">Играть →</span></div></div></a>
+<a class="card" href="../en/games/stack-dune.html"><span class="ribbon">НАСТОЯЩЕЕ 3D</span><div class="art a2">🧱<span class="big-t">STACK THE DUNE</span></div><div class="cbody"><h3>Stack the Dune 3D</h3><p>Физическая башня, 12 уровней.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">Играть →</span></div></div></a>
+<a class="card" href="../en/games/guess-oasis.html"><div class="art a3">🌴<span class="big-t">GUESS THE OASIS</span></div><div class="cbody"><h3>Guess the Oasis</h3><p>Угадай место на фото.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">Играть →</span></div></div></a>
+</main>
+</section>
+<div class="ads">Реклама — keeps games free</div>
+<footer>
+<div class="f-in">
+<div><h4>🔥 Студия Zokro</h4><a>Независимая студия. 11 языков.</a></div>
+<div><h4>Игры</h4><a href="../en/games/desert-daily.html">Desert Daily</a><a href="../en/games/stack-dune.html">Stack the Dune 3D</a></div>
+<div><h4>Студия</h4><a href="../en/about.html">О нас</a><a href="../en/contact.html">Контакты</a></div>
+<div><h4>Право</h4><a href="../en/privacy.html">Конфиденциальность</a><a href="../en/terms.html">Условия</a></div>
+</div>
+<p class="copy">© 2026 Zokro • zokro.fun</p>
+</footer>
+<script src="../assets/langs.js?v=6"></script>
+<script>
+try{const k='zk_streak',d=localStorage.getItem(k+'_d'),t=new Date().toDateString();let s=parseInt(localStorage.getItem(k)||'0');if(d!==t){const y=new Date(Date.now()-864e5).toDateString();s=(d===y)?s+1:1;localStorage.setItem(k,s);localStorage.setItem(k+'_d',t);}document.getElementById('streak').textContent=s;}catch(e){}
+function tick(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);let s=Math.floor((m-n)/1000);document.getElementById('cd').textContent=String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+tick();setInterval(tick,1000);
+function filter(){const v=document.getElementById('q').value.toLowerCase();document.querySelectorAll('#grid .card').forEach(c=>{c.style.display=(c.textContent.toLowerCase()).indexOf(v)>=0?'':'none';});}
+</script>
+</body>
+</html>

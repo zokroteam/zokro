@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request a Game - Zokro</title>
+<meta name="description" content="Vote for the next game on Zokro. Tell us what to build!">
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body>
+<nav class="nav"><a class="logo" href="./">ZOK<span>RO</span></a></nav>
+<div style="max-width:600px;margin:auto;padding:20px;text-align:center">
+<h1>🗳 Request a game</h1>
+<p>We build what players vote for. Pick one or suggest yours on TikTok <b>@zokro</b>:</p>
+<p><button onclick="vote(this)">🐍 Snake</button> <button onclick="vote(this)">❌⭕ Tic-Tac-Toe</button> <button onclick="vote(this)">🧠 Memory</button> <button onclick="vote(this)">🔢 2048 Merge</button> <button onclick="vote(this)">🏓 Ping Pong</button></p>
+<p id="msg"></p>
+<p><a href="./">← Back to games</a></p>
+</div>
+<script>
+const v=JSON.parse(localStorage.getItem('zv')||'{}');
+function vote(b){v[b.textContent]=(v[b.textContent]||0)+1;localStorage.setItem('zv',JSON.stringify(v));document.getElementById('msg').textContent='✅ Voted '+b.textContent+'! Total: '+v[b.textContent];}
+</script>
+</body>
+</html>

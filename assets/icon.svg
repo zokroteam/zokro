@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a1a4e"/>
+      <stop offset="1" stop-color="#120b26"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff6d8"/>
+      <stop offset=".45" stop-color="#f5c451"/>
+      <stop offset="1" stop-color="#e86a1c"/>
+    </linearGradient>
+  </defs>
+  <rect x="3" y="3" width="58" height="58" rx="19" fill="url(#bg)" stroke="#f5c451" stroke-width="2" stroke-opacity=".85"/>
+  <!-- chunky rounded Z -->
+  <path d="M16 20 H48 L29 44 H48" fill="none" stroke="url(#gold)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- glossy highlight -->
+  <path d="M20 20 H42" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+  <path d="M33 27 L25 39" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity=".3"/>
+  <!-- ground shadow -->
+  <ellipse cx="32" cy="50" rx="16" ry="3" fill="#000" opacity=".35"/>
+</svg>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zokro - Free Online Games</title>
+<style>body{font-family:system-ui;background:#10122b;color:#fff;text-align:center;padding:60px 20px}a{display:block;max-width:320px;margin:12px auto;padding:16px;border-radius:14px;background:#1e2247;border:1px solid #2c3170;color:#fff;text-decoration:none;font-size:20px}</style>
+<script>
+function go(p){try{localStorage.setItem('zk_lang',p);}catch(e){}location.replace(p);}
+try{
+  const saved=localStorage.getItem('zk_lang');
+  if(saved){location.replace(saved);}
+  else{
+    const done=function(path){location.replace(path);};
+    // Country-based detection (Germany->DE, France->FR, Arab world->AR), fallback to browser language
+    fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(j){
+      const c=(j&&j.country_code)||'';
+      var AR=['EG','SA','AE','QA','KW','BH','OM','JO','LB','SY','IQ','YE','MA','DZ','TN','LY','SD','MR','PS'];
+      if(c==='DE'||c==='AT'||c==='CH')done('de/');
+      else if(c==='FR'||c==='BE'||c==='MC')done('fr/');
+      else if(c==='ES'||c==='MX'||c==='AR'||c==='CO'||c==='CL'||c==='PE')done('es/');
+      else if(c==='BR'||c==='PT')done('pt/');
+      else if(c==='TR')done('tr/');
+      else if(c==='PL')done('pl/');
+      else if(c==='CZ')done('cs/');
+      else if(c==='RU'||c==='BY'||c==='KZ'||c==='UA')done('ru/');
+      else if(c==='JP')done('ja/');
+      else if(AR.indexOf(c)>=0)done('ar/');
+      else browserLang();
+    }).catch(browserLang);
+    setTimeout(function(){browserLang();},2500);
+    let redirected=false;
+    function browserLang(){
+      if(redirected)return;redirected=true;
+      const l=(navigator.language||'en').toLowerCase();
+      if(l.indexOf('ar')===0)done('ar/');
+      else if(l.indexOf('de')===0)done('de/');
+      else if(l.indexOf('fr')===0)done('fr/');
+      else if(l.indexOf('es')===0)done('es/');
+      else if(l.indexOf('pt')===0)done('pt/');
+      else if(l.indexOf('tr')===0)done('tr/');
+      else if(l.indexOf('pl')===0)done('pl/');
+      else if(l.indexOf('cs')===0)done('cs/');
+      else if(l.indexOf('ru')===0||l.indexOf('uk')===0)done('ru/');
+      else if(l.indexOf('ja')===0)done('ja/');
+      else done('en/');
+    }
+  }
+}catch(e){location.replace('en/');}
+</script>
+</head>
+<body>
+<h1>🎮 ZOKRO</h1>
+<p>Choose your language</p>
+<a href="ar/">🇪🇬 عربي</a>
+<a href="en/">🇺🇸 English</a>
+<a href="de/">🇩🇪 Deutsch</a>
+<a href="fr/">🇫🇷 Français</a>
+<a href="es/">🇪🇸 Español</a>
+<a href="pt/">🇧🇷 Português</a>
+<a href="tr/">🇹🇷 Türk</a>
+<a href="pl/">🇵🇱 Polski</a>
+<a href="cs/">🇨🇿 Česky</a>
+<a href="ru/">🇷🇺 Русский</a>
+<a href="ja/">🇯🇵 日本語</a>
+</body>
+</html>

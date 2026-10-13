@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zokro - Free Online Games | Play Instantly</title>
+<meta name="description" content="Zokro: free online games with daily challenges, streaks and 3D arcade. No signup, no download. New games every week in 4 languages.">
+<link rel="alternate" hreflang="ar" href="https://zokro.fun/ar/">
+<link rel="alternate" hreflang="de" href="https://zokro.fun/de/">
+<link rel="alternate" hreflang="fr" href="https://zokro.fun/fr/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="nav">
+<a class="logo" href="./">ZOK<b>RO</b></a>
+<div class="links"><a href="#games">Games</a><a href="#daily">Daily</a><a href="request.html">Vote</a><a href="about.html">Studio</a></div>
+<div class="search"><input id="q" placeholder="Search games..." oninput="filter()"></div>
+<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=6"></script>
+<button class="cta" onclick="document.getElementById('games').scrollIntoView()">Play</button>
+</nav>
+
+<section class="hero">
+<div class="spot">
+<div class="dunes"></div>
+<h1>Today's challenge:<br><em>Desert Daily</em> 💧</h1>
+<p>100 water. Rising heat. 60 seconds. Same challenge for the whole world today.</p>
+<div class="count">⏳ Next challenge in <b id="cd">--:--:--</b></div>
+<div style="position:relative"><a class="cta" style="text-decoration:none" href="games/desert-daily.html" onclick="play('Desert Daily','games/desert-daily.html')">▶ Play now</a></div>
+</div>
+<div class="side2">
+<div class="streak"><div class="fl">🔥</div><b id="streak">0</b><div>day streak — come back daily</div></div>
+<div class="vote"><h3 style="margin:0 0 6px">🗳 You run the studio</h3><p style="color:var(--mut);font-size:13px;margin:0 0 12px">Vote the next game we build.</p><a class="cta" style="text-decoration:none;font-size:14px" href="request.html">Vote</a></div>
+</div>
+</section>
+
+<section class="sec" id="games">
+<h2>⚡ The collection</h2>
+<p class="d">Hand-picked originals + licensed hits soon. Click any card to play.</p>
+<div class="chips"><button class="on">All</button><button>🧩 Puzzle</button><button>🎮 3D</button><button>📅 Daily</button></div>
+<main class="grid" id="grid">
+<a class="card" data-n="desert daily survival water" href="games/desert-daily.html" onclick="play('Desert Daily','games/desert-daily.html')"><span class="ribbon">DAILY</span><div class="art a1">💧<span class="big-t">DESERT DAILY</span></div><div class="cbody"><h3>Desert Daily</h3><p>60-second water survival, fresh every midnight.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">Play →</span></div></div></a>
+<a class="card" data-n="stack dune tower 3d" href="games/stack-dune.html" onclick="play('Stack the Dune 3D','games/stack-dune.html')"><span class="ribbon">REAL 3D</span><div class="art a2">🧱<span class="big-t">STACK THE DUNE</span></div><div class="cbody"><h3>Stack the Dune 3D</h3><p>Physics tower stacking, 12 levels.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">Play →</span></div></div></a>
+<a class="card" data-n="guess oasis riddle" href="games/guess-oasis.html" onclick="play('Guess the Oasis','games/guess-oasis.html')"><div class="art a3">🌴<span class="big-t">GUESS THE OASIS</span></div><div class="cbody"><h3>Guess the Oasis</h3><p>Unblur the photo, name the place.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">Play →</span></div></div></a>
+<a class="card" data-n="request vote snake chess" href="request.html"><div class="art a4">➕<span class="big-t">YOU DECIDE</span></div><div class="cbody"><h3>Request a game</h3><p>Snake? Chess? Memory? Your vote builds it.</p><div class="rowline"><span>🗳 Community</span><span class="go">Vote →</span></div></div></a>
+</main>
+</section>
+
+<section class="sec" id="continue" style="display:none">
+<h2>↩ Continue playing</h2>
+<p class="d">Pick up where you left off.</p>
+<div class="grid" id="contGrid"></div>
+</section>
+
+<div class="ads">Advertisement — keeps every game free</div>
+
+<footer>
+<div class="f-in">
+<div><h4>🔥 ZOKRO Studio</h4><a>Independent games studio.</a><a>English • عربي • Deutsch • Français</a><a>New titles every week.</a></div>
+<div><h4>Games</h4><a href="games/desert-daily.html">Desert Daily</a><a href="games/stack-dune.html">Stack the Dune 3D</a><a href="games/guess-oasis.html">Guess the Oasis</a></div>
+<div><h4>Studio</h4><a href="about.html">About us</a><a href="contact.html">Contact</a><a href="request.html">Request a game</a></div>
+<div><h4>Legal</h4><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
+</div>
+<p class="copy">© 2026 Zokro Studio • zokro.fun • Made for players worldwide</p>
+</footer>
+<script>
+function saveL(v){try{localStorage.setItem('zk_lang',v);}catch(e){}}
+function play(n,u){try{localStorage.setItem('zk_last',JSON.stringify({n:n,u:u}));}catch(e){}}
+try{const l=JSON.parse(localStorage.getItem('zk_last')||'null');if(l&&l.u){document.getElementById('continue').style.display='';document.getElementById('contGrid').innerHTML='<a class="card" href="'+l.u+'"><div class="art a4">↩</div><div class="cbody"><h3>'+l.n+'</h3><p>Resume instantly.</p><div class="rowline"><span>▶ Continue</span></div></div></a>';}}catch(e){}
+try{const k='zk_streak',d=localStorage.getItem(k+'_d'),t=new Date().toDateString();let s=parseInt(localStorage.getItem(k)||'0');if(d!==t){const y=new Date(Date.now()-864e5).toDateString();s=(d===y)?s+1:1;localStorage.setItem(k,s);localStorage.setItem(k+'_d',t);}document.getElementById('streak').textContent=s;}catch(e){}
+function tick(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);let s=Math.floor((m-n)/1000);const h=String(Math.floor(s/3600)).padStart(2,'0'),mi=String(Math.floor(s%3600/60)).padStart(2,'0'),ss=String(s%60).padStart(2,'0');document.getElementById('cd').textContent=h+':'+mi+':'+ss;}
+tick();setInterval(tick,1000);
+function filter(){const v=document.getElementById('q').value.toLowerCase();document.querySelectorAll('#grid .card').forEach(c=>{const t=((c.dataset.n||'')+' '+c.textContent).toLowerCase();c.style.display=t.indexOf(v)>=0?'':'none';});}
+</script>
+</body>
+</html>

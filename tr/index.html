@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zokro - Ücretsiz Online Oyunlar | Hemen Oyna</title>
+<meta name="description" content="Zokro: ücretsiz online oyunlar anında. Günlük meydan okumalar, 3D arcade ve bulmacalar. Kayıt yok, indirme yok.">
+<link rel="alternate" hreflang="en" href="https://zokro.fun/en/">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="nav">
+<a class="logo" href="./">ZOK<b>RO</b></a>
+<div class="links"><a href="#games">Oyunlar</a><a href="../en/request.html">Oyla</a></div>
+<div class="search"><input id="q" placeholder="Oyun ara..." oninput="filter()"></div>
+<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=6"></script>
+<button class="cta" onclick="document.getElementById('games').scrollIntoView()">Oyna</button>
+</nav>
+<section class="hero">
+<div class="spot">
+<div class="dunes"></div>
+<h1>Günün görevi:<br><em>Desert Daily</em> 💧</h1>
+<p>100 su. Yükselen sıcaklık. 60 saniye. Bugün tüm dünya için aynı görev.</p>
+<div class="count">⏳ Sonraki görev <b id="cd">--:--:--</b></div>
+<div style="position:relative"><a class="cta" style="text-decoration:none" href="../en/games/desert-daily.html">▶ Hemen oyna</a></div>
+</div>
+<div class="side2">
+<div class="streak"><div class="fl">🔥</div><b id="streak">0</b><div>günlük seri — her gün gel</div></div>
+<div class="vote"><h3 style="margin:0 0 6px">🗳 Sen karar ver</h3><p style="color:var(--mut);font-size:13px;margin:0 0 12px">Sonraki oyuna oy ver.</p><a class="cta" style="text-decoration:none;font-size:14px" href="../en/request.html">Oyla</a></div>
+</div>
+</section>
+<section class="sec" id="games">
+<h2>⚡ Koleksiyon</h2>
+<p class="d">Orijinaller + lisanslı hitler yakında.</p>
+<main class="grid" id="grid">
+<a class="card" href="../en/games/desert-daily.html"><span class="ribbon">GÜNLÜK</span><div class="art a1">💧<span class="big-t">DESERT DAILY</span></div><div class="cbody"><h3>Desert Daily</h3><p>60 saniyelik su macerası, her gün yeni.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">Oyna →</span></div></div></a>
+<a class="card" href="../en/games/stack-dune.html"><span class="ribbon">GERÇEK 3D</span><div class="art a2">🧱<span class="big-t">STACK THE DUNE</span></div><div class="cbody"><h3>Stack the Dune 3D</h3><p>Fizik kulesi, 12 seviye.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">Oyna →</span></div></div></a>
+<a class="card" href="../en/games/guess-oasis.html"><div class="art a3">🌴<span class="big-t">GUESS THE OASIS</span></div><div class="cbody"><h3>Guess the Oasis</h3><p>Fotoğraftaki yeri tahmin et.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">Oyna →</span></div></div></a>
+</main>
+</section>
+<div class="ads">Reklam — her oyunu ücretsiz tutar</div>
+<footer>
+<div class="f-in">
+<div><h4>🔥 Zokro Stüdyo</h4><a>Bağımsız stüdyo. 11 dil.</a></div>
+<div><h4>Oyunlar</h4><a href="../en/games/desert-daily.html">Desert Daily</a><a href="../en/games/stack-dune.html">Stack the Dune 3D</a></div>
+<div><h4>Stüdyo</h4><a href="../en/about.html">Hakkında</a><a href="../en/contact.html">İletişim</a></div>
+<div><h4>Yasal</h4><a href="../en/privacy.html">Gizlilik</a><a href="../en/terms.html">Koşullar</a></div>
+</div>
+<p class="copy">© 2026 Zokro • zokro.fun</p>
+</footer>
+<script src="../assets/langs.js?v=6"></script>
+<script>
+try{const k='zk_streak',d=localStorage.getItem(k+'_d'),t=new Date().toDateString();let s=parseInt(localStorage.getItem(k)||'0');if(d!==t){const y=new Date(Date.now()-864e5).toDateString();s=(d===y)?s+1:1;localStorage.setItem(k,s);localStorage.setItem(k+'_d',t);}document.getElementById('streak').textContent=s;}catch(e){}
+function tick(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);let s=Math.floor((m-n)/1000);document.getElementById('cd').textContent=String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+tick();setInterval(tick,1000);
+function filter(){const v=document.getElementById('q').value.toLowerCase();document.querySelectorAll('#grid .card').forEach(c=>{c.style.display=(c.textContent.toLowerCase()).indexOf(v)>=0?'':'none';});}
+</script>
+</body>
+</html>

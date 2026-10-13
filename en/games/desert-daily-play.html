@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Desert Daily - Play</title>
+<style>body{font-family:system-ui;margin:0;background:#faf3e3;color:#3b2f1d;text-align:center;padding:12px}.bar{height:16px;background:#e5dcc8;border-radius:8px;overflow:hidden;margin:6px auto;max-width:420px}.bar>div{height:100%;background:#2f9e44}.bar.heat>div{background:#e8590c}button{font-size:16px;padding:10px 16px;margin:5px;border-radius:10px;border:0;background:#1971c2;color:#fff;cursor:pointer}</style>
+</head>
+<body>
+<h2>💧 Desert Daily #<span id="dayNum"></span></h2>
+<div>Water<div class="bar"><div id="waterBar" style="width:100%"></div></div></div>
+<div>Heat: <span id="heat">40</span>°C<div class="bar heat"><div id="heatBar" style="width:30%"></div></div></div>
+<div>Time: <span id="time">60</span>s • Score: <span id="score">0</span></div>
+<div><button onclick="give()">💧 Drink</button><button onclick="shade()">⛱️ Shade</button><button onclick="rest()">😴 Rest</button></div>
+<p id="result"></p>
+<button onclick="share()">📋 Copy result</button>
+<script>
+const dayNum=Math.floor(Date.now()/86400000);
+document.getElementById('dayNum').textContent=dayNum;
+let seed=dayNum%100;function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
+let water=100,heat=40+rnd()*5,time=60,score=0,over=false;
+const timer=setInterval(()=>{if(over)return;time--;heat+=0.4+rnd()*0.4;water-=(heat-35)*0.12;if(time<=0||water<=0){end();}update();},1000);
+function update(){document.getElementById('waterBar').style.width=Math.max(0,water)+'%';document.getElementById('heatBar').style.width=Math.min(100,(heat-30)*3)+'%';document.getElementById('heat').textContent=Math.round(heat);document.getElementById('time').textContent=Math.max(0,time);document.getElementById('score').textContent=Math.round(score);}
+function give(){if(over)return;if(score>=5){water=Math.min(100,water+8);score-=5;}update();}
+function shade(){if(over)return;if(water>=10){water-=10;heat-=4;score+=5;}update();}
+function rest(){if(over)return;heat+=2;score+=15;update();}
+function end(){over=true;clearInterval(timer);const win=time<=0&&water>0;document.getElementById('result').textContent=win?`You survived! Score ${Math.round(score+water)} 🟩🟩🟩🟩🟩`:`Dried out! Score ${Math.round(score)} 🟥🟥⬜⬜⬜`;update();}
+function share(){const t=`🏜️ Desert Daily #${dayNum} - Score ${Math.round(score+Math.max(0,water))} - Play free at https://zokro.fun`;navigator.clipboard.writeText(t);alert('Copied!');}
+update();
+</script>
+</body>
+</html>

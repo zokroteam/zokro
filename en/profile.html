@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile - Zokro</title>
+<link rel="stylesheet" href="../assets/style.css">
+<style>.wrap{max-width:640px;margin:auto;padding:20px}.pcard{background:#151d33;border:1px solid #263154;border-radius:18px;padding:26px;text-align:center}.pav{font-size:72px}.pick button{font-size:26px;background:#0d1531;border:1px solid #263154;border-radius:12px;padding:6px 10px;margin:3px;cursor:pointer}#pname{font-size:18px;padding:10px;border-radius:12px;border:1px solid #263154;background:#0d1531;color:#fff;width:80%}table{width:100%;margin-top:14px;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #263154;font-size:14px}</style>
+</head>
+<body>
+<nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=6"></script></nav>
+<div class="wrap">
+<a href="./">← Home</a>
+<div class="pcard" id="pcard"><p>Loading... (login first from homepage)</p></div>
+<h3>🏆 My best scores</h3>
+<table id="scores"><tr><th>Game</th><th>Score</th><th>Date</th></tr></table>
+<p><a href="leaderboard.html">🌍 Global leaderboard →</a></p>
+<p><button onclick="logout()">Log out</button></p>
+</div>
+<footer><p class="copy">© 2026 Zokro</p></footer>
+<script src="../assets/auth.js"></script>
+<script>
+function logout(){if(window.zkAuth&&window.zkAuth.ready)window.zkAuth.client.auth.signOut().then(function(){location.href='./';});}
+var iv=setInterval(function(){
+  if(!window.zkAuth||!window.zkAuth.ready)return;
+  var u=window.zkAuth.user;
+  if(!u){document.getElementById('pcard').innerHTML='<p>🔒 <a href="./">Log in from homepage</a> to see your profile.</p>';clearInterval(iv);return;}
+  window.zkAuth.client.from('profiles').select('*').eq('id',u.id).single().then(function(r){
+    var p=r.data||{username:'Player',avatar:'🎮'};
+    document.getElementById('pcard').innerHTML='<div class="pav">'+p.avatar+'</div><h2>'+p.username+'</h2><p>'+u.email+'</p>'
+      +'<input id="pname" value="'+p.username+'"> <button onclick="saveName()">Save name</button>'
+      +'<div class="pick">'+['🎮','🔥','🌴','💧','🧱','🐪','⚡','👑'].map(function(e){return '<button onclick="setAv(\''+e+'\')">'+e+'</button>';}).join('')+'</div>';
+  });
+  window.zkAuth.client.from('scores').select('*').eq('user_id',u.id).order('score',{ascending:false}).limit(10).then(function(r){
+    (r.data||[]).forEach(function(s){document.getElementById('scores').innerHTML+='<tr><td>'+s.game+'</td><td>'+s.score+'</td><td>'+new Date(s.created_at).toLocaleDateString()+'</td></tr>';});
+  });
+  clearInterval(iv);
+},500);
+function saveName(){var v=document.getElementById('pname').value;window.zkAuth.client.from('profiles').update({username:v}).eq('id',window.zkAuth.user.id).then(function(){location.reload();});}
+function setAv(e){window.zkAuth.client.from('profiles').update({avatar:e}).eq('id',window.zkAuth.user.id).then(function(){location.reload();});}
+</script>
+</body>
+</html>

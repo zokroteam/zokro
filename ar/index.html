@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>زوكرو - ألعاب مجانية | العب فوراً</title>
+<meta name="description" content="زوكرو: ألعاب مجانية بتحديات يومية وسلاسل وأركيد 3D. بدون تسجيل ولا تحميل. ألعاب جديدة كل أسبوع.">
+<link rel="alternate" hreflang="en" href="https://zokro.fun/en/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="nav">
+<a class="logo" href="./">ZOK<b>RO</b></a>
+<div class="links"><a href="#games">الألعاب</a><a href="../en/request.html">صوّت</a><a href="../en/about.html">الاستوديو</a></div>
+<div class="search"><input id="q" placeholder="دوّر على لعبة..." oninput="filter()"></div>
+<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=6"></script>
+<button class="cta" onclick="document.getElementById('games').scrollIntoView()">العب</button>
+</nav>
+
+<section class="hero">
+<div class="spot">
+<div class="dunes"></div>
+<h1>تحدي النهاردة:<br><em>تحدي الصحراء</em> 💧</h1>
+<p>100 مية. حرارة بتعلى. 60 ثانية. نفس التحدي للعالم كله النهاردة.</p>
+<div class="count">⏳ التحدي الجاي بعد <b id="cd">--:--:--</b></div>
+<div style="position:relative"><a class="cta" style="text-decoration:none" href="games/desert-daily.html">▶ العب دلوقتي</a></div>
+</div>
+<div class="side2">
+<div class="streak"><div class="fl">🔥</div><b id="streak">0</b><div>أيام متتالية — ادخل كل يوم</div></div>
+<div class="vote"><h3 style="margin:0 0 6px">🗳 انت بتدير الاستوديو</h3><p style="color:var(--mut);font-size:13px;margin:0 0 12px">صوّت للعبة الجاية اللي نبنيها.</p><a class="cta" style="text-decoration:none;font-size:14px" href="../en/request.html">صوّت</a></div>
+</div>
+</section>
+
+<section class="sec" id="games">
+<h2>⚡ التشكيلة</h2>
+<p class="d">مختارات أصلية + ألعاب مرخصة قريباً. دوس على أي كارت والعب.</p>
+<main class="grid" id="grid">
+<a class="card" href="games/desert-daily.html"><span class="ribbon">يومي</span><div class="art a1">💧<span class="big-t">تحدي الصحراء</span></div><div class="cbody"><h3>تحدي الصحراء اليومي</h3><p>بقاء 60 ثانية بالمية، جديد كل نص ليل.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">← العب</span></div></div></a>
+<a class="card" href="../en/games/stack-dune.html"><span class="ribbon">3D حقيقي</span><div class="art a2">🧱<span class="big-t">رص الكثبان</span></div><div class="cbody"><h3>رص الكثبان 3D</h3><p>برج فيزيائي، 12 مرحلة.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">← العب</span></div></div></a>
+<a class="card" href="../en/games/guess-oasis.html"><div class="art a3">🌴<span class="big-t">خمن الواحة</span></div><div class="cbody"><h3>خمن الواحة</h3><p>امسح البلور وسمّي المكان.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">← العب</span></div></div></a>
+</main>
+</section>
+
+<div class="ads">إعلان — بيخلي كل لعبة مجانية</div>
+
+<footer>
+<div class="f-in">
+<div><h4>🔥 استوديو زوكرو</h4><a>استوديو ألعاب مستقل.</a><a>عربي • English • Deutsch • Français</a></div>
+<div><h4>الألعاب</h4><a href="games/desert-daily.html">تحدي الصحراء</a><a href="../en/games/stack-dune.html">رص الكثبان 3D</a><a href="../en/games/guess-oasis.html">خمن الواحة</a></div>
+<div><h4>الاستوديو</h4><a href="../en/about.html">من نحن</a><a href="../en/contact.html">اتصل بنا</a></div>
+<div><h4>قانوني</h4><a href="../en/privacy.html">الخصوصية</a><a href="../en/terms.html">الشروط</a></div>
+</div>
+<p class="copy">© 2026 استوديو زوكرو • zokro.fun</p>
+</footer>
+<script>
+function saveL(v){try{localStorage.setItem('zk_lang',v);}catch(e){}}
+try{const k='zk_streak',d=localStorage.getItem(k+'_d'),t=new Date().toDateString();let s=parseInt(localStorage.getItem(k)||'0');if(d!==t){const y=new Date(Date.now()-864e5).toDateString();s=(d===y)?s+1:1;localStorage.setItem(k,s);localStorage.setItem(k+'_d',t);}document.getElementById('streak').textContent=s;}catch(e){}
+function tick(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);let s=Math.floor((m-n)/1000);const h=String(Math.floor(s/3600)).padStart(2,'0'),mi=String(Math.floor(s%3600/60)).padStart(2,'0'),ss=String(s%60).padStart(2,'0');document.getElementById('cd').textContent=h+':'+mi+':'+ss;}
+tick();setInterval(tick,1000);
+function filter(){const v=document.getElementById('q').value;document.querySelectorAll('#grid .card').forEach(c=>{c.style.display=c.textContent.indexOf(v)>=0?'':'none';});}
+</script>
+</body>
+</html>

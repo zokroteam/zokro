@@ -1,0 +1,13 @@
+# Secrets - NEVER commit these
+.env
+.env.local
+*service_role*
+*secret*.txt
+*token*.txt
+
+# OS / editor junk
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+*.log
