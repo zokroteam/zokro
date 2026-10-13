@@ -1,5 +1,5 @@
 /* Zokro accounts (Supabase Auth: Google + magic link). Paste keys in ZOKRO_CFG below. */
-var ZOKRO_CFG = { url: 'PASTE_SUPABASE_URL', anon: 'PASTE_SUPABASE_ANON_KEY' };
+var ZOKRO_CFG = { url: 'https://gtzjrhqtoafjmdjobptv.supabase.co', anon: 'sb_publishable_3ZhtfEA2Q1qLgumU3HXvqg_BwdUzo5J' };
 (function(){
   if(ZOKRO_CFG.url.indexOf('PASTE')===0){ window.zkAuth={ready:false}; return; }
   var s=document.createElement('script');
