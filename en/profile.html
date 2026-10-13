@@ -9,32 +9,48 @@
 <meta name="theme-color" content="#0a0714">
 <link rel="stylesheet" href="../assets/style.css?v=2">
 <style>
-.wrap{max-width:640px;margin:auto;padding:20px}
-.pcard{background:#151d33;border:1px solid #263154;border-radius:18px;padding:26px;text-align:center}
-.pav{font-size:72px;line-height:1.2}
-.pavimg{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid #f5c451}
-.pick{margin-top:12px}
-.pick button{font-size:26px;background:#0d1531;border:1px solid #263154;border-radius:12px;padding:6px 10px;margin:3px;cursor:pointer}
-.pick button.on{border-color:#f5c451;box-shadow:0 0 0 2px #f5c45155}
-#pname{font-size:16px;padding:10px;border-radius:12px;border:1px solid #263154;background:#0d1531;color:#fff;width:70%;max-width:300px}
-.btn-gold{background:linear-gradient(90deg,#f5c451,#ff8a3d);color:#1a1000;font-weight:800;border:0;border-radius:12px;padding:10px 18px;cursor:pointer;font-size:14px}
+.wrap{max-width:680px;margin:auto;padding:20px}
+.pcard{background:#151d33;border:1px solid #263154;border-radius:22px;overflow:hidden;text-align:center;box-shadow:0 24px 60px #00000066}
+.pbanner{height:120px;background:linear-gradient(120deg,#7c3aed,#ff8a3d 55%,#f5c451);position:relative}
+.pbanner::after{content:'🏜️';position:absolute;right:18px;bottom:-6px;font-size:64px;opacity:.55;filter:drop-shadow(0 8px 20px #000)}
+.pavatar{margin-top:-52px;display:flex;justify-content:center}
+.pav{font-size:72px;line-height:96px;width:96px;height:96px;border-radius:50%;background:#0d1531;border:3px solid #f5c451;box-shadow:0 0 0 4px #f5c45133,0 10px 30px #00000088}
+.pavimg{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid #f5c451;box-shadow:0 0 0 4px #f5c45133,0 10px 30px #00000088;background:#0d1531}
+.pname{margin:10px 0 2px;font-size:26px;letter-spacing:.5px}
+.pmail{color:#b8aed6;margin:0 0 4px;font-size:13px}
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 18px 4px}
+.stat{background:#0d1531;border:1px solid #263154;border-radius:14px;padding:12px 6px}
+.stat b{display:block;font-size:22px;color:#f5c451}
+.stat span{font-size:11.5px;color:#b8aed6}
+.pedit{padding:12px 18px 4px}
+#pname{font-size:15px;padding:11px 14px;border-radius:12px;border:1px solid #263154;background:#0d1531;color:#fff;width:62%;max-width:280px;outline:none}
+#pname:focus{border-color:#f5c451}
+.btn-gold{background:linear-gradient(90deg,#f5c451,#ff8a3d);color:#1a1000;font-weight:800;border:0;border-radius:12px;padding:11px 20px;cursor:pointer;font-size:14px}
 .btn-gold:disabled,.btn-ghost:disabled{opacity:.6;cursor:wait}
 .btn-ghost{background:transparent;color:#b8aed6;border:1px solid #263154;border-radius:12px;padding:10px 18px;cursor:pointer;font-size:14px}
-table{width:100%;margin-top:14px;border-collapse:collapse;background:#151d33;border:1px solid #263154;border-radius:14px;overflow:hidden}
-td,th{padding:9px;border-bottom:1px solid #263154;font-size:14px;text-align:left}
-.streakline{margin:6px 0 0;color:#f5c451;font-weight:800}
-.uprow{margin-top:12px}
+.pick{margin:12px 0 4px}
+.pick button{font-size:24px;background:#0d1531;border:1px solid #263154;border-radius:12px;padding:6px 10px;margin:3px;cursor:pointer;transition:.15s}
+.pick button:hover{transform:translateY(-2px);border-color:#f5c451}
+.pick button.on{border-color:#f5c451;box-shadow:0 0 0 2px #f5c45155}
+.uprow{margin:10px 0 4px}
 .uprow input[type=file]{display:none}
 #pmsg{font-size:13px;color:#f5c451;min-height:20px;font-weight:700}
+table{width:100%;margin-top:14px;border-collapse:collapse;background:#151d33;border:1px solid #263154;border-radius:16px;overflow:hidden}
+thead th{background:#f5c45114;color:#f5c451;font-size:12px;text-transform:uppercase;letter-spacing:1px}
+td,th{padding:11px 12px;border-bottom:1px solid #263154;font-size:14px;text-align:left}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#f5c4510d}
+.rank1{color:#f5c451;font-weight:900}
+.secttl{display:flex;align-items:center;gap:8px;margin:22px 2px 0}
 </style>
 </head>
 <body>
 <nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=14"></script></nav>
 <div class="wrap">
 <a href="./">← Home</a>
-<div class="pcard" id="pcard"><p>⏳ Loading your profile...</p></div>
-<h3>🏆 My best scores</h3>
-<table id="scores"><tr><th>Game</th><th>Score</th><th>Date</th></tr></table>
+<div class="pcard" id="pcard"><p style="padding:30px">⏳ Loading your profile...</p></div>
+<div class="secttl"><h3 style="margin:0">🏆 My best scores</h3></div>
+<table id="scores"><thead><tr><th>Game</th><th>Score</th><th>Date</th></tr></thead><tbody id="scoresBody"></tbody></table>
 <p><a href="leaderboard.html">🌍 Global leaderboard →</a></p>
 <p><button class="btn-ghost" onclick="logout()">Log out</button></p>
 </div>
@@ -55,10 +71,9 @@ var iv=setInterval(function(){
   if(!window.zkAuth||!window.zkAuth.ready)return;
   clearInterval(iv);
   var sb=window.zkAuth.client;
-  // Refresh the session first so saves never fail on an expired token
   sb.auth.getSession().then(function(sr){
     var u=(sr.data&&sr.data.session&&sr.data.session.user)||window.zkAuth.user;
-    if(!u){document.getElementById('pcard').innerHTML='<p style="font-size:20px">🔒</p><p><a href="./">Log in from the homepage</a> to see your profile.<br>Playing stays free — no account needed.</p>';return;}
+    if(!u){document.getElementById('pcard').innerHTML='<p style="padding:30px;font-size:17px">🔒<br><br><a href="./">Log in from the homepage</a> to see your profile.<br><span style="color:#b8aed6;font-size:13px">Playing stays free — no account needed.</span></p>';return;}
     window.zkAuth.user=u;
     loadProfile(sb,u);
     loadScores(sb,u);
@@ -66,32 +81,40 @@ var iv=setInterval(function(){
 },500);
 function loadProfile(sb,u){
   sb.from('profiles').select('*').eq('id',u.id).single().then(function(r){
-    if(r.error&&r.error.code!=='PGRST116'){document.getElementById('pcard').innerHTML='<p>⚠️ Could not load profile: '+esc(r.error.message)+'</p><p><button class="btn-ghost" onclick="location.reload()">Retry</button></p>';return;}
+    if(r.error&&r.error.code!=='PGRST116'){document.getElementById('pcard').innerHTML='<p style="padding:30px">⚠️ Could not load profile: '+esc(r.error.message)+'<br><br><button class="btn-ghost" onclick="location.reload()">Retry</button></p>';return;}
     var p=r.data||{username:'Player',avatar:'🎮'};
     var la=localAv();
-    if(la&&p.avatar!==la){p.avatar=la;sb.from('profiles').update({avatar:la}).eq('id',u.id).then(function(){/*saved*/});}
+    if(la&&p.avatar!==la){p.avatar=la;sb.from('profiles').update({avatar:la}).eq('id',u.id).then(function(){});}
     var av=p.avatar||la||'🎮';
     var name=p.username||'Player';
     var since='—';try{since=u.created_at?new Date(u.created_at).toLocaleDateString():'—';}catch(e){}
     var emos=['🎮','🔥','🌴','💧','🧱','🐪','⚡','👑'];
     document.getElementById('pcard').innerHTML=
-      avHTML(av)+'<h2 style="margin:8px 0 2px">'+esc(name)+'</h2>'
-      +'<p style="color:#b8aed6;margin:0 0 4px">'+esc(u.email||'')+' • joined '+esc(since)+'</p>'
-      +'<p class="streakline">🔥 '+localStreak()+' day streak</p>'
-      +'<div style="margin-top:12px"><input id="pname" maxlength="20" value="'+esc(name)+'"> <button class="btn-gold" id="saveBtn" onclick="saveName()">Save name</button></div>'
+      '<div class="pbanner"></div><div class="pavatar">'+avHTML(av)+'</div>'
+      +'<h2 class="pname">'+esc(name)+'</h2>'
+      +'<p class="pmail">'+esc(u.email||'')+' • joined '+esc(since)+'</p>'
+      +'<div class="pstats"><div class="stat"><b>🔥 '+localStreak()+'</b><span>day streak</span></div>'
+      +'<div class="stat"><b id="st-games">–</b><span>games played</span></div>'
+      +'<div class="stat"><b id="st-best">–</b><span>best score</span></div></div>'
+      +'<div class="pedit"><input id="pname" maxlength="20" value="'+esc(name)+'"> <button class="btn-gold" id="saveBtn" onclick="saveName()">Save</button></div>'
       +'<div class="pick">'+emos.map(function(e){return '<button class="'+(av===e?'on':'')+'" onclick="setAv(\''+e+'\')">'+e+'</button>';}).join('')+'</div>'
       +'<div class="uprow"><label class="btn-ghost" style="display:inline-block;cursor:pointer">📷 Upload photo<input type="file" accept="image/*" onchange="upPhoto(this)"></label></div>'
       +'<p id="pmsg"></p>';
   });
 }
 function loadScores(sb,u){
-  sb.from('scores').select('game,score,created_at').eq('user_id',u.id).order('score',{ascending:false}).limit(10).then(function(r){
-    if(r.error){document.getElementById('scores').innerHTML+='<tr><td colspan="3">⚠️ '+esc(r.error.message)+'</td></tr>';return;}
+  sb.from('scores').select('game,score,created_at').eq('user_id',u.id).order('score',{ascending:false}).limit(100).then(function(r){
+    var tb=document.getElementById('scoresBody');
+    if(r.error){tb.innerHTML='<tr><td colspan="3">⚠️ '+esc(r.error.message)+'</td></tr>';return;}
     var rows=r.data||[];
-    if(!rows.length){document.getElementById('scores').innerHTML+='<tr><td colspan="3">No scores yet — go play! 🎮</td></tr>';return;}
-    rows.forEach(function(s){
+    if(!rows.length){tb.innerHTML='<tr><td colspan="3">No scores yet — go play! 🎮</td></tr>';return;}
+    var games={},best=0;
+    rows.forEach(function(s){games[s.game]=1;if(s.score>best)best=s.score;});
+    document.getElementById('st-games').textContent=Object.keys(games).length;
+    document.getElementById('st-best').textContent=best;
+    rows.slice(0,10).forEach(function(s,i){
       var d='—';try{d=new Date(s.created_at).toLocaleDateString();}catch(e){}
-      document.getElementById('scores').innerHTML+='<tr><td>'+esc(s.game)+'</td><td>'+parseInt(s.score||0)+'</td><td>'+esc(d)+'</td></tr>';
+      tb.innerHTML+='<tr><td>'+(i===0?'<span class="rank1">🥇 ':'')+esc(s.game)+(i===0?'</span>':'')+'</td><td>'+parseInt(s.score||0)+'</td><td>'+esc(d)+'</td></tr>';
     });
   });
 }
