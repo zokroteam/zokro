@@ -75,7 +75,7 @@ function buildFooter(){
   var ab=base+'en/about.html',ct=base+'en/contact.html',rq=base+'en/request.html',pv=base+'en/privacy.html',tm=base+'en/terms.html';
   f.innerHTML='<div class="f-top"></div><div class="f-in">'
     +'<div class="f-brand"><img src="'+base+'assets/logo.svg" alt="Zokro" style="height:44px"><p style="margin:12px 0">'+t.tag+'</p>'
-    +'<div class="soc"><a class="sc-tt" href="https://tiktok.com/@zokro" title="TikTok">🎵</a><a class="sc-yt" href="https://youtube.com/@zokro" title="YouTube">▶️</a><a class="sc-x" href="https://x.com/zokro" title="X">✖️</a><a class="sc-ig" href="https://instagram.com/zokro" title="Instagram">📸</a><a class="sc-dc" href="https://discord.gg/ZUUeYucQFT" title="Discord">💬</a></div>'
+    +'<div class="soc"><a class="sc-fb" href="https://facebook.com/zokrofun" title="Facebook">f</a><a class="sc-tt" href="https://tiktok.com/@zokro" title="TikTok">🎵</a><a class="sc-yt" href="https://youtube.com/@zokro" title="YouTube">▶️</a><a class="sc-x" href="https://x.com/zokro" title="X">✖️</a><a class="sc-ig" href="https://instagram.com/zokro" title="Instagram">📸</a><a class="sc-dc" href="https://discord.gg/ZUUeYucQFT" title="Discord">💬</a></div>'
     +'<div class="trust"><span>🔒 Safe</span><span>👨‍👩‍👧 Kid-friendly</span><span>📱 Mobile-ready</span></div></div>'
     +'<div><h4>'+t.g+'</h4><a href="'+G+'desert-daily.html">💧 Desert Daily</a><a href="'+G+'stack-dune.html">🧱 Stack the Dune 3D</a><a href="'+G+'guess-oasis.html">🌴 Guess the Oasis</a></div>'
     +'<div><h4>'+t.s+'</h4><a href="'+ab+'">'+t.about+'</a><a href="'+ct+'">'+t.contact+'</a><a href="'+rq+'">'+t.req+'</a></div>'
