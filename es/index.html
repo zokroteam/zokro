@@ -12,7 +12,7 @@
 <a class="logo" href="./">ZOK<b>RO</b></a>
 <div class="links"><a href="#games">Juegos</a><a href="../en/request.html">Votar</a></div>
 <div class="search"><input id="q" placeholder="Buscar juegos..." oninput="filter()"></div>
-<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=8"></script>
+<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=9"></script>
 <button class="cta" onclick="document.getElementById('games').scrollIntoView()">Jugar</button>
 </nav>
 <section class="hero">
@@ -47,7 +47,7 @@
 </div>
 <p class="copy">© 2026 Zokro • zokro.fun</p>
 </footer>
-<script src="../assets/langs.js?v=8"></script>
+<script src="../assets/langs.js?v=9"></script>
 <script>
 try{const k='zk_streak',d=localStorage.getItem(k+'_d'),t=new Date().toDateString();let s=parseInt(localStorage.getItem(k)||'0');if(d!==t){const y=new Date(Date.now()-864e5).toDateString();s=(d===y)?s+1:1;localStorage.setItem(k,s);localStorage.setItem(k+'_d',t);}document.getElementById('streak').textContent=s;}catch(e){}
 function tick(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);let s=Math.floor((m-n)/1000);document.getElementById('cd').textContent=String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
