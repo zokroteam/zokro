@@ -101,13 +101,9 @@ footer{background:linear-gradient(180deg,#0a0716,#05030d)}
 .zk-hero{font-size:52px;animation:flick 2s infinite}
 .zk-sub{color:var(--mut);font-size:14px;margin:0 0 14px}
 .zk-box h3{margin:0;font-size:24px;letter-spacing:1px}
-.zk-pv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
-.zk-box button.pv{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:11px 8px;font-size:14px;border-radius:12px;border:1px solid var(--line);background:#ffffff10;color:#fff}
-.zk-box button.pv:hover{transform:translateY(-2px)}
-.pv-g:hover{background:#fff!important;color:#222!important}
-.pv-f:hover{background:#1877F2!important;border-color:#1877F2!important}
-.pv-d:hover{background:#5865F2!important;border-color:#5865F2!important}
-.pv-a:hover{background:#fff!important;color:#000!important}
+.zk-pv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.zk-box button.pv{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:11px 8px;font-size:14px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#222}
+.zk-box button.pv:hover{transform:translateY(-2px);box-shadow:0 8px 20px #00000066}
 .zk-box h3{margin:0 0 6px}.zk-box p{color:var(--mut);font-size:14px}
 .zk-box button{display:block;width:100%;margin:8px 0;padding:12px;border-radius:12px;border:0;font-size:15px;font-weight:700;cursor:pointer}
 #zk-g{background:#fff;color:#222}#zk-m{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000}

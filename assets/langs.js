@@ -79,9 +79,8 @@ function buildFooter(){
     +'<div class="trust"><span>🔒 Safe</span><span>👨‍👩‍👧 Kid-friendly</span><span>📱 Mobile-ready</span></div></div>'
     +'<div><h4>'+t.g+'</h4><a href="'+G+'desert-daily.html">💧 Desert Daily</a><a href="'+G+'stack-dune.html">🧱 Stack the Dune 3D</a><a href="'+G+'guess-oasis.html">🌴 Guess the Oasis</a></div>'
     +'<div><h4>'+t.s+'</h4><a href="'+ab+'">'+t.about+'</a><a href="'+ct+'">'+t.contact+'</a><a href="'+rq+'">'+t.req+'</a></div>'
-    +'<div><h4>'+t.l+'</h4><a href="'+pv+'">'+t.priv+'</a><a href="'+tm+'">'+t.terms+'</a><div class="nlbox"><p>'+t.news+'</p><div class="nl"><input id="nl-in" placeholder="'+t.ph+'"><button onclick="nlGo()">'+t.go+'</button></div><p id="nl-msg"></p></div></div>'
+    +'<div><h4>'+t.l+'</h4><a href="'+pv+'">'+t.priv+'</a><a href="'+tm+'">'+t.terms+'</a></div>'
     +'</div><div class="f-bar"><span class="f-cr">'+t.cr+'</span><button class="top_" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">↑ Top</button></div>';
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',buildFooter);
 else buildFooter();
-function nlGo(){var v=(document.getElementById('nl-in')||{}).value||'';if(v.indexOf('@')>0){try{localStorage.setItem('zk_nl',v);}catch(e){}document.getElementById('nl-msg').textContent='✅ Welcome aboard!';}else{document.getElementById('nl-msg').textContent='✉️ Email?';}}

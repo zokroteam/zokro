@@ -38,15 +38,14 @@ var ZOKRO_CFG = { url: 'https://gtzjrhqtoafjmdjobptv.supabase.co', anon: 'sb_pub
     }
     window.zkOpenAuth=openAuth;
     var PROVIDERS=[
-      {id:'google',icon:'🔵',label:'Google',cls:'pv-g'},
-      {id:'facebook',icon:'📘',label:'Facebook',cls:'pv-f'},
-      {id:'discord',icon:'🎮',label:'Discord',cls:'pv-d'},
-      {id:'apple',icon:'🍎',label:'Apple',cls:'pv-a'}
+      {id:'google',label:'Google',svg:'<svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.3-2.2H12v4.1h6.5c-.1 1.1-.8 2.7-2.4 3.8l-.1.1 3.5 2.7.2.1c2.2-2 3.8-5 3.8-8.6z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.8-2.9c-1 .7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5l-.1.1-3.7 2.9v.1C3.4 21.5 7.4 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.7.4-2.4l-.1-.1-3.6-2.8H1.4C.5 8.4 0 10.1 0 12s.5 3.6 1.4 5.3l3.8-2.9z"/><path fill="#EA4335" d="M12 4.7c1.8 0 3 .8 3.7 1.4l3.3-3.2C17.9 1.1 15.2 0 12 0 7.4 0 3.4 2.5 1.4 6.7l3.7 2.9c1-2.9 3.7-4.9 6.9-4.9z"/></svg>'},
+      {id:'facebook',label:'Facebook',svg:'<svg width="20" height="20" viewBox="0 0 24 24"><path fill="#1877F2" d="M24 12a12 12 0 1 0-13.9 11.9v-8.4h-3v-3.5h3V9.4c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 1-2 1.9V12h3.3l-.5 3.5h-2.8v8.4A12 12 0 0 0 24 12z"/></svg>'},
+      {id:'discord',label:'Discord',svg:'<svg width="22" height="22" viewBox="0 0 24 24"><path fill="#5865F2" d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3c-.2.4-.5.9-.6 1.3a18.3 18.3 0 0 0-5.5 0C9.1 3.9 8.8 3.4 8.6 3a19.7 19.7 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1c2 1.5 4 2.4 5.9 3 .5-.6.9-1.3 1.2-2-.7-.2-1.3-.6-1.9-1l.4-.3c2.4 1.1 5 1.1 7.4 0l.4.3c-.6.4-1.2.8-1.9 1 .4.7.8 1.4 1.2 2 1.9-.6 3.9-1.5 5.9-3 .5-5.2-.7-9.7-3.4-13.7zM8.7 15.3c-1.2 0-2.1-1-2.1-2.3s.9-2.3 2.1-2.3 2.2 1 2.1 2.3c0 1.3-.9 2.3-2.1 2.3zm6.6 0c-1.2 0-2.1-1-2.1-2.3s.9-2.3 2.1-2.3 2.2 1 2.1 2.3c0 1.3-.9 2.3-2.1 2.3z"/></svg>'}
     ];
     function openAuth(){
       if(document.getElementById('zk-modal')){document.getElementById('zk-modal').style.display='flex';return;}
       var d=document.createElement('div');d.id='zk-modal';
-      var pv=PROVIDERS.map(function(p){return '<button class="pv '+p.cls+'" data-pv="'+p.id+'"><span>'+p.icon+'</span>'+p.label+'</button>';}).join('');
+      var pv=PROVIDERS.map(function(p){return '<button class="pv" data-pv="'+p.id+'">'+p.svg+'<span>'+p.label+'</span></button>';}).join('');
       d.innerHTML='<div class="zk-box"><div class="zk-hero">🔥</div><h3>Join Zokro</h3><p class="zk-sub">One account for scores, streaks & leaderboard.</p>'
         +'<div class="zk-pv">'+pv+'</div>'
         +'<div class="zk-tabs"><button id="zk-t-in" class="on">Log In</button><button id="zk-t-up">Sign Up</button></div>'
