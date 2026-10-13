@@ -13,9 +13,12 @@ var ZOKRO_CFG = { url: 'https://gtzjrhqtoafjmdjobptv.supabase.co', anon: 'sb_pub
     sb.auth.onAuthStateChange(function(ev,sess){setUser(sess&&sess.user||null);});
     function setUser(u){
       window.zkAuth.user=u;
-      document.querySelectorAll('button.login,[data-auth]').forEach(function(el){
+      var lang=(document.documentElement.lang||'en').toLowerCase();
+      var loginText={ar:'دخول',de:'Log In',fr:'Se connecter',es:'Entrar',pt:'Entrar',tr:'Giriş Yap',pl:'Zaloguj',cs:'Přihlásit se',ru:'Войти',ja:'ログイン',en:'Log In'}[lang]||'Log In';
+      // Gold nav button (Play) becomes Login - playing stays free without account
+      document.querySelectorAll('button.login,nav button.cta,[data-auth]').forEach(function(el){
         if(u){el.innerHTML='👤 '+(u.user_metadata&&u.user_metadata.name?u.user_metadata.name.split(' ')[0]:'Player');el.onclick=function(){location.href=basePath()+'en/profile.html';};}
-        else{el.textContent=el.getAttribute('data-login-text')||'Log In';el.onclick=openAuth;}
+        else{el.textContent=el.getAttribute('data-login-text')||loginText;el.onclick=openAuth;}
       });
       if(u)ensureProfile(u);
     }
