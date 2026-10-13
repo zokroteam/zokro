@@ -11,11 +11,15 @@
 <style>
 .wrap{max-width:680px;margin:auto;padding:20px}
 .pcard{background:#151d33;border:1px solid #263154;border-radius:22px;overflow:hidden;text-align:center;box-shadow:0 24px 60px #00000066}
-.pbanner{height:120px;background:linear-gradient(120deg,#7c3aed,#ff8a3d 55%,#f5c451);position:relative}
-.pbanner::after{content:'🏜️';position:absolute;right:18px;bottom:-6px;font-size:64px;opacity:.55;filter:drop-shadow(0 8px 20px #000)}
-.pavatar{margin-top:-52px;display:flex;justify-content:center}
-.pav{font-size:72px;line-height:96px;width:96px;height:96px;border-radius:50%;background:#0d1531;border:3px solid #f5c451;box-shadow:0 0 0 4px #f5c45133,0 10px 30px #00000088}
-.pavimg{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid #f5c451;box-shadow:0 0 0 4px #f5c45133,0 10px 30px #00000088;background:#0d1531}
+.pbanner{height:120px;background:linear-gradient(120deg,#2a1540,#7c3aed 40%,#ff8a3d 75%,#f5c451);position:relative;overflow:hidden}
+.pbanner::before{content:'';position:absolute;bottom:-42px;left:-10%;right:-10%;height:84px;background:radial-gradient(60% 100% at 30% 100%,#f5c45177,transparent),radial-gradient(50% 100% at 70% 100%,#ff8a3d77,transparent);border-radius:50% 50% 0 0}
+.pbanner::after{content:'';position:absolute;top:-50px;right:-30px;width:170px;height:170px;background:radial-gradient(circle,#ffffff2e,transparent 70%)}
+.backpill{display:inline-block;text-decoration:none;font-size:13px;font-weight:800;color:#f5c451;border:1px solid #f5c45155;background:#f5c4510d;padding:8px 18px;border-radius:20px;margin-bottom:12px}
+.backpill:hover{background:#f5c45122}
+.pavatar{margin-top:-56px;display:flex;justify-content:center;position:relative;z-index:2}
+.pav{font-size:64px;line-height:104px;width:104px;height:104px;border-radius:50%;background:#0d1531;border:3px solid #f5c451;box-shadow:0 0 0 4px #f5c45133,0 10px 30px #00000088}
+.pavimg{width:104px;height:104px;border-radius:50%;object-fit:cover;border:3px solid #f5c451;box-shadow:0 0 0 4px #f5c45133,0 10px 30px #00000088;background:#0d1531}
+.pavinit{width:104px;height:104px;border-radius:50%;background:linear-gradient(135deg,#f5c451,#ff8a3d);color:#1a1000;font-size:46px;font-weight:900;display:flex;align-items:center;justify-content:center;border:3px solid #ffe9a8;box-shadow:0 0 24px #f5c45155,0 10px 30px #00000088}
 .pname{margin:10px 0 2px;font-size:26px;letter-spacing:.5px}
 .pmail{color:#b8aed6;margin:0 0 4px;font-size:13px}
 .pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 18px 4px}
@@ -47,7 +51,7 @@ tbody tr:hover{background:#f5c4510d}
 <body>
 <nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=14"></script></nav>
 <div class="wrap">
-<a href="./">← Home</a>
+<a href="./" class="backpill">← Home</a>
 <div class="pcard" id="pcard"><p style="padding:30px">⏳ Loading your profile...</p></div>
 <div class="secttl"><h3 style="margin:0">🏆 My best scores</h3></div>
 <table id="scores"><thead><tr><th>Game</th><th>Score</th><th>Date</th></tr></thead><tbody id="scoresBody"></tbody></table>
@@ -58,10 +62,12 @@ tbody tr:hover{background:#f5c4510d}
 <script src="../assets/auth.js?v=2"></script>
 <script>
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-function avHTML(av){
-  av=av||'🎮';
+function avHTML(av,name){
+  av=av||'';
   if(/^data:image|^https?:\/\//i.test(av))return '<img class="pavimg" src="'+av+'" alt="avatar">';
-  return '<div class="pav">'+esc(av)+'</div>';
+  if(av&&av!=='🎮')return '<div class="pav">'+esc(av)+'</div>';
+  var ch=((name||'P').trim().charAt(0)||'P').toUpperCase();
+  return '<div class="pavinit">'+esc(ch)+'</div>';
 }
 function logout(){if(window.zkAuth&&window.zkAuth.ready)window.zkAuth.client.auth.signOut().then(function(){location.href='./';});else location.href='./';}
 function localAv(){try{return localStorage.getItem('zk_avatar')||'';}catch(e){return '';}}
@@ -90,12 +96,12 @@ function loadProfile(sb,u){
     var since='—';try{since=u.created_at?new Date(u.created_at).toLocaleDateString():'—';}catch(e){}
     var emos=['🎮','🔥','🌴','💧','🧱','🐪','⚡','👑'];
     document.getElementById('pcard').innerHTML=
-      '<div class="pbanner"></div><div class="pavatar">'+avHTML(av)+'</div>'
+      '<div class="pbanner"></div><div class="pavatar">'+avHTML(av,name)+'</div>'
       +'<h2 class="pname">'+esc(name)+'</h2>'
       +'<p class="pmail">'+esc(u.email||'')+' • joined '+esc(since)+'</p>'
       +'<div class="pstats"><div class="stat"><b>🔥 '+localStreak()+'</b><span>day streak</span></div>'
-      +'<div class="stat"><b id="st-games">–</b><span>games played</span></div>'
-      +'<div class="stat"><b id="st-best">–</b><span>best score</span></div></div>'
+      +'<div class="stat"><b id="st-games">0</b><span>games played</span></div>'
+      +'<div class="stat"><b id="st-best">0</b><span>best score</span></div></div>'
       +'<div class="pedit"><input id="pname" maxlength="20" value="'+esc(name)+'"> <button class="btn-gold" id="saveBtn" onclick="saveName()">Save</button></div>'
       +'<div class="pick">'+emos.map(function(e){return '<button class="'+(av===e?'on':'')+'" onclick="setAv(\''+e+'\')">'+e+'</button>';}).join('')+'</div>'
       +'<div class="uprow"><label class="btn-ghost" style="display:inline-block;cursor:pointer">📷 Upload photo<input type="file" accept="image/*" onchange="upPhoto(this)"></label></div>'
@@ -107,7 +113,7 @@ function loadScores(sb,u){
     var tb=document.getElementById('scoresBody');
     if(r.error){tb.innerHTML='<tr><td colspan="3">⚠️ '+esc(r.error.message)+'</td></tr>';return;}
     var rows=r.data||[];
-    if(!rows.length){tb.innerHTML='<tr><td colspan="3">No scores yet — go play! 🎮</td></tr>';return;}
+    if(!rows.length){tb.innerHTML='<tr><td colspan="3" style="text-align:center;padding:20px">No scores yet — <a href="./" style="color:#f5c451;font-weight:800">go play! 🎮</a></td></tr>';return;}
     var games={},best=0;
     rows.forEach(function(s){games[s.game]=1;if(s.score>best)best=s.score;});
     document.getElementById('st-games').textContent=Object.keys(games).length;
