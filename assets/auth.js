@@ -40,20 +40,55 @@ var ZOKRO_CFG = { url: 'https://gtzjrhqtoafjmdjobptv.supabase.co', anon: 'sb_pub
     function openAuth(){
       if(document.getElementById('zk-modal')){document.getElementById('zk-modal').style.display='flex';return;}
       var d=document.createElement('div');d.id='zk-modal';
-      d.innerHTML='<div class="zk-box"><h3>🔥 Join Zokro</h3><p>Save scores, streaks & profile across devices.</p>'
+      d.innerHTML='<div class="zk-box"><h3>🔥 Join Zokro</h3>'
         +'<button id="zk-g">🔵 Continue with Google</button>'
-        +'<div class="zk-or">— or —</div>'
-        +'<input id="zk-e" type="email" placeholder="Email for magic link"><button id="zk-m">✉️ Send login link</button>'
+        +'<div class="zk-tabs"><button id="zk-t-in" class="on">Log In</button><button id="zk-t-up">Sign Up</button></div>'
+        +'<div id="zk-up-fields" style="display:none"><input id="zk-u" placeholder="Username (for signup)"></div>'
+        +'<input id="zk-e" type="email" placeholder="Email">'
+        +'<input id="zk-p" type="password" placeholder="Password (6+ chars)">'
+        +'<button id="zk-go">Log In</button>'
+        +'<div class="zk-or">— or get a magic link —</div>'
+        +'<button id="zk-m">✉️ Email me a login link</button>'
         +'<p id="zk-msg"></p><button id="zk-x">Close</button></div>';
       document.body.appendChild(d);
+      var mode='in';
+      function setMode(m){
+        mode=m;
+        document.getElementById('zk-t-in').className=m==='in'?'on':'';
+        document.getElementById('zk-t-up').className=m==='up'?'on':'';
+        document.getElementById('zk-up-fields').style.display=m==='up'?'':'none';
+        document.getElementById('zk-go').textContent=m==='up'?'Create account':'Log In';
+      }
+      document.getElementById('zk-t-in').onclick=function(){setMode('in');};
+      document.getElementById('zk-t-up').onclick=function(){setMode('up');};
       document.getElementById('zk-x').onclick=function(){d.style.display='none';};
       document.getElementById('zk-g').onclick=function(){
         sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href}});
       };
+      function msg(t){document.getElementById('zk-msg').textContent=t;}
+      document.getElementById('zk-go').onclick=function(){
+        var em=document.getElementById('zk-e').value.trim();
+        var pw=document.getElementById('zk-p').value;
+        if(!em||pw.length<6){msg('✉️ Email + password 6+ chars');return;}
+        msg('⏳ ...');
+        if(mode==='up'){
+          var un=(document.getElementById('zk-u').value.trim()||em.split('@')[0]).slice(0,20);
+          sb.auth.signUp({email:em,password:pw,options:{data:{name:un},emailRedirectTo:location.href}}).then(function(r){
+            if(r.error){msg('❌ '+r.error.message);return;}
+            msg(r.session?'✅ Account created!':'✅ Check your email to confirm, then log in!');
+          });
+        }else{
+          sb.auth.signInWithPassword({email:em,password:pw}).then(function(r){
+            msg(r.error?'❌ '+r.error.message:'');
+            if(!r.error)d.style.display='none';
+          });
+        }
+      };
       document.getElementById('zk-m').onclick=function(){
-        var em=document.getElementById('zk-e').value;
+        var em=document.getElementById('zk-e').value.trim();
+        if(!em){msg('✉️ Type your email first');return;}
         sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:location.href}}).then(function(r){
-          document.getElementById('zk-msg').textContent=r.error?r.error.message:'✅ Check your email!';
+          msg(r.error?'❌ '+r.error.message:'✅ Check your email!');
         });
       };
     }

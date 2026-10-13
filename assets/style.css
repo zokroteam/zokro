@@ -102,6 +102,11 @@ footer{background:linear-gradient(180deg,#0a0716,#05030d)}
 #zk-g{background:#fff;color:#222}#zk-m{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000}
 #zk-x{background:transparent;color:var(--mut);border:1px solid var(--line)}
 #zk-e{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0d1531;color:#fff;box-sizing:border-box}
+#zk-p,#zk-u{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#0d1531;color:#fff;box-sizing:border-box;margin-top:8px}
+.zk-tabs{display:flex;gap:6px;margin:10px 0}
+.zk-tabs button{flex:1;margin:0!important;background:#0d1531!important;color:var(--mut)!important;border:1px solid var(--line)!important}
+.zk-tabs button.on{color:#1a1000!important;background:linear-gradient(90deg,var(--gold),var(--gold2))!important;border:0!important}
+#zk-go{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000}
 .zk-or{color:var(--mut);font-size:13px;margin:6px 0}
 #zk-msg{font-size:13px;color:var(--gold);min-height:18px}
 .soc{display:flex;gap:8px;margin-top:6px}
