@@ -4,7 +4,31 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zokro - Darmowe gry online | Graj teraz</title>
 <meta name="description" content="Zokro: darmowe gry online natychmiast. Codzienne wyzwania, arcade 3D i łamigłówki. Bez rejestracji i pobierania.">
+<link rel="canonical" href="https://zokro.fun/pl/">
+<link rel="alternate" hreflang="x-default" href="https://zokro.fun/en/">
+<link rel="alternate" hreflang="ar" href="https://zokro.fun/ar/">
+<link rel="alternate" hreflang="de" href="https://zokro.fun/de/">
 <link rel="alternate" hreflang="en" href="https://zokro.fun/en/">
+<link rel="alternate" hreflang="es" href="https://zokro.fun/es/">
+<link rel="alternate" hreflang="fr" href="https://zokro.fun/fr/">
+<link rel="alternate" hreflang="pt" href="https://zokro.fun/pt/">
+<link rel="alternate" hreflang="tr" href="https://zokro.fun/tr/">
+<link rel="alternate" hreflang="pl" href="https://zokro.fun/pl/">
+<link rel="alternate" hreflang="cs" href="https://zokro.fun/cs/">
+<link rel="alternate" hreflang="ru" href="https://zokro.fun/ru/">
+<link rel="alternate" hreflang="ja" href="https://zokro.fun/ja/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zokro">
+<meta property="og:title" content="Zokro - Darmowe gry online | Graj teraz">
+<meta property="og:description" content="Zokro: darmowe gry online natychmiast. Codzienne wyzwania, arcade 3D i łamigłówki. Bez rejestracji i pobierania.">
+<meta property="og:url" content="https://zokro.fun/pl/">
+<meta property="og:image" content="https://zokro.fun/assets/social-cover.png">
+<meta property="og:locale" content="pl_PL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zokro - Darmowe gry online | Graj teraz">
+<meta name="twitter:description" content="Zokro: darmowe gry online natychmiast. Codzienne wyzwania, arcade 3D i łamigłówki. Bez rejestracji i pobierania.">
+<meta name="twitter:image" content="https://zokro.fun/assets/social-cover.png">
+<meta name="theme-color" content="#0a0714">
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
@@ -12,7 +36,7 @@
 <a class="logo" href="./">ZOK<b>RO</b></a>
 <div class="links"><a href="#games">Gry</a><a href="../en/request.html">Głosuj</a></div>
 <div class="search"><input id="q" placeholder="Szukaj gier..." oninput="filter()"></div>
-<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=12"></script>
+<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=13"></script>
 <button class="cta" onclick="document.getElementById('games').scrollIntoView()">Graj</button>
 </nav>
 <section class="hero">
@@ -31,10 +55,11 @@
 <section class="sec" id="games">
 <h2>⚡ Kolekcja</h2>
 <p class="d">Oryginały + licencjonowane hity wkrótce.</p>
+<div class="chips"><button class="on">Wszystkie</button><button>🧩 Puzzle</button><button>🎮 3D</button><button>📅 Codziennie</button></div>
 <main class="grid" id="grid">
-<a class="card" href="../en/games/desert-daily.html"><span class="ribbon">DZIENNE</span><div class="art a1">💧<span class="big-t">DESERT DAILY</span></div><div class="cbody"><h3>Desert Daily</h3><p>60 sekund przetrwania, codziennie nowe.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">Graj →</span></div></div></a>
-<a class="card" href="../en/games/stack-dune.html"><span class="ribbon">PRAWDZIWE 3D</span><div class="art a2">🧱<span class="big-t">STACK THE DUNE</span></div><div class="cbody"><h3>Stack the Dune 3D</h3><p>Wieża fizyczna, 12 poziomów.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">Graj →</span></div></div></a>
-<a class="card" href="../en/games/guess-oasis.html"><div class="art a3">🌴<span class="big-t">GUESS THE OASIS</span></div><div class="cbody"><h3>Guess the Oasis</h3><p>Zgadnij miejsce ze zdjęcia.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">Graj →</span></div></div></a>
+<a class="card" data-cat="daily puzzle survival" href="../en/games/desert-daily.html"><span class="ribbon">DZIENNE</span><div class="art a1">💧<span class="big-t">DESERT DAILY</span></div><div class="cbody"><h3>Desert Daily</h3><p>60 sekund przetrwania, codziennie nowe.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">Graj →</span></div></div></a>
+<a class="card" data-cat="3d arcade" href="../en/games/stack-dune.html"><span class="ribbon">PRAWDZIWE 3D</span><div class="art a2">🧱<span class="big-t">STACK THE DUNE</span></div><div class="cbody"><h3>Stack the Dune 3D</h3><p>Wieża fizyczna, 12 poziomów.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">Graj →</span></div></div></a>
+<a class="card" data-cat="puzzle trivia" href="../en/games/guess-oasis.html"><div class="art a3">🌴<span class="big-t">GUESS THE OASIS</span></div><div class="cbody"><h3>Guess the Oasis</h3><p>Zgadnij miejsce ze zdjęcia.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">Graj →</span></div></div></a>
 </main>
 </section>
 <div class="ads">Reklama — utrzymuje gry darmowe</div>
@@ -47,7 +72,6 @@
 </div>
 <p class="copy">© 2026 Zokro • zokro.fun</p>
 </footer>
-<script src="../assets/langs.js?v=12"></script>
 <script>
 try{const k='zk_streak',d=localStorage.getItem(k+'_d'),t=new Date().toDateString();let s=parseInt(localStorage.getItem(k)||'0');if(d!==t){const y=new Date(Date.now()-864e5).toDateString();s=(d===y)?s+1:1;localStorage.setItem(k,s);localStorage.setItem(k+'_d',t);}document.getElementById('streak').textContent=s;}catch(e){}
 function tick(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);let s=Math.floor((m-n)/1000);document.getElementById('cd').textContent=String(Math.floor(s/3600)).padStart(2,'0')+':'+String(Math.floor(s%3600/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}

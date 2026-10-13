@@ -54,10 +54,11 @@ function drop(){
   }
   prev={x:nx,z:nz,w:nw,d:nd};lvl++;
   document.getElementById('lvl').textContent=lvl;
-  if(lvl>=12){over=true;document.getElementById('msg').textContent='🏆 You win! Tower of 12! Share it!';return;}
+  if(lvl>=12){over=true;document.getElementById('msg').textContent='🏆 You win! Tower of 12! Share it!';zkPush('Stack the Dune 3D',1700);return;}
   axis=axis==='x'?'z':'x';box=newBox();
 }
-function lose(){over=true;falling.push({m:box,vy:0,vx:axis==='x'?dir*4:0,vz:axis==='z'?dir*4:0});document.getElementById('msg').textContent='💥 Fell! Level '+lvl+' - tap to restart';setTimeout(()=>{addEventListener('pointerdown',()=>location.reload(),{once:true});},500);}
+function lose(){over=true;falling.push({m:box,vy:0,vx:axis==='x'?dir*4:0,vz:axis==='z'?dir*4:0});document.getElementById('msg').textContent='💥 Fell! Level '+lvl+' - tap to restart';zkPush('Stack the Dune 3D',lvl*100);setTimeout(()=>{addEventListener('pointerdown',()=>location.reload(),{once:true});},500);}
+function zkPush(g,s){try{const k='zk_best_'+g;if(s>parseInt(localStorage.getItem(k)||'0'))localStorage.setItem(k,String(s));if(parent&&parent.zkSaveScore)parent.zkSaveScore(g,s);}catch(e){}}
 let t=0;
 (function loop(){
   requestAnimationFrame(loop);t+=0.016;

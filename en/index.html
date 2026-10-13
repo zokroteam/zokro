@@ -3,10 +3,32 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zokro - Free Online Games | Play Instantly</title>
-<meta name="description" content="Zokro: free online games with daily challenges, streaks and 3D arcade. No signup, no download. New games every week in 4 languages.">
+<meta name="description" content="Zokro: free online games with daily challenges, streaks and 3D arcade. No signup, no download. New games every week in 11 languages.">
+<link rel="canonical" href="https://zokro.fun/en/">
+<link rel="alternate" hreflang="x-default" href="https://zokro.fun/en/">
 <link rel="alternate" hreflang="ar" href="https://zokro.fun/ar/">
 <link rel="alternate" hreflang="de" href="https://zokro.fun/de/">
+<link rel="alternate" hreflang="en" href="https://zokro.fun/en/">
+<link rel="alternate" hreflang="es" href="https://zokro.fun/es/">
 <link rel="alternate" hreflang="fr" href="https://zokro.fun/fr/">
+<link rel="alternate" hreflang="pt" href="https://zokro.fun/pt/">
+<link rel="alternate" hreflang="tr" href="https://zokro.fun/tr/">
+<link rel="alternate" hreflang="pl" href="https://zokro.fun/pl/">
+<link rel="alternate" hreflang="cs" href="https://zokro.fun/cs/">
+<link rel="alternate" hreflang="ru" href="https://zokro.fun/ru/">
+<link rel="alternate" hreflang="ja" href="https://zokro.fun/ja/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zokro">
+<meta property="og:title" content="Zokro - Free Online Games | Play Instantly">
+<meta property="og:description" content="Zokro: free online games with daily challenges, streaks and 3D arcade. No signup, no download. New games every week in 11 languages.">
+<meta property="og:url" content="https://zokro.fun/en/">
+<meta property="og:image" content="https://zokro.fun/assets/social-cover.png">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Zokro - Free Online Games | Play Instantly">
+<meta name="twitter:description" content="Zokro: free online games with daily challenges, streaks and 3D arcade. No signup, no download. New games every week in 11 languages.">
+<meta name="twitter:image" content="https://zokro.fun/assets/social-cover.png">
+<meta name="theme-color" content="#0a0714">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
 <link rel="stylesheet" href="../assets/style.css">
 </head>
@@ -15,7 +37,7 @@
 <a class="logo" href="./">ZOK<b>RO</b></a>
 <div class="links"><a href="#games">Games</a><a href="#daily">Daily</a><a href="request.html">Vote</a><a href="about.html">Studio</a></div>
 <div class="search"><input id="q" placeholder="Search games..." oninput="filter()"></div>
-<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=12"></script>
+<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=13"></script>
 <button class="cta" onclick="document.getElementById('games').scrollIntoView()">Play</button>
 </nav>
 
@@ -38,10 +60,10 @@
 <p class="d">Hand-picked originals + licensed hits soon. Click any card to play.</p>
 <div class="chips"><button class="on">All</button><button>🧩 Puzzle</button><button>🎮 3D</button><button>📅 Daily</button></div>
 <main class="grid" id="grid">
-<a class="card" data-n="desert daily survival water" href="games/desert-daily.html" onclick="play('Desert Daily','games/desert-daily.html')"><span class="ribbon">DAILY</span><div class="art a1">💧<span class="big-t">DESERT DAILY</span></div><div class="cbody"><h3>Desert Daily</h3><p>60-second water survival, fresh every midnight.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">Play →</span></div></div></a>
-<a class="card" data-n="stack dune tower 3d" href="games/stack-dune.html" onclick="play('Stack the Dune 3D','games/stack-dune.html')"><span class="ribbon">REAL 3D</span><div class="art a2">🧱<span class="big-t">STACK THE DUNE</span></div><div class="cbody"><h3>Stack the Dune 3D</h3><p>Physics tower stacking, 12 levels.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">Play →</span></div></div></a>
-<a class="card" data-n="guess oasis riddle" href="games/guess-oasis.html" onclick="play('Guess the Oasis','games/guess-oasis.html')"><div class="art a3">🌴<span class="big-t">GUESS THE OASIS</span></div><div class="cbody"><h3>Guess the Oasis</h3><p>Unblur the photo, name the place.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">Play →</span></div></div></a>
-<a class="card" data-n="request vote snake chess" href="request.html"><div class="art a4">➕<span class="big-t">YOU DECIDE</span></div><div class="cbody"><h3>Request a game</h3><p>Snake? Chess? Memory? Your vote builds it.</p><div class="rowline"><span>🗳 Community</span><span class="go">Vote →</span></div></div></a>
+<a class="card" data-cat="daily puzzle survival" data-n="desert daily survival water" href="games/desert-daily.html" onclick="play('Desert Daily','games/desert-daily.html')"><span class="ribbon">DAILY</span><div class="art a1">💧<span class="big-t">DESERT DAILY</span></div><div class="cbody"><h3>Desert Daily</h3><p>60-second water survival, fresh every midnight.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">Play →</span></div></div></a>
+<a class="card" data-cat="3d arcade" data-n="stack dune tower 3d" href="games/stack-dune.html" onclick="play('Stack the Dune 3D','games/stack-dune.html')"><span class="ribbon">REAL 3D</span><div class="art a2">🧱<span class="big-t">STACK THE DUNE</span></div><div class="cbody"><h3>Stack the Dune 3D</h3><p>Physics tower stacking, 12 levels.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">Play →</span></div></div></a>
+<a class="card" data-cat="puzzle trivia" data-n="guess oasis riddle" href="games/guess-oasis.html" onclick="play('Guess the Oasis','games/guess-oasis.html')"><div class="art a3">🌴<span class="big-t">GUESS THE OASIS</span></div><div class="cbody"><h3>Guess the Oasis</h3><p>Unblur the photo, name the place.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">Play →</span></div></div></a>
+<a class="card" data-all="1" data-n="request vote snake chess" href="request.html"><div class="art a4">➕<span class="big-t">YOU DECIDE</span></div><div class="cbody"><h3>Request a game</h3><p>Snake? Chess? Memory? Your vote builds it.</p><div class="rowline"><span>🗳 Community</span><span class="go">Vote →</span></div></div></a>
 </main>
 </section>
 

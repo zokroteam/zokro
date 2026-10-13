@@ -4,7 +4,31 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>زوكرو - ألعاب مجانية | العب فوراً</title>
 <meta name="description" content="زوكرو: ألعاب مجانية بتحديات يومية وسلاسل وأركيد 3D. بدون تسجيل ولا تحميل. ألعاب جديدة كل أسبوع.">
+<link rel="canonical" href="https://zokro.fun/ar/">
+<link rel="alternate" hreflang="x-default" href="https://zokro.fun/en/">
+<link rel="alternate" hreflang="ar" href="https://zokro.fun/ar/">
+<link rel="alternate" hreflang="de" href="https://zokro.fun/de/">
 <link rel="alternate" hreflang="en" href="https://zokro.fun/en/">
+<link rel="alternate" hreflang="es" href="https://zokro.fun/es/">
+<link rel="alternate" hreflang="fr" href="https://zokro.fun/fr/">
+<link rel="alternate" hreflang="pt" href="https://zokro.fun/pt/">
+<link rel="alternate" hreflang="tr" href="https://zokro.fun/tr/">
+<link rel="alternate" hreflang="pl" href="https://zokro.fun/pl/">
+<link rel="alternate" hreflang="cs" href="https://zokro.fun/cs/">
+<link rel="alternate" hreflang="ru" href="https://zokro.fun/ru/">
+<link rel="alternate" hreflang="ja" href="https://zokro.fun/ja/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zokro">
+<meta property="og:title" content="زوكرو - ألعاب مجانية | العب فوراً">
+<meta property="og:description" content="زوكرو: ألعاب مجانية بتحديات يومية وسلاسل وأركيد 3D. بدون تسجيل ولا تحميل. ألعاب جديدة كل أسبوع.">
+<meta property="og:url" content="https://zokro.fun/ar/">
+<meta property="og:image" content="https://zokro.fun/assets/social-cover.png">
+<meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="زوكرو - ألعاب مجانية | العب فوراً">
+<meta name="twitter:description" content="زوكرو: ألعاب مجانية بتحديات يومية وسلاسل وأركيد 3D. بدون تسجيل ولا تحميل. ألعاب جديدة كل أسبوع.">
+<meta name="twitter:image" content="https://zokro.fun/assets/social-cover.png">
+<meta name="theme-color" content="#0a0714">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
 <link rel="stylesheet" href="../assets/style.css">
 </head>
@@ -13,7 +37,7 @@
 <a class="logo" href="./">ZOK<b>RO</b></a>
 <div class="links"><a href="#games">الألعاب</a><a href="../en/request.html">صوّت</a><a href="../en/about.html">الاستوديو</a></div>
 <div class="search"><input id="q" placeholder="دوّر على لعبة..." oninput="filter()"></div>
-<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=12"></script>
+<div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=13"></script>
 <button class="cta" onclick="document.getElementById('games').scrollIntoView()">العب</button>
 </nav>
 
@@ -34,10 +58,11 @@
 <section class="sec" id="games">
 <h2>⚡ التشكيلة</h2>
 <p class="d">مختارات أصلية + ألعاب مرخصة قريباً. دوس على أي كارت والعب.</p>
+<div class="chips"><button class="on">الكل</button><button>🧩 ألغاز</button><button>🎮 3D</button><button>📅 يومي</button></div>
 <main class="grid" id="grid">
-<a class="card" href="games/desert-daily.html"><span class="ribbon">يومي</span><div class="art a1">💧<span class="big-t">تحدي الصحراء</span></div><div class="cbody"><h3>تحدي الصحراء اليومي</h3><p>بقاء 60 ثانية بالمية، جديد كل نص ليل.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">← العب</span></div></div></a>
-<a class="card" href="../en/games/stack-dune.html"><span class="ribbon">3D حقيقي</span><div class="art a2">🧱<span class="big-t">رص الكثبان</span></div><div class="cbody"><h3>رص الكثبان 3D</h3><p>برج فيزيائي، 12 مرحلة.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">← العب</span></div></div></a>
-<a class="card" href="../en/games/guess-oasis.html"><div class="art a3">🌴<span class="big-t">خمن الواحة</span></div><div class="cbody"><h3>خمن الواحة</h3><p>امسح البلور وسمّي المكان.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">← العب</span></div></div></a>
+<a class="card" data-cat="daily puzzle survival" href="games/desert-daily.html"><span class="ribbon">يومي</span><div class="art a1">💧<span class="big-t">تحدي الصحراء</span></div><div class="cbody"><h3>تحدي الصحراء اليومي</h3><p>بقاء 60 ثانية بالمية، جديد كل نص ليل.</p><div class="rowline"><span class="stars">★★★★★ 4.8</span><span class="go">← العب</span></div></div></a>
+<a class="card" data-cat="3d arcade" href="../en/games/stack-dune.html"><span class="ribbon">3D حقيقي</span><div class="art a2">🧱<span class="big-t">رص الكثبان</span></div><div class="cbody"><h3>رص الكثبان 3D</h3><p>برج فيزيائي، 12 مرحلة.</p><div class="rowline"><span class="stars">★★★★★ 4.7</span><span class="go">← العب</span></div></div></a>
+<a class="card" data-cat="puzzle trivia" href="../en/games/guess-oasis.html"><div class="art a3">🌴<span class="big-t">خمن الواحة</span></div><div class="cbody"><h3>خمن الواحة</h3><p>امسح البلور وسمّي المكان.</p><div class="rowline"><span class="stars">★★★★★ 4.9</span><span class="go">← العب</span></div></div></a>
 </main>
 </section>
 

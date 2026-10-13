@@ -50,6 +50,30 @@ document.addEventListener('click',function(e){
     if(!menus[i].parentElement.contains(e.target))menus[i].classList.remove('open');
   }
 });
+// Category chips: language-independent (button order: All, Puzzle, 3D, Daily)
+window.zkCat=0;
+function zkApplyCat(){
+  var q='';try{var qi=document.getElementById('q');q=qi?qi.value.toLowerCase():'';}catch(e){}
+  var cats=['all','puzzle','3d','daily'];var want=cats[window.zkCat||0]||'all';
+  var cards=document.querySelectorAll('#grid .card');if(!cards.length)return;
+  for(var i=0;i<cards.length;i++){var c=cards[i];
+    var dc=(c.getAttribute('data-cat')||'').toLowerCase();
+    var okC=(want==='all'||c.hasAttribute('data-all')||dc.indexOf(want)>=0);
+    var okQ=(!q||((c.getAttribute('data-n')||'')+' '+c.textContent).toLowerCase().indexOf(q)>=0);
+    c.style.display=(okC&&okQ)?'':'none';}
+}
+document.addEventListener('click',function(e){
+  var t=e.target;var b=(t&&t.closest)?t.closest('.chips button'):null;
+  if(!b||!b.parentElement)return;
+  var btns=b.parentElement.querySelectorAll('button');
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove('on');
+  b.classList.add('on');
+  window.zkCat=Array.prototype.indexOf.call(btns,b);
+  zkApplyCat();
+});
+document.addEventListener('input',function(e){
+  if(e.target&&e.target.id==='q')setTimeout(zkApplyCat,0);
+});
 // World-class footer everywhere from one place (runs after page loads)
 function buildFooter(){
   var f=document.querySelector('footer');

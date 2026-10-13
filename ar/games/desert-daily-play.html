@@ -21,7 +21,8 @@ function update(){document.getElementById('waterBar').style.width=Math.max(0,wat
 function give(){if(over)return;if(score>=5){water=Math.min(100,water+8);score-=5;}update();}
 function shade(){if(over)return;if(water>=10){water-=10;heat-=4;score+=5;}update();}
 function rest(){if(over)return;heat+=2;score+=15;update();}
-function end(){over=true;clearInterval(timer);document.getElementById('result').textContent=time<=0&&water>0?`عشت! نقاطك ${Math.round(score+water)} 🟩🟩🟩🟩🟩`:`نشفت! نقاطك ${Math.round(score)} 🟥🟥⬜⬜⬜`;update();}
+function end(){over=true;clearInterval(timer);const win=time<=0&&water>0;const final=Math.round(score+(win?Math.max(0,water):0));document.getElementById('result').textContent=win?`عشت! نقاطك ${final} 🟩🟩🟩🟩🟩`:`نشفت! نقاطك ${final} 🟥🟥⬜⬜⬜`;update();zkPush('Desert Daily',final);}
+function zkPush(g,s){try{const k='zk_best_'+g;if(s>parseInt(localStorage.getItem(k)||'0'))localStorage.setItem(k,String(s));if(parent&&parent.zkSaveScore)parent.zkSaveScore(g,s);}catch(e){}}
 function share(){const t=`🏜️ تحدي الصحراء #${dayNum} - نقاطي ${Math.round(score+Math.max(0,water))} - العب مجانا https://zokro.fun/ar/`;navigator.clipboard.writeText(t);alert('اتنسخ!');}
 update();
 </script>

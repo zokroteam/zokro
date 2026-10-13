@@ -1,21 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Request a Game - Zokro</title>
-<meta name="description" content="Vote for the next game on Zokro. Tell us what to build!">
-<link rel="stylesheet" href="../assets/style.css"></head>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request a Game - Vote What We Build Next | Zokro</title>
+<meta name="description" content="Vote for the next game on Zokro. Snake, chess, memory, 2048 and more — players decide what our studio builds next!">
+<link rel="canonical" href="https://zokro.fun/en/request.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zokro">
+<meta property="og:title" content="Request a Game - Vote What We Build Next | Zokro">
+<meta property="og:description" content="Vote for the next game on Zokro. Players decide what our studio builds next!">
+<meta property="og:url" content="https://zokro.fun/en/request.html">
+<meta property="og:image" content="https://zokro.fun/assets/social-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0714">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.wrap{max-width:640px;margin:auto;padding:24px 20px;text-align:center}
+.vote-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+.vote-card{background:#151d33;border:1px solid #263154;border-radius:16px;padding:18px 12px;cursor:pointer;transition:.15s;color:#fff;font-size:16px;font-weight:700}
+.vote-card:hover{border-color:#f5c451;transform:translateY(-3px)}
+.vote-card .big{font-size:38px;display:block;margin-bottom:6px}
+.vote-card .n{display:block;margin-top:8px;font-size:13px;color:#f5c451}
+.bar{height:8px;background:#0d1531;border-radius:6px;margin-top:8px;overflow:hidden}
+.bar>div{height:100%;background:linear-gradient(90deg,#f5c451,#ff8a3d);width:0%}
+#msg{color:#f5c451;font-weight:700;min-height:22px}
+.suggest{margin-top:18px;background:#151d33;border:1px solid #263154;border-radius:16px;padding:18px}
+.suggest input{width:100%;padding:12px;border-radius:12px;border:1px solid #263154;background:#0d1531;color:#fff;box-sizing:border-box;font-size:14px}
+</style>
+</head>
 <body>
-<nav class="nav"><a class="logo" href="./">ZOK<span>RO</span></a></nav>
-<div style="max-width:600px;margin:auto;padding:20px;text-align:center">
-<h1>🗳 Request a game</h1>
-<p>We build what players vote for. Pick one or suggest yours on TikTok <b>@zokro</b>:</p>
-<p><button onclick="vote(this)">🐍 Snake</button> <button onclick="vote(this)">❌⭕ Tic-Tac-Toe</button> <button onclick="vote(this)">🧠 Memory</button> <button onclick="vote(this)">🔢 2048 Merge</button> <button onclick="vote(this)">🏓 Ping Pong</button></p>
+<nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=13"></script></nav>
+<div class="wrap">
+<a href="./">← Back to games</a>
+<h1>🗳 You run the studio</h1>
+<p style="color:#b8aed6">We build what players vote for. Tap to vote — results update live:</p>
+<div class="vote-grid" id="vg"></div>
 <p id="msg"></p>
-<p><a href="./">← Back to games</a></p>
+<div class="suggest">
+<h3 style="margin:0 0 8px">💡 Another idea?</h3>
+<p style="color:#b8aed6;font-size:13px;margin:0 0 10px">Tell us on TikTok <b>@zokrofun</b> or Instagram <b>@zokrofun</b> — we read everything.</p>
+<input id="sg" maxlength="40" placeholder="e.g. Chess ♟️">
+<p><button class="vote-card" style="width:100%" onclick="suggest()">Send idea</button></p>
 </div>
+</div>
+<footer><p class="copy">© 2026 Zokro</p></footer>
 <script>
-const v=JSON.parse(localStorage.getItem('zv')||'{}');
-function vote(b){v[b.textContent]=(v[b.textContent]||0)+1;localStorage.setItem('zv',JSON.stringify(v));document.getElementById('msg').textContent='✅ Voted '+b.textContent+'! Total: '+v[b.textContent];}
+var GAMES=[['🐍','Snake'],['❌⭕','Tic-Tac-Toe'],['🧠','Memory'],['🔢','2048 Merge'],['🏓','Ping Pong'],['♟️','Chess']];
+function votes(){try{return JSON.parse(localStorage.getItem('zv')||'{}');}catch(e){return {};}}
+function render(){
+  var v=votes(),tot=0,i;
+  for(i=0;i<GAMES.length;i++)tot+=(v[GAMES[i][1]]||0);
+  var h='';
+  for(i=0;i<GAMES.length;i++){
+    var n=v[GAMES[i][1]]||0,pct=tot?Math.round(n/tot*100):0;
+    h+='<button class="vote-card" onclick="vote(\''+GAMES[i][1]+'\')"><span class="big">'+GAMES[i][0]+'</span>'+GAMES[i][1]+'<span class="n">'+n+' votes • '+pct+'%</span><span class="bar"><span style="display:block"><span style="display:block;height:8px;border-radius:6px;background:linear-gradient(90deg,#f5c451,#ff8a3d);width:'+pct+'%"></span></span></span></button>';
+  }
+  document.getElementById('vg').innerHTML=h;
+}
+function vote(g){var v=votes();v[g]=(v[g]||0)+1;try{localStorage.setItem('zv',JSON.stringify(v));}catch(e){}render();document.getElementById('msg').textContent='✅ Voted '+g+'!';}
+function suggest(){var s=document.getElementById('sg').value.trim();if(!s)return;vote(s.slice(0,40));document.getElementById('sg').value='';}
+render();
 </script>
 </body>
 </html>
