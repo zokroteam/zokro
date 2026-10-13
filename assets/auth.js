@@ -37,20 +37,36 @@ var ZOKRO_CFG = { url: 'https://gtzjrhqtoafjmdjobptv.supabase.co', anon: 'sb_pub
       });
     }
     window.zkOpenAuth=openAuth;
+    var PROVIDERS=[
+      {id:'google',icon:'🔵',label:'Google',cls:'pv-g'},
+      {id:'facebook',icon:'📘',label:'Facebook',cls:'pv-f'},
+      {id:'discord',icon:'🎮',label:'Discord',cls:'pv-d'},
+      {id:'apple',icon:'🍎',label:'Apple',cls:'pv-a'}
+    ];
     function openAuth(){
       if(document.getElementById('zk-modal')){document.getElementById('zk-modal').style.display='flex';return;}
       var d=document.createElement('div');d.id='zk-modal';
-      d.innerHTML='<div class="zk-box"><h3>🔥 Join Zokro</h3>'
-        +'<button id="zk-g">🔵 Continue with Google</button>'
+      var pv=PROVIDERS.map(function(p){return '<button class="pv '+p.cls+'" data-pv="'+p.id+'"><span>'+p.icon+'</span>'+p.label+'</button>';}).join('');
+      d.innerHTML='<div class="zk-box"><div class="zk-hero">🔥</div><h3>Join Zokro</h3><p class="zk-sub">One account for scores, streaks & leaderboard.</p>'
+        +'<div class="zk-pv">'+pv+'</div>'
         +'<div class="zk-tabs"><button id="zk-t-in" class="on">Log In</button><button id="zk-t-up">Sign Up</button></div>'
         +'<div id="zk-up-fields" style="display:none"><input id="zk-u" placeholder="Username (for signup)"></div>'
         +'<input id="zk-e" type="email" placeholder="Email">'
         +'<input id="zk-p" type="password" placeholder="Password (6+ chars)">'
         +'<button id="zk-go">Log In</button>'
-        +'<div class="zk-or">— or get a magic link —</div>'
+        +'<div class="zk-or">— or —</div>'
         +'<button id="zk-m">✉️ Email me a login link</button>'
         +'<p id="zk-msg"></p><button id="zk-x">Close</button></div>';
       document.body.appendChild(d);
+      var btns=d.querySelectorAll('[data-pv]');
+      for(var i=0;i<btns.length;i++)(function(b){
+        b.onclick=function(){
+          msg('⏳ Opening '+b.getAttribute('data-pv')+'...');
+          sb.auth.signInWithOAuth({provider:b.getAttribute('data-pv'),options:{redirectTo:location.href}}).then(function(r){
+            if(r.error)msg('⚠️ '+b.textContent.trim()+' is not enabled yet — try Email below.');
+          });
+        };
+      })(btns[i]);
       var mode='in';
       function setMode(m){
         mode=m;
@@ -62,9 +78,6 @@ var ZOKRO_CFG = { url: 'https://gtzjrhqtoafjmdjobptv.supabase.co', anon: 'sb_pub
       document.getElementById('zk-t-in').onclick=function(){setMode('in');};
       document.getElementById('zk-t-up').onclick=function(){setMode('up');};
       document.getElementById('zk-x').onclick=function(){d.style.display='none';};
-      document.getElementById('zk-g').onclick=function(){
-        sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.href}});
-      };
       function msg(t){document.getElementById('zk-msg').textContent=t;}
       document.getElementById('zk-go').onclick=function(){
         var em=document.getElementById('zk-e').value.trim();

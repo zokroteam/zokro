@@ -96,7 +96,18 @@ footer{background:linear-gradient(180deg,#0a0716,#05030d)}
 .top_:hover{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000;border-color:transparent}
 /* Auth modal */
 #zk-modal{position:fixed;inset:0;background:#000000aa;display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
-.zk-box{background:#151d33;border:1px solid var(--line);border-radius:20px;padding:28px;max-width:360px;width:100%;text-align:center}
+.zk-box{background:linear-gradient(180deg,#1b1440,#100c28);border:1px solid var(--line);border-radius:24px;padding:30px 26px;max-width:380px;width:100%;text-align:center;box-shadow:0 30px 80px #000000cc;animation:zkpop .25s}
+@keyframes zkpop{from{transform:scale(.92) translateY(10px);opacity:0}}
+.zk-hero{font-size:52px;animation:flick 2s infinite}
+.zk-sub{color:var(--mut);font-size:14px;margin:0 0 14px}
+.zk-box h3{margin:0;font-size:24px;letter-spacing:1px}
+.zk-pv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}
+.zk-box button.pv{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:11px 8px;font-size:14px;border-radius:12px;border:1px solid var(--line);background:#ffffff10;color:#fff}
+.zk-box button.pv:hover{transform:translateY(-2px)}
+.pv-g:hover{background:#fff!important;color:#222!important}
+.pv-f:hover{background:#1877F2!important;border-color:#1877F2!important}
+.pv-d:hover{background:#5865F2!important;border-color:#5865F2!important}
+.pv-a:hover{background:#fff!important;color:#000!important}
 .zk-box h3{margin:0 0 6px}.zk-box p{color:var(--mut);font-size:14px}
 .zk-box button{display:block;width:100%;margin:8px 0;padding:12px;border-radius:12px;border:0;font-size:15px;font-weight:700;cursor:pointer}
 #zk-g{background:#fff;color:#222}#zk-m{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000}
