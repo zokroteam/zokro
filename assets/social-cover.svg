@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 640">
+  <defs>
+    <radialGradient id="bg" cx=".3" cy=".2" r="1.1">
+      <stop offset="0" stop-color="#2a1a4e"/>
+      <stop offset=".6" stop-color="#120b26"/>
+      <stop offset="1" stop-color="#0a0714"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff6d8"/>
+      <stop offset=".45" stop-color="#f5c451"/>
+      <stop offset="1" stop-color="#e86a1c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1920" height="640" fill="url(#bg)"/>
+  <circle cx="320" cy="320" r="220" fill="none" stroke="url(#gold)" stroke-width="14" opacity=".95"/>
+  <path d="M210 230 H430 L320 410 H430" fill="none" stroke="url(#gold)" stroke-width="58" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="620" y="300" font-family="'Fredoka',Arial,sans-serif" font-size="150" font-weight="700" letter-spacing="20" fill="#ffffff">ZOKRO</text>
+  <text x="626" y="380" font-family="Arial,sans-serif" font-size="46" letter-spacing="6" fill="#f5c451">PLAY FREE GAMES INSTANTLY</text>
+  <text x="626" y="450" font-family="Arial,sans-serif" font-size="38" fill="#b8aed6">11 languages • Daily challenges • No signup  •  zokro.fun</text>
+  <text x="1620" y="560" font-size="90">🎮💧🧱🌴🔥</text>
+</svg>
