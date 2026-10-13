@@ -99,6 +99,8 @@ footer{background:linear-gradient(180deg,#0a0716,#05030d)}
 .zk-box{background:linear-gradient(180deg,#1b1440,#100c28);border:1px solid var(--line);border-radius:24px;padding:30px 26px;max-width:380px;width:100%;text-align:center;box-shadow:0 30px 80px #000000cc;animation:zkpop .25s}
 @keyframes zkpop{from{transform:scale(.92) translateY(10px);opacity:0}}
 .zk-hero{font-size:52px;animation:flick 2s infinite}
+.zk-logo{height:58px;margin-bottom:8px;filter:drop-shadow(0 6px 18px #f5c45144)}
+.zk-logo{height:56px;margin-bottom:6px;filter:drop-shadow(0 6px 18px #f5c45144)}
 .zk-sub{color:var(--mut);font-size:14px;margin:0 0 14px}
 .zk-box h3{margin:0;font-size:24px;letter-spacing:1px}
 .zk-pv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
