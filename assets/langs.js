@@ -27,7 +27,7 @@
   holder.innerHTML=h;
   // Accounts engine on every page
   try{
-    var as=document.createElement('script');as.src=base+'assets/auth.js?v=2';document.head.appendChild(as);
+    var as=document.createElement('script');as.src=base+'assets/auth.js?v=3';document.head.appendChild(as);
   }catch(e){}
   // Brand: logo + favicon everywhere (one place, all pages)
   try{

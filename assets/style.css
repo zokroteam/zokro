@@ -110,6 +110,7 @@ footer{background:linear-gradient(180deg,#0a0716,#05030d)}
 .zk-box .zk-pw #zk-p{padding-inline-end:64px}
 .zk-box button.zk-show{position:absolute;top:50%;transform:translateY(-50%);inset-inline-end:10px;display:inline-block;width:auto;margin:0;padding:6px 8px;background:transparent;border:0;color:var(--gold);font-size:12px;font-weight:800;cursor:pointer;box-shadow:none}
 #zk-go:disabled{opacity:.65;cursor:wait}
+.zk-avinit{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#f5c451,#ff8a3d);color:#1a1000;font-size:12px;font-weight:900;margin-inline-end:6px;vertical-align:middle;flex-shrink:0}
 .zk-box button.pv{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:11px 8px;font-size:14px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#222}
 .zk-box button.pv:hover{transform:translateY(-2px);box-shadow:0 8px 20px #00000066}
 .zk-box h3{margin:0 0 6px}.zk-box p{color:var(--mut);font-size:14px}

@@ -7,7 +7,7 @@
 <link rel="canonical" href="https://zokro.fun/en/profile.html">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0a0714">
-<link rel="stylesheet" href="../assets/style.css?v=2">
+<link rel="stylesheet" href="../assets/style.css?v=3">
 <style>
 .wrap{max-width:680px;margin:auto;padding:20px}
 .pcard{background:#151d33;border:1px solid #263154;border-radius:22px;overflow:hidden;text-align:center;box-shadow:0 24px 60px #00000066}
@@ -49,7 +49,7 @@ tbody tr:hover{background:#f5c4510d}
 </style>
 </head>
 <body>
-<nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=14"></script></nav>
+<nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=15"></script></nav>
 <div class="wrap">
 <a href="./" class="backpill">← Home</a>
 <div class="pcard" id="pcard"><p style="padding:30px">⏳ Loading your profile...</p></div>
@@ -59,7 +59,7 @@ tbody tr:hover{background:#f5c4510d}
 <p><button class="btn-ghost" onclick="logout()">Log out</button></p>
 </div>
 <footer><p class="copy">© 2026 Zokro</p></footer>
-<script src="../assets/auth.js?v=2"></script>
+<script src="../assets/auth.js?v=3"></script>
 <script>
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function avHTML(av,name){
@@ -113,7 +113,7 @@ function loadScores(sb,u){
     var tb=document.getElementById('scoresBody');
     if(r.error){tb.innerHTML='<tr><td colspan="3">⚠️ '+esc(r.error.message)+'</td></tr>';return;}
     var rows=r.data||[];
-    if(!rows.length){tb.innerHTML='<tr><td colspan="3" style="text-align:center;padding:20px">No scores yet — <a href="./" style="color:#f5c451;font-weight:800">go play! 🎮</a></td></tr>';return;}
+    if(!rows.length){tb.innerHTML='<tr><td colspan="3" style="text-align:center;padding:20px">No scores yet — <a href="./" style="color:#f5c451;font-weight:800">go play →</a></td></tr>';return;}
     var games={},best=0;
     rows.forEach(function(s){games[s.game]=1;if(s.score>best)best=s.score;});
     document.getElementById('st-games').textContent=Object.keys(games).length;

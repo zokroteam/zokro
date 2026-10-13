@@ -22,13 +22,27 @@ var ZOKRO_CFG = { url: 'https://gtzjrhqtoafjmdjobptv.supabase.co', anon: 'sb_pub
       var m=(u&&u.user_metadata)||{};
       return m.avatar_url||m.picture||'🎮';
     }
+    function zkAvImg(av,nm){
+      if(av&&/^data:image|^https?:\/\//i.test(av))return '<img src="'+escHtml(av)+'" alt="" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-inline-end:6px">';
+      if(av&&av!=='🎮')return escHtml(av)+' ';
+      var ch=(((nm||'P').trim().charAt(0))||'P').toUpperCase();
+      return '<span class="zk-avinit">'+escHtml(ch)+'</span>';
+    }
     function setUser(u){
       window.zkAuth.user=u;
       var lang=(document.documentElement.lang||'en').toLowerCase();
       var loginText={ar:'دخول',de:'Log In',fr:'Se connecter',es:'Entrar',pt:'Entrar',tr:'Giriş Yap',pl:'Zaloguj',cs:'Přihlásit se',ru:'Войти',ja:'ログイン',en:'Log In'}[lang]||'Log In';
       // Gold nav button (Play) becomes Login - playing stays free without account
       document.querySelectorAll('button.login,nav button.cta,[data-auth]').forEach(function(el){
-        if(u){el.innerHTML='👤 '+escHtml(metaName(u).split(' ')[0]);el.onclick=function(){location.href=basePath()+'en/profile.html';};}
+        if(u){
+          var nm=metaName(u).split(' ')[0];
+          el.innerHTML=zkAvImg(metaAvatar(u),nm)+escHtml(nm);
+          el.onclick=function(){location.href=basePath()+'en/profile.html';};
+          sb.from('profiles').select('avatar').eq('id',u.id).single().then(function(r){
+            var av=r.data&&r.data.avatar;
+            if(av&&av!==metaAvatar(u))el.innerHTML=zkAvImg(av,nm)+escHtml(nm);
+          });
+        }
         else{el.textContent=el.getAttribute('data-login-text')||loginText;el.onclick=openAuth;}
       });
       if(u)ensureProfile(u);
