@@ -14,6 +14,12 @@ create table if not exists scores(
 );
 alter table profiles enable row level security;
 alter table scores enable row level security;
+-- Table access for app roles (required: SQL-created tables have no grants by default)
+grant select on profiles to anon, authenticated;
+grant insert, update, delete on profiles to authenticated;
+grant select on scores to anon, authenticated;
+grant insert on scores to authenticated;
+grant usage, select on all sequences in schema public to anon, authenticated;
 drop policy if exists "read all" on profiles; create policy "read all" on profiles for select using (true);
 drop policy if exists "own write" on profiles; create policy "own write" on profiles for all using (auth.uid()=id) with check (auth.uid()=id);
 drop policy if exists "read all" on scores; create policy "read all" on scores for select using (true);
