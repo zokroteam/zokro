@@ -7,7 +7,7 @@
 <link rel="canonical" href="https://zokro.fun/en/profile.html">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0a0714">
-<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/style.css?v=2">
 <style>
 .wrap{max-width:640px;margin:auto;padding:20px}
 .pcard{background:#151d33;border:1px solid #263154;border-radius:18px;padding:26px;text-align:center}
@@ -18,13 +18,14 @@
 .pick button.on{border-color:#f5c451;box-shadow:0 0 0 2px #f5c45155}
 #pname{font-size:16px;padding:10px;border-radius:12px;border:1px solid #263154;background:#0d1531;color:#fff;width:70%;max-width:300px}
 .btn-gold{background:linear-gradient(90deg,#f5c451,#ff8a3d);color:#1a1000;font-weight:800;border:0;border-radius:12px;padding:10px 18px;cursor:pointer;font-size:14px}
+.btn-gold:disabled,.btn-ghost:disabled{opacity:.6;cursor:wait}
 .btn-ghost{background:transparent;color:#b8aed6;border:1px solid #263154;border-radius:12px;padding:10px 18px;cursor:pointer;font-size:14px}
 table{width:100%;margin-top:14px;border-collapse:collapse;background:#151d33;border:1px solid #263154;border-radius:14px;overflow:hidden}
 td,th{padding:9px;border-bottom:1px solid #263154;font-size:14px;text-align:left}
 .streakline{margin:6px 0 0;color:#f5c451;font-weight:800}
 .uprow{margin-top:12px}
 .uprow input[type=file]{display:none}
-#amsg{font-size:13px;color:#f5c451;min-height:18px}
+#pmsg{font-size:13px;color:#f5c451;min-height:20px;font-weight:700}
 </style>
 </head>
 <body>
@@ -49,31 +50,43 @@ function avHTML(av){
 function logout(){if(window.zkAuth&&window.zkAuth.ready)window.zkAuth.client.auth.signOut().then(function(){location.href='./';});else location.href='./';}
 function localAv(){try{return localStorage.getItem('zk_avatar')||'';}catch(e){return '';}}
 function localStreak(){try{return parseInt(localStorage.getItem('zk_streak')||'0');}catch(e){return 0;}}
+function pmsg(t){var m=document.getElementById('pmsg');if(m)m.textContent=t||'';}
 var iv=setInterval(function(){
   if(!window.zkAuth||!window.zkAuth.ready)return;
   clearInterval(iv);
-  var u=window.zkAuth.user;
-  if(!u){document.getElementById('pcard').innerHTML='<p style="font-size:20px">🔒</p><p><a href="./">Log in from the homepage</a> to see your profile.<br>Playing stays free — no account needed.</p>';return;}
   var sb=window.zkAuth.client;
+  // Refresh the session first so saves never fail on an expired token
+  sb.auth.getSession().then(function(sr){
+    var u=(sr.data&&sr.data.session&&sr.data.session.user)||window.zkAuth.user;
+    if(!u){document.getElementById('pcard').innerHTML='<p style="font-size:20px">🔒</p><p><a href="./">Log in from the homepage</a> to see your profile.<br>Playing stays free — no account needed.</p>';return;}
+    window.zkAuth.user=u;
+    loadProfile(sb,u);
+    loadScores(sb,u);
+  });
+},500);
+function loadProfile(sb,u){
   sb.from('profiles').select('*').eq('id',u.id).single().then(function(r){
+    if(r.error&&r.error.code!=='PGRST116'){document.getElementById('pcard').innerHTML='<p>⚠️ Could not load profile: '+esc(r.error.message)+'</p><p><button class="btn-ghost" onclick="location.reload()">Retry</button></p>';return;}
     var p=r.data||{username:'Player',avatar:'🎮'};
-    // If a photo was picked while logged out, push it to the account now
     var la=localAv();
-    if(la&&p.avatar!==la){p.avatar=la;sb.from('profiles').update({avatar:la}).eq('id',u.id).then(function(){});}
+    if(la&&p.avatar!==la){p.avatar=la;sb.from('profiles').update({avatar:la}).eq('id',u.id).then(function(){/*saved*/});}
     var av=p.avatar||la||'🎮';
     var name=p.username||'Player';
-    var since='';try{since=u.created_at?new Date(u.created_at).toLocaleDateString():'—';}catch(e){since='—';}
+    var since='—';try{since=u.created_at?new Date(u.created_at).toLocaleDateString():'—';}catch(e){}
     var emos=['🎮','🔥','🌴','💧','🧱','🐪','⚡','👑'];
     document.getElementById('pcard').innerHTML=
       avHTML(av)+'<h2 style="margin:8px 0 2px">'+esc(name)+'</h2>'
       +'<p style="color:#b8aed6;margin:0 0 4px">'+esc(u.email||'')+' • joined '+esc(since)+'</p>'
       +'<p class="streakline">🔥 '+localStreak()+' day streak</p>'
-      +'<div style="margin-top:12px"><input id="pname" maxlength="20" value="'+esc(name)+'"> <button class="btn-gold" onclick="saveName()">Save name</button></div>'
+      +'<div style="margin-top:12px"><input id="pname" maxlength="20" value="'+esc(name)+'"> <button class="btn-gold" id="saveBtn" onclick="saveName()">Save name</button></div>'
       +'<div class="pick">'+emos.map(function(e){return '<button class="'+(av===e?'on':'')+'" onclick="setAv(\''+e+'\')">'+e+'</button>';}).join('')+'</div>'
       +'<div class="uprow"><label class="btn-ghost" style="display:inline-block;cursor:pointer">📷 Upload photo<input type="file" accept="image/*" onchange="upPhoto(this)"></label></div>'
-      +'<p id="amsg"></p>';
+      +'<p id="pmsg"></p>';
   });
+}
+function loadScores(sb,u){
   sb.from('scores').select('game,score,created_at').eq('user_id',u.id).order('score',{ascending:false}).limit(10).then(function(r){
+    if(r.error){document.getElementById('scores').innerHTML+='<tr><td colspan="3">⚠️ '+esc(r.error.message)+'</td></tr>';return;}
     var rows=r.data||[];
     if(!rows.length){document.getElementById('scores').innerHTML+='<tr><td colspan="3">No scores yet — go play! 🎮</td></tr>';return;}
     rows.forEach(function(s){
@@ -81,20 +94,32 @@ var iv=setInterval(function(){
       document.getElementById('scores').innerHTML+='<tr><td>'+esc(s.game)+'</td><td>'+parseInt(s.score||0)+'</td><td>'+esc(d)+'</td></tr>';
     });
   });
-},500);
+}
 function saveName(){
-  var v=document.getElementById('pname').value.trim().slice(0,20)||'Player';
-  window.zkAuth.client.from('profiles').update({username:v}).eq('id',window.zkAuth.user.id).then(function(){location.reload();});
+  var b=document.getElementById('saveBtn');
+  var v=document.getElementById('pname').value.trim().slice(0,20);
+  if(!v){pmsg('⚠️ Name cannot be empty');return;}
+  b.disabled=true;pmsg('⏳ Saving...');
+  window.zkAuth.client.from('profiles').update({username:v}).eq('id',window.zkAuth.user.id).then(function(r){
+    b.disabled=false;
+    if(r.error){pmsg('❌ '+r.error.message);return;}
+    pmsg('✅ Name saved!');
+    setTimeout(function(){location.reload();},600);
+  });
 }
 function setAv(e){
+  pmsg('⏳ Saving avatar...');
   try{localStorage.removeItem('zk_avatar');}catch(x){}
-  window.zkAuth.client.from('profiles').update({avatar:e}).eq('id',window.zkAuth.user.id).then(function(){location.reload();});
+  window.zkAuth.client.from('profiles').update({avatar:e}).eq('id',window.zkAuth.user.id).then(function(r){
+    if(r.error){pmsg('❌ '+r.error.message);return;}
+    pmsg('✅ Avatar saved!');
+    setTimeout(function(){location.reload();},600);
+  });
 }
 function upPhoto(inp){
   var f=inp.files&&inp.files[0];if(!f)return;
-  var msg=function(t){var m=document.getElementById('amsg');if(m)m.textContent=t;};
-  if(f.size>5*1024*1024){msg('⚠️ Image too big (max 5MB)');return;}
-  msg('⏳ Uploading...');
+  if(f.size>5*1024*1024){pmsg('⚠️ Image too big (max 5MB)');inp.value='';return;}
+  pmsg('⏳ Uploading photo...');
   var rd=new FileReader();
   rd.onload=function(){
     var img=new Image();
@@ -105,10 +130,14 @@ function upPhoto(inp){
         ctx.drawImage(img,(img.width-a)/2,(img.height-a)/2,a,a,0,0,s,s);
         var url=c.toDataURL('image/jpeg',0.82);
         try{localStorage.setItem('zk_avatar',url);}catch(e){}
-        window.zkAuth.client.from('profiles').update({avatar:url}).eq('id',window.zkAuth.user.id).then(function(){location.reload();});
-      }catch(e){msg('❌ Could not read that image');}
+        window.zkAuth.client.from('profiles').update({avatar:url}).eq('id',window.zkAuth.user.id).then(function(r){
+          if(r.error){pmsg('❌ '+r.error.message);return;}
+          pmsg('✅ Photo saved!');
+          setTimeout(function(){location.reload();},600);
+        });
+      }catch(e){pmsg('❌ Could not read that image');}
     };
-    img.onerror=function(){msg('❌ Could not read that image');};
+    img.onerror=function(){pmsg('❌ Could not read that image');};
     img.src=rd.result;
   };
   rd.readAsDataURL(f);

@@ -106,9 +106,9 @@ footer{background:linear-gradient(180deg,#0a0716,#05030d)}
 .zk-sub{color:var(--mut);font-size:14px;margin:0 0 14px}
 .zk-box h3{margin:0;font-size:24px;letter-spacing:1px}
 .zk-pv{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:4px}
-.zk-pw{position:relative}
-.zk-pw input{padding-inline-end:64px}
-.zk-show{position:absolute;top:50%;transform:translateY(-50%);inset-inline-end:8px;background:none!important;border:0!important;color:var(--gold)!important;font-size:12px;font-weight:800;cursor:pointer;width:auto!important;margin:0!important;padding:6px!important}
+.zk-box .zk-pw{position:relative;margin:8px 0}
+.zk-box .zk-pw #zk-p{padding-inline-end:64px}
+.zk-box button.zk-show{position:absolute;top:50%;transform:translateY(-50%);inset-inline-end:10px;display:inline-block;width:auto;margin:0;padding:6px 8px;background:transparent;border:0;color:var(--gold);font-size:12px;font-weight:800;cursor:pointer;box-shadow:none}
 #zk-go:disabled{opacity:.65;cursor:wait}
 .zk-box button.pv{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:11px 8px;font-size:14px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#222}
 .zk-box button.pv:hover{transform:translateY(-2px);box-shadow:0 8px 20px #00000066}
