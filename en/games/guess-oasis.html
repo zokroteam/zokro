@@ -13,8 +13,10 @@
 <meta property="og:image" content="https://zokro.fun/assets/social-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0a0714">
-<link rel="stylesheet" href="../../assets/style.css?v=3">
+<link rel="stylesheet" href="../../assets/style.css?v=4">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Guess the Oasis","url":"https://zokro.fun/en/games/guess-oasis.html","genre":["Puzzle","Trivia"],"gamePlatform":"Web browser","applicationCategory":"Game","offers":{"@type":"Offer","price":"0"},"inLanguage":"en"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://zokro.fun/en/"},{"@type":"ListItem","position":2,"name":"Guess the Oasis","item":"https://zokro.fun/en/games/guess-oasis.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Guess the Oasis free?","acceptedAnswer":{"@type":"Answer","text":"Yes, free forever, no signup. A new riddle appears every day."}}]}</script>
 <style>.wrap{max-width:900px;margin:auto;padding:16px}.play{background:#151d33;border:1px solid #263154;border-radius:16px;padding:26px;text-align:center}.play button{font-size:16px;padding:10px 18px;margin:5px;border-radius:10px;border:0;background:#7c3aed;color:#fff;cursor:pointer}article{background:#151d33;border:1px solid #263154;border-radius:14px;padding:18px;margin-top:14px}</style>
 </head>
 <body>
@@ -22,17 +24,13 @@
 <div class="wrap">
 <a href="../">← All games</a>
 <h1>🌴 Guess the Oasis</h1>
-<p>⭐ 4.9 • 🧩 Puzzle • 📅 Daily riddle</p>
+<p>⭐ 4.9 • 🧩 Puzzle • 📅 Daily riddle #<span id="dayNum"></span></p>
 <div class="play">
 <p>Daily riddle. Unblur with hints, guess with fewest hints.</p>
 <h2 id="emoji" style="font-size:64px;filter:blur(8px)">🏜️🌴💧🐪</h2>
-<p id="hint">Hint 1/3: It is in North Africa...</p>
+<p id="hint"></p>
 <button onclick="more()">Get hint (-blur)</button>
-<div>
-<button onclick="guess('Siwa')">Siwa, Egypt</button>
-<button onclick="guess('Huacachina')">Huacachina, Peru</button>
-<button onclick="guess('Timimoun')">Timimoun, Algeria</button>
-</div>
+<div id="opts"></div>
 <p id="res"></p>
 </div>
 <article>
@@ -46,10 +44,20 @@
 </div>
 <footer><p>© 2026 Zokro • Original Zokro game</p></footer>
 <script>
-const HINTS=['It is in North Africa...','Famous for salt lakes and dates...','Its name starts with S... Si...'];
-const ANSWER='Siwa';let hi=1;
-function more(){if(hi<3){document.getElementById('emoji').style.filter='blur('+Math.max(0,8-hi*3)+'px)';document.getElementById('hint').textContent='Hint '+(hi+1)+'/3: '+HINTS[hi];hi++;}}
-function guess(g){document.getElementById('emoji').style.filter='blur(0px)';const ok=g===ANSWER;const pts=ok?Math.max(100,400-hi*100):0;document.getElementById('res').textContent=ok?('✅ Correct with '+hi+' hint(s)! Score '+pts+' 🎉'):('❌ It was '+ANSWER+'! Try tomorrow.');if(ok){try{const k='zk_best_Guess the Oasis';if(pts>parseInt(localStorage.getItem(k)||'0'))localStorage.setItem(k,String(pts));if(window.zkSaveScore)window.zkSaveScore('Guess the Oasis',pts);}catch(e){}}}
+const RIDDLES=[
+ {e:'🏜️🌴💧🐪',h:['It is in North Africa...','Famous for salt lakes and dates...','Its name starts with S... Si...'],a:'Siwa',o:['Siwa, Egypt','Huacachina, Peru','Timimoun, Algeria']},
+ {e:'🏜️⛲🌵🦅',h:['It is in South America...','A desert oasis with a green lagoon...','Its name starts with H... Hua...'],a:'Huacachina',o:['Timimoun, Algeria','Huacachina, Peru','Siwa, Egypt']},
+ {e:'🏜️🕌🌴🐪',h:['It is in North Africa...','A red oasis town deep in the desert...','Its name starts with T... Ti...'],a:'Timimoun',o:['Huacachina, Peru','Siwa, Egypt','Timimoun, Algeria']}
+];
+const dayNum=Math.floor(Date.now()/86400000);
+const R=RIDDLES[dayNum%RIDDLES.length];
+document.getElementById('dayNum').textContent=dayNum;
+document.getElementById('emoji').textContent=R.e;
+document.getElementById('hint').textContent='Hint 1/3: '+R.h[0];
+document.getElementById('opts').innerHTML=R.o.map(function(x){return '<button onclick="guess(\''+x.split(',')[0]+'\')">'+x+'</button>';}).join('');
+let hi=1;
+function more(){if(hi<3){document.getElementById('emoji').style.filter='blur('+Math.max(0,8-hi*3)+'px)';document.getElementById('hint').textContent='Hint '+(hi+1)+'/3: '+R.h[hi];hi++;}}
+function guess(g){document.getElementById('emoji').style.filter='blur(0px)';const ok=g===R.a;const pts=ok?Math.max(100,400-hi*100):0;document.getElementById('res').textContent=ok?('✅ Correct with '+hi+' hint(s)! Score '+pts+' 🎉'):('❌ It was '+R.a+'! Try tomorrow.');if(ok){try{const k='zk_best_Guess the Oasis';if(pts>parseInt(localStorage.getItem(k)||'0'))localStorage.setItem(k,String(pts));if(window.zkSaveScore)window.zkSaveScore('Guess the Oasis',pts);}catch(e){}}}
 </script>
 </body>
 </html>
