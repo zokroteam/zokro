@@ -283,7 +283,6 @@ function buildSidebar(){
   a.innerHTML='<button id="sb-x" aria-label="close">✕</button><div class="sb-scroll">'
     +'<div class="sb-sec">'
     +zkSbLink(home+'#games','🏠',S.all)
-    +zkSbLink(G+'desert-daily.html','📅',S.daily)
     +zkSbLink(lb,'🏆',S.top)
     +zkSbBtn(4,'♥',S.fav)
     +zkSbLink(home+'#continue','↩',S.recent)
