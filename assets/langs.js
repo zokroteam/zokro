@@ -165,77 +165,127 @@ function zkBookmarkGo(){
 function zkHeader(){
   var nav=document.querySelector('nav.nav');if(!nav||nav.getAttribute('data-hdr'))return;
   nav.setAttribute('data-hdr','1');
+  nav.classList.add('cg');
   var lang=(document.documentElement.lang||'en').toLowerCase();
   var H=ZK_HDR[lang]||ZK_HDR.en;
-  if(!document.getElementById('q')){
-    var s=document.createElement('div');s.className='search';
-    s.innerHTML='<input id="q" placeholder="'+H.search+'">';
-    var lm=document.querySelector('#langmenu');
-    if(lm&&lm.parentNode)lm.parentNode.insertBefore(s,lm);else nav.appendChild(s);
-    s.querySelector('input').addEventListener('keydown',function(e){
+  var logo=nav.querySelector('a.logo');
+  var s=nav.querySelector('.search');
+  if(!s){s=document.createElement('div');s.className='search';s.innerHTML='<input id="q" placeholder="'+H.search+'">';}
+  else{var _qi=s.querySelector('input');if(_qi&&!_qi.getAttribute('placeholder'))_qi.setAttribute('placeholder',H.search);}
+  var inp=s.querySelector('input');
+  if(inp&&!inp.getAttribute('data-qw')){
+    inp.setAttribute('data-qw','1');
+    inp.addEventListener('keydown',function(e){
       if(e.key==='Enter'){try{localStorage.setItem('zk_q',this.value);}catch(x){}var lg2=(document.documentElement.lang||'en').toLowerCase();location.href=zkHomeBase()+lg2+'/#games';}
     });
   }
-  if(!nav.querySelector('.playpill')&&nav.children.length>1){
-    var pill=document.createElement('button');pill.className='cta playpill';pill.textContent=H.play;
-    pill.onclick=function(){var g=document.getElementById('games');if(g)g.scrollIntoView();else{var lg3=(document.documentElement.lang||'en').toLowerCase();location.href=zkHomeBase()+lg3+'/#games';}};
-    nav.insertBefore(pill,nav.children[1]);
+  var cta=nav.querySelector('button.cta:not(.playpill)');
+  if(!cta){
+    cta=document.createElement('button');cta.className='cta loginbtn';
+    cta.setAttribute('data-login-text',lang==='ar'?'دخول':'Log In');
+    cta.textContent=lang==='ar'?'دخول':'Log In';
+    cta.onclick=function(){if(window.zkOpenAuth)window.zkOpenAuth();};
   }
+  var lm=document.querySelector('#langmenu');
+  var left=document.createElement('div');left.className='hdr-left';
+  var hb=document.createElement('button');hb.className='nicon hamb hbtn';hb.id='zk-hamb';hb.innerHTML='☰';hb.setAttribute('aria-label','menu');
+  hb.onclick=window.zkToggleSide;
+  left.appendChild(hb);
+  if(logo)left.appendChild(logo);
+  var center=document.createElement('div');center.className='hdr-center';
+  center.appendChild(s);
+  var right=document.createElement('div');right.className='hdr-right';
+  right.appendChild(cta);
+  if(lm)right.appendChild(lm);
+  nav.innerHTML='';
+  nav.appendChild(left);nav.appendChild(center);nav.appendChild(right);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zkHeader);
 else zkHeader();
 // SIDEBAR on every page (desktop fixed rail, mobile drawer) + slim footer links live here too
 var ZK_SB={
-en:{games:'Games',all:'All games',daily:'Daily challenge',top:'Top players',fav:'Favorites',cats:'Categories',cAll:'All',cPuzzle:'Puzzle',c3d:'3D',cDaily:'Daily',cFav:'Favs',studio:'Studio',ab:'About us',ct:'Contact',rq:'Request a game',legal:'Legal',pv:'Privacy',tm:'Terms'},
-ar:{games:'الألعاب',all:'كل الألعاب',daily:'تحدي اليوم',top:'الأوائل',fav:'المفضلة',cats:'التصنيفات',cAll:'الكل',cPuzzle:'ألغاز',c3d:'3D',cDaily:'يومي',cFav:'المفضلة',studio:'الاستوديو',ab:'من نحن',ct:'اتصل بنا',rq:'اطلب لعبة',legal:'قانوني',pv:'الخصوصية',tm:'الشروط'}};
+en:{games:'Games',all:'All games',daily:'Daily challenge',top:'Top players',fav:'Favorites',recent:'Recently played',vote:'Request a game',cats:'Categories',cAll:'All',cPuzzle:'Puzzle',c3d:'3D',cDaily:'Daily',cFav:'Favs',studio:'Studio',ab:'About us',ct:'Contact',rq:'Request a game',legal:'Legal',pv:'Privacy',tm:'Terms',contactUs:'Contact us',copy:'© 2026 Zokro Studio'},
+ar:{games:'الألعاب',all:'كل الألعاب',daily:'تحدي اليوم',top:'الأوائل',fav:'المفضلة',recent:'اتلعبت قريب',vote:'اطلب لعبة',cats:'التصنيفات',cAll:'الكل',cPuzzle:'ألغاز',c3d:'3D',cDaily:'يومي',cFav:'المفضلة',studio:'الاستوديو',ab:'من نحن',ct:'اتصل بنا',rq:'اطلب لعبة',legal:'قانوني',pv:'الخصوصية',tm:'الشروط',contactUs:'اتصل بنا',copy:'© 2026 استوديو زوكرو'}};
+window.zkToggleSide=function(){
+  if(window.innerWidth<1024){document.body.classList.toggle('sb-open');}
+  else{var c=document.body.classList.toggle('sb-collapsed');try{localStorage.setItem('zk_sb_c',c?'1':'0');}catch(e){}}
+};
 function zkGoCat(i){
   var chips=document.querySelectorAll('.chips button');
   if(chips.length>i){chips[i].click();var g=document.getElementById('games');if(g)g.scrollIntoView();}
   else{try{localStorage.setItem('zk_goto_cat',String(i));}catch(e){}var lg=(document.documentElement.lang||'en').toLowerCase();location.href=zkHomeBase()+lg+'/#games';}
 }
+function zkSbLink(href,ic,lb){return '<a class="sb-link" href="'+href+'"><span class="sb-ic">'+ic+'</span><span class="sb-lb">'+lb+'</span></a>';}
+function zkSbBtn(i,ic,lb){return '<button class="sb-link" data-sbcat="'+i+'"><span class="sb-ic">'+ic+'</span><span class="sb-lb">'+lb+'</span></button>';}
 function buildSidebar(){
-  if(document.getElementById('zkside'))return;
+  if(document.getElementById('zkside')){
+    var _hb=document.getElementById('zk-hamb');
+    if(_hb)_hb.onclick=window.zkToggleSide;
+    return;
+  }
   var holder=document.querySelector('#langmenu');
   var base=holder?holder.getAttribute('data-base'):'./';
   var lang=(document.documentElement.lang||'en').toLowerCase();
   var S=ZK_SB[lang]||ZK_SB.en;
   var home=base+lang+'/',G=base+lang+'/games/';
+  var lb=base+'en/leaderboard.html';
+  var ab=base+'en/about.html',ct=base+'en/contact.html',rq=base+'en/request.html',pv=base+'en/privacy.html',tm=base+'en/terms.html';
   var a=document.createElement('aside');a.id='zkside';
-  a.innerHTML='<div class="sb-sec"><h4>🎮 '+S.games+'</h4>'
-    +'<a href="'+home+'#games">🏠 '+S.all+'</a>'
-    +'<a href="'+G+'desert-daily.html">📅 '+S.daily+'</a>'
-    +'<a href="'+base+'en/leaderboard.html">🏆 '+S.top+'</a>'
-    +'<a href="'+home+'#games" data-sbcat="4">♥ '+S.fav+'</a></div>'
-    +'<div class="sb-sec"><h4>🧩 '+S.cats+'</h4>'
-    +'<button data-sbcat="0">'+S.cAll+'</button>'
-    +'<button data-sbcat="1">🧩 '+S.cPuzzle+'</button>'
-    +'<button data-sbcat="2">🎮 '+S.c3d+'</button>'
-    +'<button data-sbcat="3">📅 '+S.cDaily+'</button>'
-    +'<button data-sbcat="4">♥ '+S.cFav+'</button></div>'
-    +'<div class="sb-sec"><h4>🏢 '+S.studio+'</h4>'
-    +'<a href="'+base+'en/about.html">'+S.ab+'</a>'
-    +'<a href="'+base+'en/contact.html">'+S.ct+'</a>'
-    +'<a href="'+base+'en/request.html">'+S.rq+'</a></div>'
-    +'<div class="sb-sec"><h4>⚖️ '+S.legal+'</h4>'
-    +'<a href="'+base+'en/privacy.html">'+S.pv+'</a>'
-    +'<a href="'+base+'en/terms.html">'+S.tm+'</a></div>';
+  a.innerHTML='<div class="sb-scroll">'
+    +'<div class="sb-sec">'
+    +zkSbLink(home+'#games','🏠',S.all)
+    +zkSbLink(G+'desert-daily.html','📅',S.daily)
+    +zkSbLink(lb,'🏆',S.top)
+    +zkSbBtn(4,'♥',S.fav)
+    +zkSbLink(home+'#continue','↩',S.recent)
+    +zkSbLink(rq,'🗳',S.vote)
+    +'</div><div class="sb-div"></div>'
+    +'<div class="sb-sec"><h4><span>'+S.cats+'</span></h4>'
+    +zkSbBtn(0,'🌐',S.cAll)
+    +zkSbBtn(1,'🧩',S.cPuzzle)
+    +zkSbBtn(2,'🎮',S.c3d)
+    +zkSbBtn(3,'📅',S.cDaily)
+    +zkSbBtn(4,'♥',S.cFav)
+    +'</div><div class="sb-div"></div>'
+    +'<div class="sb-sec"><h4><span>'+S.studio+'</span></h4>'
+    +zkSbLink(ab,'ℹ️',S.ab)
+    +zkSbLink(ct,'✉️',S.ct)
+    +zkSbLink(rq,'➕',S.rq)
+    +'</div>'
+    +'<div class="sb-sec"><h4><span>'+S.legal+'</span></h4>'
+    +zkSbLink(pv,'🔒',S.pv)
+    +zkSbLink(tm,'📜',S.tm)
+    +'</div>'
+    +'</div>'
+    +'<div class="sb-foot">'
+    +'<a class="sb-contact" href="'+ct+'">'+S.contactUs+'</a>'
+    +'<div class="sb-links"><a href="'+ab+'">'+S.ab+'</a><a href="'+ct+'">'+S.ct+'</a><a href="'+rq+'">'+S.rq+'</a><a href="'+pv+'">'+S.pv+'</a><a href="'+tm+'">'+S.tm+'</a><a href="'+lb+'">'+S.top+'</a></div>'
+    +'<div class="sb-soc"><a href="https://facebook.com/zokrofun" title="Facebook">📘</a><a href="https://tiktok.com/@zokro" title="TikTok">🎵</a><a href="https://youtube.com/@zokro" title="YouTube">▶️</a><a href="https://x.com/zokro" title="X">𝕏</a><a href="https://instagram.com/zokrofun" title="Instagram">📸</a><a href="https://discord.gg/ZUUeYucQFT" title="Discord">💬</a></div>'
+    +'<div class="sb-copy">'+S.copy+' • zokro.fun</div>'
+    +'</div>';
   a.addEventListener('click',function(e){
     var b=e.target&&e.target.closest?e.target.closest('[data-sbcat]'):null;
-    if(!b)return;
-    e.preventDefault();
-    document.body.classList.remove('sb-open');
-    zkGoCat(parseInt(b.getAttribute('data-sbcat')));
+    if(b){e.preventDefault();document.body.classList.remove('sb-open');zkGoCat(parseInt(b.getAttribute('data-sbcat')));return;}
+    var link=e.target&&e.target.closest?e.target.closest('a.sb-link'):null;
+    if(link)document.body.classList.remove('sb-open');
   });
   document.body.appendChild(a);
-  var ov=document.createElement('div');ov.id='sb-overlay';
-  ov.onclick=function(){document.body.classList.remove('sb-open');};
-  document.body.appendChild(ov);
-  var nav=document.querySelector('nav.nav');
-  if(nav&&!document.getElementById('zk-hamb')){
-    var hb=document.createElement('button');hb.className='nicon hamb';hb.id='zk-hamb';hb.innerHTML='☰';
-    hb.onclick=function(){document.body.classList.toggle('sb-open');};
-    nav.insertBefore(hb,nav.firstChild);
+  if(!document.getElementById('sb-overlay')){
+    var ov=document.createElement('div');ov.id='sb-overlay';
+    ov.onclick=function(){document.body.classList.remove('sb-open');};
+    document.body.appendChild(ov);
   }
+  var hb=document.getElementById('zk-hamb');
+  if(!hb){
+    var nav=document.querySelector('nav.nav');
+    if(nav){
+      hb=document.createElement('button');hb.className='nicon hamb hbtn';hb.id='zk-hamb';hb.innerHTML='☰';hb.setAttribute('aria-label','menu');
+      var hl=nav.querySelector('.hdr-left');
+      if(hl&&hl.firstChild)hl.insertBefore(hb,hl.firstChild);else if(hl)hl.appendChild(hb);else nav.insertBefore(hb,nav.firstChild);
+    }
+  }
+  if(hb)hb.onclick=window.zkToggleSide;
+  try{if(localStorage.getItem('zk_sb_c')==='1'&&window.innerWidth>=1024)document.body.classList.add('sb-collapsed');}catch(e){}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',buildSidebar);
 else buildSidebar();
@@ -251,8 +301,8 @@ else buildSidebar();
 // NAV CENTER: friends + notifications + game reactions (one place, every page, every language)
 (function(){
 var ZK_NAV_T={
-en:{fr:'Friends',nt:'Notifications',login:'Log in to see.',open:'Open profile',empty:'Nothing here yet.'},
-ar:{fr:'الأصدقاء',nt:'الإشعارات',login:'سجل دخول عشان تشوف.',open:'افتح البروفايل',empty:'مفيش حاجة لسه.'}};
+en:{fr:'Friends',my:'My games',nt:'Notifications',login:'Log in to see.',open:'Open profile',empty:'Nothing here yet.'},
+ar:{fr:'الأصدقاء',my:'ألعابي',nt:'الإشعارات',login:'سجل دخول عشان تشوف.',open:'افتح البروفايل',empty:'مفيش حاجة لسه.'}};
 function T(){var l=(document.documentElement.lang||'en').toLowerCase();return ZK_NAV_T[l]||ZK_NAV_T.en;}
 function zkNotifs(){try{return JSON.parse(localStorage.getItem('zk_notifs')||'[]');}catch(e){return [];}}
 function zkUnread(){try{return parseInt(localStorage.getItem('zk_notif_un')||'0');}catch(e){return 0;}}
@@ -261,17 +311,19 @@ function escH(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){retu
 function mount(){
   var n=document.querySelector('nav.nav');if(!n||document.getElementById('zk-friends-btn'))return;
   var t=T();
-  var wrap=document.createElement('div');wrap.style.cssText='display:flex;gap:8px;align-items:center';
-  wrap.innerHTML='<button class="nicon" id="zk-friends-btn" title="'+t.fr+'">👥<span class="bdg" id="zk-fbdg" style="display:none">0</span></button>'
+  var wrap=document.createElement('div');wrap.className='hdr-icons';
+  wrap.innerHTML='<button class="pill-btn" id="zk-friends-btn" title="'+t.fr+'">👥<span class="lbl">'+t.fr+'</span><span class="bdg" id="zk-fbdg" style="display:none">0</span></button>'
     +'<button class="nicon" id="zk-bell-btn" title="'+t.nt+'">🔔<span class="bdg" id="zk-nbdg" style="display:none">0</span></button>'
     +'<div class="npanel" id="zk-fpanel"><h3>👥 '+t.fr+'</h3><div id="zk-fbody"><div class="nempty">…</div></div></div>'
     +'<div class="npanel" id="zk-npanel"><h3>🔔 '+t.nt+'</h3><div id="zk-nbody"></div></div>';
-  var cta=n.querySelector('button.cta');if(cta)n.insertBefore(wrap,cta);else n.appendChild(wrap);
+  var cta=n.querySelector('button.cta');
+  if(cta&&cta.parentNode)cta.parentNode.insertBefore(wrap,cta);
+  else{var hr=n.querySelector('.hdr-right');if(hr)hr.appendChild(wrap);else n.appendChild(wrap);}
   document.getElementById('zk-friends-btn').onclick=function(){toggle('zk-fpanel');loadFriends();};
   document.getElementById('zk-bell-btn').onclick=function(){toggle('zk-npanel');renderNotifs(true);};
   (function(){
     var bell=document.getElementById('zk-bell-btn');if(!bell||document.getElementById('zk-bookmark-btn'))return;
-    var bm=document.createElement('button');bm.className='nicon';bm.id='zk-bookmark-btn';bm.title='♥';bm.setAttribute('aria-label','saved games');bm.innerHTML='🔖';
+    var bm=document.createElement('button');bm.className='pill-btn';bm.id='zk-bookmark-btn';bm.title=t.my||'My games';bm.setAttribute('aria-label','saved games');bm.innerHTML='💾<span class="lbl">'+(t.my||'My games')+'</span>';
     bm.onclick=zkBookmarkGo;
     bell.parentNode.insertBefore(bm,bell);
   })();
@@ -395,6 +447,8 @@ else mount();
 })();
 // World-class footer everywhere from one place (runs after page loads)
 function buildFooter(){
+  try{document.querySelectorAll('footer').forEach(function(x){x.style.display='none';x.setAttribute('aria-hidden','true');});}catch(e){}
+  return;
   var f=document.querySelector('footer');
   if(!f)return;
   var holder=document.querySelector('#langmenu');
