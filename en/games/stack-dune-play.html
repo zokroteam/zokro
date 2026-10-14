@@ -5,10 +5,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.min.js"></script>
 </head>
 <body>
-<div id="ui">🧱 Level <b id="lvl">0</b>/12 • Daily #<span id="dd"></span></div>
+<div id="ui">🧱 <span data-t="level">Level</span> <b id="lvl">0</b>/12 • <span data-t="daily">Daily</span> #<span id="dd"></span></div>
 <div id="msg"></div>
-<button id="btn">DROP</button>
+<button id="btn"><span data-t="drop">DROP</span></button>
+<script src="../../assets/game-i18n.js"></script>
 <script>
+const T=function(k){try{if(window.zkT)return window.zkT('stack',k);}catch(e){}return k;};
+try{if(window.zkApplyI18n)window.zkApplyI18n('stack');}catch(e){}
 const scene=new THREE.Scene();
 scene.background=new THREE.Color(0xf4e3c1);
 scene.fog=new THREE.Fog(0xf4e3c1,18,42);
@@ -54,10 +57,10 @@ function drop(){
   }
   prev={x:nx,z:nz,w:nw,d:nd};lvl++;
   document.getElementById('lvl').textContent=lvl;
-  if(lvl>=12){over=true;document.getElementById('msg').textContent='🏆 You win! Tower of 12! Share it!';zkPush('Stack the Dune 3D',1700);return;}
+  if(lvl>=12){over=true;document.getElementById('msg').textContent='🏆 '+T('win');zkPush('Stack the Dune 3D',1700);return;}
   axis=axis==='x'?'z':'x';box=newBox();
 }
-function lose(){over=true;falling.push({m:box,vy:0,vx:axis==='x'?dir*4:0,vz:axis==='z'?dir*4:0});document.getElementById('msg').textContent='💥 Fell! Level '+lvl+' - tap to restart';zkPush('Stack the Dune 3D',lvl*100);setTimeout(()=>{addEventListener('pointerdown',()=>location.reload(),{once:true});},500);}
+function lose(){over=true;falling.push({m:box,vy:0,vx:axis==='x'?dir*4:0,vz:axis==='z'?dir*4:0});document.getElementById('msg').textContent='💥 '+T('fell')+' '+lvl+' - '+T('restart');zkPush('Stack the Dune 3D',lvl*100);setTimeout(()=>{addEventListener('pointerdown',()=>location.reload(),{once:true});},500);}
 function zkPush(g,s){try{const k='zk_best_'+g;if(s>parseInt(localStorage.getItem(k)||'0'))localStorage.setItem(k,String(s));if(parent&&parent.zkSaveScore)parent.zkSaveScore(g,s);}catch(e){}}
 document.getElementById('dd').textContent=Math.floor(Date.now()/86400000);let t=0;
 (function loop(){

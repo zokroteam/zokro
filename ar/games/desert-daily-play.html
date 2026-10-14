@@ -4,14 +4,16 @@
 <style>body{font-family:system-ui;margin:0;background:#faf3e3;color:#3b2f1d;text-align:center;padding:12px}.bar{height:16px;background:#e5dcc8;border-radius:8px;overflow:hidden;margin:6px auto;max-width:420px}.bar>div{height:100%;background:#2f9e44}.bar.heat>div{background:#e8590c}button{font-size:16px;padding:10px 16px;margin:5px;border-radius:10px;border:0;background:#1971c2;color:#fff;cursor:pointer}</style>
 </head>
 <body>
-<h2>💧 تحدي الصحراء اليومي #<span id="dayNum"></span></h2>
-<div>الماء<div class="bar"><div id="waterBar" style="width:100%"></div></div></div>
-<div>الحرارة: <span id="heat">40</span>°<div class="bar heat"><div id="heatBar" style="width:30%"></div></div></div>
-<div>الوقت: <span id="time">60</span> ث • النقاط: <span id="score">0</span></div>
-<div><button onclick="give()">💧 اشرب</button><button onclick="shade()">⛱️ ظل</button><button onclick="rest()">😴 راحة</button></div>
+<h2>💧 <span data-t="game_name">تحدي الصحراء اليومي</span> #<span id="dayNum"></span></h2>
+<div><span data-t="water">الماء</span><div class="bar"><div id="waterBar" style="width:100%"></div></div></div>
+<div><span data-t="heat">الحرارة</span>: <span id="heat">40</span>°<div class="bar heat"><div id="heatBar" style="width:30%"></div></div></div>
+<div><span data-t="time">الوقت</span>: <span id="time">60</span> <span data-t="sec">ث</span> • <span data-t="score">النقاط</span>: <span id="score">0</span></div>
+<div><button onclick="give()">💧 <span data-t="drink">اشرب</span></button><button onclick="shade()">⛱️ <span data-t="shade">ظل</span></button><button onclick="rest()">😴 <span data-t="rest">راحة</span></button></div>
 <p id="result"></p>
-<button onclick="share()">📋 انسخ النتيجة</button>
+<button onclick="share()">📋 <span data-t="lvl_copy">انسخ النتيجة</span></button>
+<script src="../../assets/game-i18n.js"></script>
 <script>
+const T=function(k){try{if(window.zkT)return window.zkT('desert',k);}catch(e){}return k;};
 const dayNum=Math.floor(Date.now()/86400000);
 document.getElementById('dayNum').textContent=dayNum;
 let seed=dayNum%100;function rnd(){seed=(seed*9301+49297)%233280;return seed/233280;}
@@ -21,9 +23,10 @@ function update(){document.getElementById('waterBar').style.width=Math.max(0,wat
 function give(){if(over)return;if(score>=5){water=Math.min(100,water+8);score-=5;}update();}
 function shade(){if(over)return;if(water>=10){water-=10;heat-=4;score+=5;}update();}
 function rest(){if(over)return;heat+=2;score+=15;update();}
-function end(){over=true;clearInterval(timer);const win=time<=0&&water>0;const final=Math.round(score+(win?Math.max(0,water):0));document.getElementById('result').textContent=win?`عشت! نقاطك ${final} 🟩🟩🟩🟩🟩`:`نشفت! نقاطك ${final} 🟥🟥⬜⬜⬜`;update();zkPush('Desert Daily',final);}
+function end(){over=true;clearInterval(timer);const win=time<=0&&water>0;const final=Math.round(score+(win?Math.max(0,water):0));document.getElementById('result').textContent=win?(T('survived')+' '+T('result_score')+' '+final+' 🟩🟩🟩🟩🟩'):(T('dried')+' '+T('result_score')+' '+final+' 🟥🟥⬜⬜⬜');update();zkPush('Desert Daily',final);}
 function zkPush(g,s){try{const k='zk_best_'+g;if(s>parseInt(localStorage.getItem(k)||'0'))localStorage.setItem(k,String(s));if(parent&&parent.zkSaveScore)parent.zkSaveScore(g,s);}catch(e){}}
-function share(){const t=`🏜️ تحدي الصحراء #${dayNum} - نقاطي ${Math.round(score+Math.max(0,water))} - العب مجانا https://zokro.fun/ar/`;navigator.clipboard.writeText(t);alert('اتنسخ!');}
+function share(){const t='🏜️ '+T('game_name')+' #'+dayNum+' - '+T('result_score')+' '+Math.round(score+Math.max(0,water))+' - '+T('sharePlay')+' https://zokro.fun';navigator.clipboard.writeText(t);alert(T('lvl_copied'));}
+zkApplyI18n('desert');
 update();
 </script>
 </body>

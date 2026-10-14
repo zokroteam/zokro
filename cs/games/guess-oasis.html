@@ -38,10 +38,10 @@
 <p>★★★★★ 4.9 • 🎮 puzzle • 📱 Funguje na mobilu</p>
 <div class="topstrip" id="topstrip" style="display:none"><b>🏆 Nejlepší hráči</b><div id="toprow"></div></div>
 <div class="play">
-<p>Daily riddle. Unblur with hints, guess with fewest hints.</p>
+<p>Každodenní hádanka. Rozostřete nápovědy, hádejte s nejmenšími nápovědami.</p>
 <h2 id="emoji" style="font-size:64px;filter:blur(8px)">🏜️🌴💧🐪</h2>
 <p id="hint"></p>
-<button onclick="more()">Get hint (-blur)</button>
+<button onclick="more()">Získat nápovědu (-blur)</button>
 <div id="opts"></div>
 <p id="res"></p>
 </div>
@@ -61,16 +61,16 @@
 (function(){var G="Guess the Oasis";function e(s){return String(s==null?"":s).replace(/[&<>"']/g,function(x){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x];});}var iv=setInterval(function(){if(!window.zkAuth||!window.zkAuth.ready)return;clearInterval(iv);window.zkAuth.client.from("scores").select("score,profiles(username,avatar)").eq("game",G).order("score",{ascending:false}).limit(3).then(function(r){var rows=r.data||[];if(!rows.length)return;var medals=["🥇","🥈","🥉"];var h="";rows.forEach(function(s,i){var p=s.profiles||{};h+='<span class="tcell">'+medals[i]+" "+e(p.username||"?")+" <b>"+parseInt(s.score||0)+"</b></span>";});document.getElementById("toprow").innerHTML=h;document.getElementById("topstrip").style.display="";});},600);})();
 </script>
 <script>
-const RIDDLES=[{"a":"Siwa","e":"🏜️🌴💧🐪","h":["It is in North Africa...","Famous for salt lakes and dates...","Its name starts with S... Si..."],"o":["Siwa, Egypt","Huacachina, Peru","Timimoun, Algeria"]},{"a":"Huacachina","e":"🏜️⛲🌵🦅","h":["It is in South America...","A desert oasis with a green lagoon...","Its name starts with H... Hua..."],"o":["Timimoun, Algeria","Huacachina, Peru","Siwa, Egypt"]},{"a":"Timimoun","e":"🏜️🕌🌴🐪","h":["It is in North Africa...","A red oasis town deep in the desert...","Its name starts with T... Ti..."],"o":["Huacachina, Peru","Siwa, Egypt","Timimoun, Algeria"]}];
+const RIDDLES=[{"e":"🏜️🌴💧🐪","h":["Nachází se v severní Africe...","Proslulé solnými jezery a datlemi...","Její název začíná na S... Si..."],"a":"Siwa","o":["Siwa, Egypt","Huacachina, Peru","Timimoun, Algeria"]},{"e":"🏜️⛲🌵🦅","h":["Nachází se v Jižní Americe...","Pouštní oáza se zelenou lagunou...","Jeho název začíná na H... Hua..."],"a":"Huacachina","o":["Timimoun, Algeria","Huacachina, Peru","Siwa, Egypt"]},{"e":"🏜️🕌🌴🐪","h":["Nachází se v severní Africe...","Červená oáza hluboko v poušti...","Její název začíná na T... Ti..."],"a":"Timimoun","o":["Huacachina, Peru","Siwa, Egypt","Timimoun, Algeria"]}];
 const dayNum=Math.floor(Date.now()/86400000);
 const R=RIDDLES[dayNum%RIDDLES.length];
 document.getElementById("dayNum").textContent=dayNum;
 document.getElementById("emoji").textContent=R.e;
-document.getElementById("hint").textContent="Hint 1/3: "+R.h[0];
+document.getElementById("hint").textContent="Nápověda"+" 1/3: "+R.h[0];
 document.getElementById("opts").innerHTML=R.o.map(function(x){return "<button data-g=\""+x.split(",")[0]+"\">"+x+"</button>";}).join("");Array.prototype.forEach.call(document.getElementById("opts").querySelectorAll("button"),function(b){b.onclick=function(){guess(b.getAttribute("data-g"));};});
 let hi=1;
-function more(){if(hi<3){document.getElementById("emoji").style.filter="blur("+Math.max(0,8-hi*3)+"px)";document.getElementById("hint").textContent="Hint "+(hi+1)+"/3: "+R.h[hi];hi++;}}
-function guess(g){document.getElementById("emoji").style.filter="blur(0px)";const ok=g===R.a;const pts=ok?Math.max(100,400-hi*100):0;document.getElementById("res").textContent=ok?("Correct with "+hi+" hint(s)! Score "+pts):("It was "+R.a+"! Try tomorrow.");if(ok){try{var k="zk_best_"+"Guess the Oasis";if(pts>parseInt(localStorage.getItem(k)||"0"))localStorage.setItem(k,String(pts));if(window.zkSaveScore)window.zkSaveScore("Guess the Oasis",pts);}catch(e){}}}
+function more(){if(hi<3){document.getElementById("emoji").style.filter="blur("+Math.max(0,8-hi*3)+"px)";document.getElementById("hint").textContent="Nápověda"+" "+(hi+1)+"/3: "+R.h[hi];hi++;}}
+function guess(g){document.getElementById("emoji").style.filter="blur(0px)";const ok=g===R.a;const pts=ok?Math.max(100,400-hi*100):0;document.getElementById("res").textContent=ok?("Správně"+" "+hi+" "+"Nápovědy"+"! Score "+pts):("Bylo to"+" "+R.a+"! "+"Zkuste to zítra.");if(ok){try{var k="zk_best_"+"Guess the Oasis";if(pts>parseInt(localStorage.getItem(k)||"0"))localStorage.setItem(k,String(pts));if(window.zkSaveScore)window.zkSaveScore("Guess the Oasis",pts);}catch(e){}}}
 </script>
 </body>
 </html>
