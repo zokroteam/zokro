@@ -266,6 +266,7 @@ window.zkFrGo=function(id,how){
 };
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);
 else mount();
+})();
 // GAME REACTIONS auto-wire (like/dislike with global counts)
 (function(){
   function wire(){
