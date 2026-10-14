@@ -63,7 +63,7 @@ window.zkToggleFav=function(h,ev){if(ev){ev.preventDefault();ev.stopPropagation(
 function paintFavs(){var cards=document.querySelectorAll('#grid .card, #suggest .card');for(var i=0;i<cards.length;i++){var c=cards[i];var h=c.getAttribute('href');var b=c.querySelector('.favb');if(!b||!h)continue;var on=zkIsFav(h);b.textContent=on?'❤️':'🤍';if(on)b.classList.add('on');else b.classList.remove('on');}}
 function zkApplyCat(){
   var q='';try{var qi=document.getElementById('q');q=qi?qi.value.toLowerCase():'';}catch(e){}
-  var cats=['all','puzzle','3d','daily','fav'];var want=cats[window.zkCat||0]||'all';
+  var cats=['all','puzzle','action','sports','racing','adventure','girls','kids','strategy','arcade','3d','fav'];var want=cats[window.zkCat||0]||'all';
   var cards=document.querySelectorAll('#grid .card');if(!cards.length)return;
   for(var i=0;i<cards.length;i++){var c=cards[i];
     var dc=(c.getAttribute('data-cat')||'').toLowerCase();
@@ -233,8 +233,8 @@ else zkHeader();
 })();
 // SIDEBAR on every page (desktop fixed rail, mobile drawer) + slim footer links live here too
 var ZK_SB={
-en:{games:'Games',all:'All games',daily:'Daily challenge',top:'Top players',fav:'Favorites',recent:'Recently played',vote:'Request a game',cats:'Categories',cAll:'All',cPuzzle:'Puzzle',c3d:'3D',cDaily:'Daily',cFav:'Favs',studio:'Studio',ab:'About us',ct:'Contact',rq:'Request a game',legal:'Legal',pv:'Privacy',tm:'Terms',contactUs:'Contact us',copy:'© 2026 Zokro Studio'},
-ar:{games:'الألعاب',all:'كل الألعاب',daily:'تحدي اليوم',top:'الأوائل',fav:'المفضلة',recent:'اتلعبت قريب',vote:'اطلب لعبة',cats:'التصنيفات',cAll:'الكل',cPuzzle:'ألغاز',c3d:'3D',cDaily:'يومي',cFav:'المفضلة',studio:'الاستوديو',ab:'من نحن',ct:'اتصل بنا',rq:'اطلب لعبة',legal:'قانوني',pv:'الخصوصية',tm:'الشروط',contactUs:'اتصل بنا',copy:'© 2026 استوديو زوكرو'}};
+en:{games:'Games',all:'All games',daily:'Daily challenge',top:'Top players',fav:'Favorites',recent:'Recently played',vote:'Request a game',cats:'Categories',cAll:'All',cPuzzle:'Puzzle',cAction:'Action',cSports:'Sports',cRacing:'Racing',cAdventure:'Adventure',cGirls:'Girls',cKids:'Kids',cStrategy:'Strategy',cArcade:'Arcade',c3d:'3D',cDaily:'Daily',cFav:'Favs',studio:'Studio',ab:'About us',ct:'Contact',rq:'Request a game',legal:'Legal',pv:'Privacy',tm:'Terms',contactUs:'Contact us',copy:'© 2026 Zokro Studio'},
+ar:{games:'الألعاب',all:'كل الألعاب',daily:'تحدي اليوم',top:'الأوائل',fav:'المفضلة',recent:'اتلعبت قريب',vote:'اطلب لعبة',cats:'التصنيفات',cAll:'الكل',cPuzzle:'ألغاز',cAction:'أكشن',cSports:'رياضة',cRacing:'سباقات',cAdventure:'مغامرات',cGirls:'بنات',cKids:'أطفال',cStrategy:'استراتيجية',cArcade:'أركيد',c3d:'3D',cDaily:'يومي',cFav:'المفضلة',studio:'الاستوديو',ab:'من نحن',ct:'اتصل بنا',rq:'اطلب لعبة',legal:'قانوني',pv:'الخصوصية',tm:'الشروط',contactUs:'اتصل بنا',copy:'© 2026 استوديو زوكرو'}};
 window.zkToggleSide=function(){
   if(window.innerWidth<1024){document.body.classList.toggle('sb-open');}
   else{var h=document.body.classList.toggle('sb-hidden');try{localStorage.setItem('zk_sb_h',h?'1':'0');}catch(e){}}
@@ -284,16 +284,21 @@ function buildSidebar(){
     +'<div class="sb-sec">'
     +zkSbLink(home+'#games','🏠',S.all)
     +zkSbLink(lb,'🏆',S.top)
-    +zkSbBtn(4,'♥',S.fav)
+    +zkSbBtn(11,'♥',S.fav)
     +zkSbLink(home+'#continue','↩',S.recent)
-    +zkSbLink(rq,'🗳',S.vote)
     +'</div><div class="sb-div"></div>'
     +'<div class="sb-sec"><h4><span>'+S.cats+'</span></h4>'
     +zkSbBtn(0,'🌐',S.cAll)
     +zkSbBtn(1,'🧩',S.cPuzzle)
-    +zkSbBtn(2,'🎮',S.c3d)
-    +zkSbBtn(3,'📅',S.cDaily)
-    +zkSbBtn(4,'♥',S.cFav)
+    +zkSbBtn(2,'⚔️',S.cAction)
+    +zkSbBtn(3,'⚽',S.cSports)
+    +zkSbBtn(4,'🏎️',S.cRacing)
+    +zkSbBtn(5,'🗺️',S.cAdventure)
+    +zkSbBtn(6,'🎀',S.cGirls)
+    +zkSbBtn(7,'🧸',S.cKids)
+    +zkSbBtn(8,'♟️',S.cStrategy)
+    +zkSbBtn(9,'🕹️',S.cArcade)
+    +zkSbBtn(10,'🎮',S.c3d)
     +'</div><div class="sb-div"></div>'
     +'<div class="sb-sec"><h4><span>'+S.studio+'</span></h4>'
     +zkSbLink(ab,'ℹ️',S.ab)
@@ -307,7 +312,7 @@ function buildSidebar(){
     +'</div>'
     +'<div class="sb-foot">'
     +'<a class="sb-contact" href="'+ct+'">'+S.contactUs+'</a>'
-    +'<div class="sb-links"><a href="'+ab+'">'+S.ab+'</a><a href="'+ct+'">'+S.ct+'</a><a href="'+rq+'">'+S.rq+'</a><a href="'+pv+'">'+S.pv+'</a><a href="'+tm+'">'+S.tm+'</a><a href="'+lb+'">'+S.top+'</a></div>'
+    +'<div class="sb-links"><a href="'+ab+'">'+S.ab+'</a><a href="'+ct+'">'+S.ct+'</a><a href="'+pv+'">'+S.pv+'</a><a href="'+tm+'">'+S.tm+'</a><a href="'+lb+'">'+S.top+'</a></div>'
     +'<div class="sb-lang"><a href="'+base+'en/" class="'+(lang==='en'?'on':'')+'"><img src="https://flagcdn.com/w80/us.png" alt="en"><span>English</span></a><a href="'+base+'ar/" class="'+(lang==='ar'?'on':'')+'"><img src="https://flagcdn.com/w80/eg.png" alt="ar"><span>عربي</span></a></div>'
     +'<div class="sb-soc"><a href="https://facebook.com/zokrofun" title="Facebook">📘</a><a href="https://instagram.com/zokrofun" title="Instagram">📸</a><a href="https://discord.gg/ZUUeYucQFT" title="Discord">💬</a></div>'
     +'<div class="sb-copy">'+S.copy+' • zokro.fun</div>'
