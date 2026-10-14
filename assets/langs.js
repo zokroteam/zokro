@@ -280,7 +280,7 @@ function buildSidebar(){
   var lb=base+'en/leaderboard.html';
   var ab=base+'en/about.html',ct=base+'en/contact.html',rq=base+'en/request.html',pv=base+'en/privacy.html',tm=base+'en/terms.html';
   var a=document.createElement('aside');a.id='zkside';
-  a.innerHTML='<div class="sb-scroll">'
+  a.innerHTML='<button id="sb-x" aria-label="close">✕</button><div class="sb-scroll">'
     +'<div class="sb-sec">'
     +zkSbLink(home+'#games','🏠',S.all)
     +zkSbLink(G+'desert-daily.html','📅',S.daily)
@@ -334,6 +334,8 @@ function buildSidebar(){
     }
   }
   if(hb)hb.onclick=window.zkToggleSide;
+  var xb=document.getElementById('sb-x');
+  if(xb)xb.onclick=function(){document.body.classList.remove('sb-open');};
   zkSbActive();
   try{
     if(window.innerWidth>=1024){
