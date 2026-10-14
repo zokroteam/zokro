@@ -52,9 +52,10 @@ document.addEventListener('click',function(e){
 });
 // Category chips: language-independent (button order: All, Puzzle, 3D, Daily)
 window.zkCat=0;
-function zkFavs(){try{return JSON.parse(localStorage.getItem('zk_fav')||'[]');}catch(e){return [];}}
-function zkIsFav(h){if(!h)return false;return zkFavs().indexOf(h)>=0;}
-window.zkToggleFav=function(h,ev){if(ev){ev.preventDefault();ev.stopPropagation();}var f=zkFavs();var i=f.indexOf(h);if(i>=0)f.splice(i,1);else f.push(h);try{localStorage.setItem('zk_fav',JSON.stringify(f));}catch(e){}paintFavs();zkApplyCat();};
+function zkFavs(){try{var f=JSON.parse(localStorage.getItem('zk_fav')||'[]');return f.map(function(x){return (typeof x==='string')?{u:x}:x;});}catch(e){return [];}}
+function zkFavIdx(f,h){for(var i=0;i<f.length;i++)if(f[i].u===h)return i;return -1;}
+function zkIsFav(h){if(!h)return false;return zkFavIdx(zkFavs(),h)>=0;}
+window.zkToggleFav=function(h,ev){if(ev){ev.preventDefault();ev.stopPropagation();}var f=zkFavs();var i=zkFavIdx(f,h);if(i>=0)f.splice(i,1);else{var html='';try{var c=document.querySelector('#grid .card[href="'+h+'"], #suggest .card[href="'+h+'"]');if(c)html=c.outerHTML;}catch(e){}f.push({u:h,html:html});}try{localStorage.setItem('zk_fav',JSON.stringify(f));}catch(e){}paintFavs();zkApplyCat();};
 function paintFavs(){var cards=document.querySelectorAll('#grid .card, #suggest .card');for(var i=0;i<cards.length;i++){var c=cards[i];var h=c.getAttribute('href');var b=c.querySelector('.favb');if(!b||!h)continue;var on=zkIsFav(h);b.textContent=on?'❤️':'🤍';if(on)b.classList.add('on');else b.classList.remove('on');}}
 function zkApplyCat(){
   var q='';try{var qi=document.getElementById('q');q=qi?qi.value.toLowerCase():'';}catch(e){}
@@ -151,6 +152,153 @@ else zkInitSocial();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',stamp);
   else stamp();
+})();
+// NAV CENTER: friends + notifications + game reactions (one place, every page, every language)
+(function(){
+var ZK_NAV_T={
+en:{fr:'Friends',nt:'Notifications',login:'Log in to see.',open:'Open profile',empty:'Nothing here yet.'},
+ar:{fr:'الأصدقاء',nt:'الإشعارات',login:'سجل دخول عشان تشوف.',open:'افتح البروفايل',empty:'مفيش حاجة لسه.'},
+de:{fr:'Freunde',nt:'Mitteilungen',login:'Log dich ein.',open:'Profil öffnen',empty:'Noch nichts hier.'},
+fr:{fr:'Amis',nt:'Notifications',login:'Connecte-toi.',open:'Ouvrir le profil',empty:'Rien pour le moment.'},
+es:{fr:'Amigos',nt:'Notificaciones',login:'Inicia sesión.',open:'Abrir perfil',empty:'Nada por aquí.'},
+pt:{fr:'Amigos',nt:'Notificações',login:'Entra para ver.',open:'Abrir perfil',empty:'Nada por aqui.'},
+tr:{fr:'Arkadaşlar',nt:'Bildirimler',login:'Giriş yap.',open:'Profili aç',empty:'Henüz bir şey yok.'},
+pl:{fr:'Znajomi',nt:'Powiadomienia',login:'Zaloguj się.',open:'Otwórz profil',empty:'Jeszcze nic.'},
+cs:{fr:'Přátelé',nt:'Oznámení',login:'Přihlas se.',open:'Otevřít profil',empty:'Zatím nic.'},
+ru:{fr:'Друзья',nt:'Уведомления',login:'Войди, чтобы увидеть.',open:'Открыть профиль',empty:'Пока пусто.'},
+ja:{fr:'フレンド',nt:'通知',login:'ログインして見る。',open:'プロフィールを開く',empty:'まだありません。'}};
+function T(){var l=(document.documentElement.lang||'en').toLowerCase();return ZK_NAV_T[l]||ZK_NAV_T.en;}
+function zkNotifs(){try{return JSON.parse(localStorage.getItem('zk_notifs')||'[]');}catch(e){return [];}}
+function zkUnread(){try{return parseInt(localStorage.getItem('zk_notif_un')||'0');}catch(e){return 0;}}
+window.zkPushNotif=function(t,u){try{var n=zkNotifs();n.unshift({t:t,u:u||'',d:Date.now()});n=n.slice(0,20);localStorage.setItem('zk_notifs',JSON.stringify(n));localStorage.setItem('zk_notif_un',String(zkUnread()+1));var b=document.getElementById('zk-nbdg');if(b){b.textContent=zkUnread();b.style.display='';}}catch(e){}};
+function escH(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function mount(){
+  var n=document.querySelector('nav.nav');if(!n||document.getElementById('zk-friends-btn'))return;
+  var t=T();
+  var wrap=document.createElement('div');wrap.style.cssText='display:flex;gap:8px;align-items:center';
+  wrap.innerHTML='<button class="nicon" id="zk-friends-btn" title="'+t.fr+'">👥<span class="bdg" id="zk-fbdg" style="display:none">0</span></button>'
+    +'<button class="nicon" id="zk-bell-btn" title="'+t.nt+'">🔔<span class="bdg" id="zk-nbdg" style="display:none">0</span></button>'
+    +'<div class="npanel" id="zk-fpanel"><h3>👥 '+t.fr+'</h3><div id="zk-fbody"><div class="nempty">…</div></div></div>'
+    +'<div class="npanel" id="zk-npanel"><h3>🔔 '+t.nt+'</h3><div id="zk-nbody"></div></div>';
+  var cta=n.querySelector('button.cta');if(cta)n.insertBefore(wrap,cta);else n.appendChild(wrap);
+  document.getElementById('zk-friends-btn').onclick=function(){toggle('zk-fpanel');loadFriends();};
+  document.getElementById('zk-bell-btn').onclick=function(){toggle('zk-npanel');renderNotifs(true);};
+  document.addEventListener('click',function(e){
+    if(e.target&&e.target.closest&&(e.target.closest('.npanel')||e.target.closest('.nicon')))return;
+    closeAll();
+  });
+  seedWelcome();
+  renderNotifs(false);
+  pollBadges();
+  setInterval(pollBadges,60000);
+}
+function toggle(id){var p=document.getElementById(id);var was=p.classList.contains('open');closeAll();if(!was)p.classList.add('open');}
+function closeAll(){var ps=document.querySelectorAll('.npanel.open');for(var i=0;i<ps.length;i++)ps[i].classList.remove('open');}
+function seedWelcome(){
+  try{
+    if(localStorage.getItem('zk_notif_seed'))return;
+    localStorage.setItem('zk_notif_seed','1');
+    var t=T();
+    var n=zkNotifs();n.unshift({t:'🎮 Welcome to Zokro! New games every week.',u:'',d:Date.now()});
+    localStorage.setItem('zk_notifs',JSON.stringify(n.slice(0,20)));
+    localStorage.setItem('zk_notif_un','1');
+  }catch(e){}
+}
+function renderNotifs(mark){
+  var body=document.getElementById('zk-nbody');if(!body)return;
+  var t=T(),n=zkNotifs(),h='';
+  if(!n.length)h='<div class="nempty">'+t.empty+'</div>';
+  n.forEach(function(x){
+    var when='';try{when=new Date(x.d).toLocaleDateString();}catch(e){}
+    h+='<a class="nitem" href="'+(x.u||'#')+'">'+escH(x.t)+'<small>'+escH(when)+'</small></a>';
+  });
+  body.innerHTML=h;
+  if(mark){try{localStorage.setItem('zk_notif_un','0');}catch(e){}var b=document.getElementById('zk-nbdg');if(b)b.style.display='none';}
+  else{var u=zkUnread(),bb=document.getElementById('zk-nbdg');if(bb){if(u>0){bb.textContent=u>9?'9+':u;bb.style.display='';}else bb.style.display='none';}}
+}
+function pollBadges(){
+  if(!window.zkAuth||!window.zkAuth.ready||!window.zkAuth.user)return;
+  var me=window.zkAuth.user.id;
+  try{
+    window.zkAuth.client.from('friendships').select('id').eq('friend_id',me).eq('status','pending').then(function(r){
+      var b=document.getElementById('zk-fbdg');if(!b)return;
+      var n=(r.data||[]).length;
+      if(n>0){b.textContent=n>9?'9+':n;b.style.display='';}else b.style.display='none';
+    });
+  }catch(e){}
+}
+function loadFriends(){
+  var body=document.getElementById('zk-fbody');if(!body)return;
+  var t=T();
+  if(!window.zkAuth||!window.zkAuth.ready||!window.zkAuth.user){
+    body.innerHTML='<div class="nempty">'+t.login+'<br><br><button class="btn-gold" style="border:0;border-radius:12px;padding:10px 22px;font-weight:800;cursor:pointer" onclick="if(window.zkOpenAuth)window.zkOpenAuth()">Log In</button></div>';
+    return;
+  }
+  var me=window.zkAuth.user.id,sb=window.zkAuth.client;
+  body.innerHTML='<div class="nempty">…</div>';
+  sb.from('friendships').select('id,user_id').eq('friend_id',me).eq('status','pending').then(function(r){
+    var rows=r.data||[];
+    var ids=rows.map(function(x){return x.user_id;});
+    function render(profs){
+      var h='';
+      if(!rows.length)h='<div class="nempty">'+t.empty+'</div>';
+      rows.forEach(function(x){
+        var nm=(profs[x.user_id]||'?');
+        h+='<div class="nitem"><span>'+escH(nm)+'</span><div class="nact"><button class="btn-gold" onclick="zkFrGo('+x.id+',\'accepted\')">✓</button> <button class="lbtn" onclick="zkFrGo('+x.id+',\'declined\')">✕</button></div></div>';
+      });
+      var base='./en/profile.html#frsec';
+      try{var lm=document.querySelector('#langmenu');var bs=lm?lm.getAttribute('data-base'):'./';base=bs+'en/profile.html#frsec';}catch(e){}
+      h+='<a class="nitem" style="color:#f5c451;font-weight:800" href="'+base+'">'+t.open+' →</a>';
+      body.innerHTML=h;
+    }
+    if(!ids.length){render({});return;}
+    sb.from('profiles').select('id,username').in('id',ids).then(function(r2){
+      var profs={};(r2.data||[]).forEach(function(p){profs[p.id]=p.username;});
+      render(profs);
+    });
+  });
+}
+window.zkFrGo=function(id,how){
+  if(!window.zkAuth||!window.zkAuth.user)return;
+  var sb=window.zkAuth.client,me=window.zkAuth.user.id;
+  if(how==='accepted')sb.from('friendships').update({status:'accepted'}).eq('id',id).then(function(){loadFriends();pollBadges();});
+  else sb.from('friendships').delete().eq('id',id).then(function(){loadFriends();pollBadges();});
+};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);
+else mount();
+// GAME REACTIONS auto-wire (like/dislike with global counts)
+(function(){
+  function wire(){
+    var row=document.getElementById('lrow');if(!row||row.getAttribute('data-wired'))return;
+    var G=row.getAttribute('data-game');if(!G)return;
+    row.setAttribute('data-wired','1');
+    var up=document.getElementById('lc-up'),dn=document.getElementById('lc-dn');
+    var btns=row.querySelectorAll('.lbtn');
+    function paint(my){for(var i=0;i<btns.length;i++){var v=parseInt(btns[i].getAttribute('data-v'));if(my===v)btns[i].classList.add('on');else btns[i].classList.remove('on');}}
+    function counts(){
+      if(!window.zkAuth||!window.zkAuth.ready||!window.zkAuth.client)return;
+      window.zkAuth.client.from('game_reactions').select('val').eq('game',G).then(function(r){
+        var a=0,b=0;(r.data||[]).forEach(function(x){if(x.val===1)a++;else b++;});
+        if(up)up.textContent=a;if(dn)dn.textContent=b;
+      });
+    }
+    var iv=setInterval(function(){
+      if(!window.zkAuth||!window.zkAuth.ready)return;clearInterval(iv);
+      var sb=window.zkAuth.client,me=window.zkAuth.user?window.zkAuth.user.id:null;
+      counts();
+      if(me)sb.from('game_reactions').select('val').eq('game',G).eq('user_id',me).single().then(function(r){paint(r.data?r.data.val:0);});
+      for(var i=0;i<btns.length;i++)(function(bt){
+        bt.onclick=function(){
+          if(!window.zkAuth||!window.zkAuth.user){if(window.zkOpenAuth)window.zkOpenAuth();return;}
+          var v=parseInt(bt.getAttribute('data-v'));
+          bt.disabled=true;
+          sb.from('game_reactions').upsert({user_id:me,game:G,val:v}).then(function(){bt.disabled=false;paint(v);counts();});
+        };
+      })(btns[i]);
+    },500);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',wire);
+  else wire();
 })();
 // World-class footer everywhere from one place (runs after page loads)
 function buildFooter(){

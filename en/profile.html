@@ -7,7 +7,7 @@
 <link rel="canonical" href="https://zokro.fun/en/profile.html">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0a0714">
-<link rel="stylesheet" href="../assets/style.css?v=6">
+<link rel="stylesheet" href="../assets/style.css?v=7">
 <style>
 .wrap{max-width:680px;margin:auto;padding:20px}
 .pcard{background:#151d33;border:1px solid #263154;border-radius:22px;overflow:hidden;text-align:center;box-shadow:0 24px 60px #00000066}
@@ -50,15 +50,17 @@ tbody tr:hover{background:#f5c4510d}
 </style>
 </head>
 <body>
-<nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=17"></script></nav>
+<nav class="nav"><a class="logo" href="./">ZOK<b>RO</b></a><div id="langmenu" data-base="../"></div><script src="../assets/langs.js?v=18"></script></nav>
 <div class="wrap">
 <a href="./" class="backpill">← Home</a>
 <div class="pcard" id="pcard"><p style="padding:30px">⏳ Loading your profile...</p></div>
 <div class="secttl"><h3 style="margin:0">🏆 My best scores</h3></div>
 <table id="scores"><thead><tr><th>Game</th><th>Score</th><th>Date</th></tr></thead><tbody id="scoresBody"></tbody></table>
 <p><a class="btn-gold" style="text-decoration:none;display:inline-block" href="leaderboard.html">🌍 Global leaderboard →</a></p>
-<div class="secttl"><h3 style="margin:0">👥 Friends</h3></div>
+<div class="secttl" id="frsec"><h3 style="margin:0">👥 Friends</h3></div>
 <div class="pcard" style="margin-top:12px;padding:20px" id="fcard"><p>⏳ Loading friends...</p></div>
+<div class="secttl"><h3 style="margin:0">❤️ Liked games</h3></div>
+<div class="grid" id="likedGrid" style="margin-top:12px"></div>
 <p><button class="btn-ghost" onclick="logout()">Log out</button></p>
 </div>
 <footer><p class="copy">© 2026 Zokro</p></footer>
@@ -219,6 +221,18 @@ function frAdd(){
 }
 function frAccept(id){var sb=window.zkAuth.client,me=window.zkAuth.user.id;sb.from('friendships').update({status:'accepted'}).eq('id',id).then(function(){loadFriends(sb,me);});}
 function frDel(id){var sb=window.zkAuth.client,me=window.zkAuth.user.id;sb.from('friendships').delete().eq('id',id).then(function(){loadFriends(sb,me);});}
+(function renderLiked(){
+  var g=document.getElementById('likedGrid');if(!g)return;
+  var f=[];try{f=JSON.parse(localStorage.getItem('zk_fav')||'[]');}catch(e){}
+  var h='';
+  f.forEach(function(x){
+    var o=(typeof x==='string')?{u:x}:x;
+    if(o.html)h+=o.html;
+    else h+='<a class="card" href="'+o.u+'"><div class="cbody"><h3>🎮 Saved game</h3><p><span class="go">Play →</span></p></div></a>';
+  });
+  g.innerHTML=h||'<p style="color:#b8aed6;font-size:13px">No liked games yet — tap 🤍 on any game!</p>';
+  try{if(window.paintFavs)window.paintFavs();}catch(e){}
+})();
 </script>
 </body>
 </html>
