@@ -86,7 +86,7 @@ var iv=setInterval(function(){
     window.zkAuth.user=u;
     loadProfile(sb,u);
     loadScores(sb,u);
-    loadFriends(sb,u);
+    loadFriends(sb,u.id);
   });
 },500);
 function loadProfile(sb,u){
