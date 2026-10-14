@@ -285,7 +285,10 @@ function buildSidebar(){
     }
   }
   if(hb)hb.onclick=window.zkToggleSide;
-  try{if(localStorage.getItem('zk_sb_c')==='1'&&window.innerWidth>=1024)document.body.classList.add('sb-collapsed');}catch(e){}
+  try{
+    var _c=null;try{_c=localStorage.getItem('zk_sb_c');}catch(x){}
+    if(window.innerWidth>=1024&&(_c==='1'||_c===null))document.body.classList.add('sb-collapsed');
+  }catch(e){}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',buildSidebar);
 else buildSidebar();
