@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هيكس ريسر | Zokro</title>
+<meta name="description" content="سباق 3D مضاد للجاذبية. سرعة WebGL خالصة.">
+<link rel="canonical" href="https://zokro.fun/ar/games/hex-racer.html">
+<link rel="alternate" hreflang="en" href="https://zokro.fun/en/games/hex-racer.html">
+<link rel="alternate" hreflang="ar" href="https://zokro.fun/ar/games/hex-racer.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zokro">
+<meta property="og:title" content="هيكس ريسر | Zokro">
+<meta property="og:description" content="سباق 3D مضاد للجاذبية. سرعة WebGL خالصة.">
+<meta property="og:url" content="https://zokro.fun/ar/games/hex-racer.html">
+<meta property="og:image" content="https://zokro.fun/assets/social-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0714">
+<link rel="stylesheet" href="../../assets/style.css?v=28">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Hex Racer","url":"https://zokro.fun/en/games/hex-racer.html","genre":["Game"],"gamePlatform":"Web browser","applicationCategory":"Game","offers":{"@type":"Offer","price":"0"},"inLanguage":"ar"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"https://zokro.fun/ar/"},{"@type":"ListItem","position":2,"name":"هيكس ريسر","item":"https://zokro.fun/ar/games/hex-racer.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"هيكس ريسر مجانية؟","acceptedAnswer":{"@type":"Answer","text":"أيوه، مجانية للأبد بدون تسجيل. لعبة مفتوحة المصدر مستضافة هنا على زوكرو."}},{"@type":"Question","name":"مين عملها؟","acceptedAnswer":{"@type":"Answer","text":"تيبو ديسبولان نزل HexGL برخصة MIT. مستضيفينها مع حفظ حق المؤلف."}}]}</script>
+<style>.wrap{max-width:900px;margin:auto;padding:16px}.play{border:1px solid #263154;border-radius:16px;overflow:hidden;background:#0e1530}.play iframe{width:100%;height:560px;border:0}.play button{font-size:16px;padding:10px 18px;margin:5px;border-radius:10px;border:0;background:#7c3aed;color:#fff;cursor:pointer}</style>
+</head>
+<body>
+<nav class="nav"><a class="logo" href="../">ZOKRO</a><div id="langmenu" data-base="../../"></div><script src="../../assets/langs.js?v=34"></script></nav>
+<div class="wrap">
+<a href="../" class="backlink">→ كل الألعاب</a>
+<h1>🏎️ هيكس ريسر</h1>
+<p>★★★★★ 4.8 • 🎮 3d • 📱 شغال على الموبايل</p>
+<div class="topstrip" id="topstrip" style="display:none"><b>🏆 أوائل اللاعبين</b><div id="toprow"></div></div>
+<div class="play"><iframe src="../../en/games/hex-racer/index.html" title="هيكس ريسر game" loading="lazy"></iframe></div>
+<p><a class="btn" href="../../en/games/hex-racer/index.html">⛶ ملء الشاشة</a></p>
+<article>
+<h2>إزاي تلعب</h2>
+<p>سوق بالأسهم ودوس مسافة للبوست. سابق حلبة المستقبل ضد الساعة.</p>
+<p>الأحسن على الكمبيوتر بكيبورد. وطّي الجودة من القايمة لو بطيئة.</p>
+<h2>نصايح للفوز</h2>
+<ul><li>البوست في الخطوط المستقيمة بس</li>
+<li>احفظ أول 3 ملفات</li>
+<li>الجودة العالية أحلى على الأجهزة السريعة</li></ul>
+<h2>أسئلة</h2>
+<p><b>هيكس ريسر مجانية؟</b> أيوه، مجانية للأبد بدون تسجيل. لعبة مفتوحة المصدر مستضافة هنا على زوكرو.</p>
+<p><b>مين عملها؟</b> تيبو ديسبولان نزل HexGL برخصة MIT. مستضيفينها مع حفظ حق المؤلف.</p>
+<h2>ألعاب تانية</h2>
+<p>جرب <a href="desert-daily.html">Desert Daily</a>, <a href="stack-dune.html">Stack the Dune 3D</a> and <a href="guess-oasis.html">Guess the Oasis</a>.</p>
+</article>
+</div>
+<footer><p>© 2026 Zokro • Licensed game by Open-source (MIT) HexGL by Thibaut Despoulain</p></footer>
+<script>
+(function(){var G="Hex Racer";function e(s){return String(s==null?"":s).replace(/[&<>"']/g,function(x){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x];});}var iv=setInterval(function(){if(!window.zkAuth||!window.zkAuth.ready)return;clearInterval(iv);window.zkAuth.client.from("scores").select("score,profiles(username,avatar)").eq("game",G).order("score",{ascending:false}).limit(3).then(function(r){var rows=r.data||[];if(!rows.length)return;var medals=["🥇","🥈","🥉"];var h="";rows.forEach(function(s,i){var p=s.profiles||{};h+='<span class="tcell">'+medals[i]+" "+e(p.username||"?")+" <b>"+parseInt(s.score||0)+"</b></span>";});document.getElementById("toprow").innerHTML=h;document.getElementById("topstrip").style.display="";});},600);})();
+</script>
+</body>
+</html>
