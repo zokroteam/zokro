@@ -278,29 +278,30 @@ footer{display:none!important}
 .pill-btn:hover{border-color:var(--gold);color:var(--gold)}
 .pill-btn .bdg{position:absolute;top:-6px;inset-inline-end:-6px;min-width:19px;height:19px;border-radius:10px;background:linear-gradient(90deg,#ff5b5b,#ff8a3d);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 5px}
 .nav button.cta{padding:9px 22px;font-size:13px;white-space:nowrap}
-#zkside{top:0;padding:72px 12px 0;display:flex!important;flex-direction:column;overflow-y:auto;overflow-x:hidden;background:#0c0918}
-.sb-scroll{flex:none;overflow:visible;min-height:0}
-.sb-sec{margin-bottom:8px}
-.sb-sec h4{margin:0 0 4px;padding:0 12px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
-.sb-link{display:flex;align-items:center;gap:12px;width:100%;text-align:start;background:none;border:0;color:var(--txt);text-decoration:none;font-size:13.5px;font-weight:700;padding:8px 12px;border-radius:10px;cursor:pointer;font-family:inherit;box-sizing:border-box}
+#zkside{top:60px;padding:10px 10px 0;display:flex!important;flex-direction:column;overflow-y:auto;overflow-x:hidden;background:#0c0918;scrollbar-width:none}
+#zkside::-webkit-scrollbar,.sb-scroll::-webkit-scrollbar{display:none}
+.sb-scroll{flex:none;overflow:visible;min-height:0;scrollbar-width:none}
+.sb-sec{margin-bottom:6px}
+.sb-sec h4{margin:0 0 2px;padding:0 12px;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
+.sb-link{display:flex;align-items:center;gap:10px;width:100%;text-align:start;background:none;border:0;color:var(--txt);text-decoration:none;font-size:13px;font-weight:700;padding:7px 10px;border-radius:10px;cursor:pointer;font-family:inherit;box-sizing:border-box}
 a.sb-link{color:var(--txt)}
 .sb-link:hover{background:#f5c45114;color:var(--gold)}
 .sb-link.on{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000}
 .sb-ic{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .sb-lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sb-div{height:1px;background:var(--line);margin:10px 8px;opacity:.7}
-.sb-foot{border-top:1px solid var(--line);padding:10px 6px 16px;margin-top:auto}
+.sb-div{height:1px;background:var(--line);margin:8px 6px;opacity:.7}
+.sb-foot{border-top:1px solid var(--line);padding:8px 4px 12px;margin-top:auto}
 .sb-contact{display:block;text-align:center;background:#ffffff10;border:1px solid var(--line);color:var(--txt);font-weight:800;font-size:13px;border-radius:12px;padding:10px;text-decoration:none}
 .sb-contact:hover{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000;border-color:transparent}
 .sb-links{display:grid;grid-template-columns:1fr 1fr;gap:2px 8px;margin:12px 0}
 .sb-links a{color:var(--mut);text-decoration:none;font-size:12px;padding:4px 6px;border-radius:8px}
 .sb-links a:hover{color:var(--gold)}
 .sb-soc{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 10px}
-.sb-soc a{width:36px;height:36px;border-radius:50%;background:#f5c45114;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;text-decoration:none;transition:.2s}
+.sb-soc a{width:32px;height:32px;border-radius:50%;background:#f5c45114;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:15px;text-decoration:none;transition:.2s}
 .sb-soc a:hover{background:linear-gradient(90deg,var(--gold),var(--gold2));transform:translateY(-2px)}
 .sb-copy{color:var(--mut);font-size:11px;text-align:center;line-height:1.6}
 body.sb-collapsed{padding-inline-start:76px}
-body.sb-collapsed #zkside{width:76px;padding:14px 8px 0}
+body.sb-collapsed #zkside{width:76px;padding:10px 6px 0}
 body.sb-collapsed .sb-lb{display:none}
 body.sb-collapsed .sb-sec h4{display:none}
 body.sb-collapsed .sb-link{justify-content:center;padding:10px 0}
@@ -335,9 +336,9 @@ body.sb-hidden #zkside{display:flex!important}
 }
 @media(min-width:1024px){
 body.sb-collapsed #zkside{transition:width .18s ease}
-body.sb-collapsed #zkside:hover{width:248px;box-shadow:0 0 60px #000}
+body.sb-collapsed #zkside:hover{width:260px;box-shadow:30px 0 60px #00000099;z-index:45}
 body.sb-collapsed #zkside:hover .sb-lb{display:inline}
 body.sb-collapsed #zkside:hover .sb-sec h4{display:block}
-body.sb-collapsed #zkside:hover .sb-link{justify-content:flex-start;padding:8px 12px}
+body.sb-collapsed #zkside:hover .sb-link{justify-content:flex-start;padding:7px 10px}
 body.sb-collapsed #zkside:hover .sb-foot{display:block}
 }
