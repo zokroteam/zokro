@@ -143,6 +143,15 @@ function zkSuggest(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zkInitSocial);
 else zkInitSocial();
+// AUTO-STAMP: every home/back link becomes a pill button, on any page, any language, forever
+(function(){
+  function stamp(){
+    var as=document.querySelectorAll('.wrap>a[href="./"],.wrap>a[href="../"],.wrap>a[href="/"],.wrap>a[href="index.html"]');
+    for(var i=0;i<as.length;i++){if(!as[i].classList.contains('backlink'))as[i].classList.add('backlink');}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',stamp);
+  else stamp();
+})();
 // World-class footer everywhere from one place (runs after page loads)
 function buildFooter(){
   var f=document.querySelector('footer');

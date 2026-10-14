@@ -176,6 +176,9 @@ a.btn{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--go
 a.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px #f5c45144}
 a.backlink{display:inline-block;text-decoration:none;font-size:13px;font-weight:800;color:var(--gold);border:1px solid var(--line);background:#f5c4510d;padding:8px 18px;border-radius:20px;margin-bottom:12px}
 a.backlink:hover{background:#f5c45122}
+/* AUTO-STAMP: any home back-link inside content is a pill button — no exceptions */
+.wrap>a[href="./"],.wrap>a[href="../"],.wrap>a[href="/"],.wrap>a[href="index.html"]{display:inline-block;text-decoration:none;font-size:13px;font-weight:800;color:var(--gold);border:1px solid var(--line);background:#f5c4510d;padding:8px 18px;border-radius:20px;margin-bottom:12px}
+.wrap>a[href="./"]:hover,.wrap>a[href="../"]:hover,.wrap>a[href="/"]:hover,.wrap>a[href="index.html"]:hover{background:#f5c45122}
 /* Search icon inside the box */
 .search::before{content:'🔍';position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.75;pointer-events:none}
 [dir="rtl"] .search::before{left:auto;right:16px}
