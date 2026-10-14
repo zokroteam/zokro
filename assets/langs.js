@@ -208,7 +208,7 @@ en:{games:'Games',all:'All games',daily:'Daily challenge',top:'Top players',fav:
 ar:{games:'الألعاب',all:'كل الألعاب',daily:'تحدي اليوم',top:'الأوائل',fav:'المفضلة',recent:'اتلعبت قريب',vote:'اطلب لعبة',cats:'التصنيفات',cAll:'الكل',cPuzzle:'ألغاز',c3d:'3D',cDaily:'يومي',cFav:'المفضلة',studio:'الاستوديو',ab:'من نحن',ct:'اتصل بنا',rq:'اطلب لعبة',legal:'قانوني',pv:'الخصوصية',tm:'الشروط',contactUs:'اتصل بنا',copy:'© 2026 استوديو زوكرو'}};
 window.zkToggleSide=function(){
   if(window.innerWidth<1024){document.body.classList.toggle('sb-open');}
-  else{var c=document.body.classList.toggle('sb-collapsed');try{localStorage.setItem('zk_sb_c',c?'1':'0');}catch(e){}}
+  else{var h=document.body.classList.toggle('sb-hidden');try{localStorage.setItem('zk_sb_h',h?'1':'0');}catch(e){}}
 };
 function zkGoCat(i){
   var chips=document.querySelectorAll('.chips button');
@@ -286,8 +286,11 @@ function buildSidebar(){
   }
   if(hb)hb.onclick=window.zkToggleSide;
   try{
-    var _c=null;try{_c=localStorage.getItem('zk_sb_c');}catch(x){}
-    if(window.innerWidth>=1024&&(_c==='1'||_c===null))document.body.classList.add('sb-collapsed');
+    if(window.innerWidth>=1024){
+      document.body.classList.add('sb-collapsed');
+      var _h=null;try{_h=localStorage.getItem('zk_sb_h');}catch(x){}
+      if(_h==='1')document.body.classList.add('sb-hidden');
+    }
   }catch(e){}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',buildSidebar);

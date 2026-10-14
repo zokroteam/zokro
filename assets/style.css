@@ -328,6 +328,11 @@ body.sb-collapsed .sb-foot{display:block}
 /* === v12: dynamic rail — collapsed by default, hover/click to expand === */
 #langmenu .lbtn span:first-of-type{display:none}
 #langmenu .lmenu a span:first-of-type{display:inline}
+body.sb-hidden{padding-inline-start:0}
+body.sb-hidden #zkside{display:none!important}
+@media(max-width:1023.98px){
+body.sb-hidden #zkside{display:flex!important}
+}
 @media(min-width:1024px){
 body.sb-collapsed #zkside{transition:width .18s ease}
 body.sb-collapsed #zkside:hover{width:248px;box-shadow:0 0 60px #000}
