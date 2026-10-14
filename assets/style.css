@@ -181,7 +181,7 @@ a.backlink:hover{background:#f5c45122}
 .wrap>a[href="./"],.wrap>a[href="../"],.wrap>a[href="/"],.wrap>a[href="index.html"]{display:inline-block;text-decoration:none;font-size:13px;font-weight:800;color:var(--gold);border:1px solid var(--line);background:#f5c4510d;padding:8px 18px;border-radius:20px;margin-bottom:12px}
 .wrap>a[href="./"]:hover,.wrap>a[href="../"]:hover,.wrap>a[href="/"]:hover,.wrap>a[href="index.html"]:hover{background:#f5c45122}
 /* Search icon inside the box */
-.search::before{content:'🔍';position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.75;pointer-events:none}
+.search::before{content:'';position:absolute;left:16px;top:50%;transform:translateY(-50%);width:16px;height:16px;opacity:.9;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23f5c451' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z'/%3E%3C/svg%3E") center/contain no-repeat}
 [dir="rtl"] .search::before{left:auto;right:16px}
 .search input{padding-inline-start:42px}
 /* GAME ARTICLES - readable how-to blocks (beats page styles) */
@@ -220,6 +220,7 @@ kbd{background:#0b1020;border:1px solid var(--line);border-radius:6px;padding:2p
 /* NAV ICON BUTTONS (friends + notifications) */
 .nicon{position:relative;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#141024;color:#fff;font-size:17px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
 .nicon:hover{border-color:var(--gold)}
+.nicon svg{display:block}
 .nicon .bdg{position:absolute;top:-5px;inset-inline-end:-5px;min-width:19px;height:19px;border-radius:10px;background:linear-gradient(90deg,#ff5b5b,#ff8a3d);color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;padding:0 5px}
 .npanel{position:fixed;top:64px;inset-inline-end:16px;width:min(360px,calc(100vw - 32px));max-height:70vh;overflow:auto;background:#141024;border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 70px #000000cc;z-index:90;display:none}
 .npanel.open{display:block}

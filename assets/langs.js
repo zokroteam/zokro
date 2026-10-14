@@ -328,8 +328,8 @@ function mount(){
   var n=document.querySelector('nav.nav');if(!n||document.getElementById('zk-friends-btn'))return;
   var t=T();
   var wrap=document.createElement('div');wrap.className='hdr-icons';
-  wrap.innerHTML='<button class="nicon" id="zk-friends-btn" title="'+t.fr+'">👥<span class="bdg" id="zk-fbdg" style="display:none">0</span></button>'
-    +'<button class="nicon" id="zk-bell-btn" title="'+t.nt+'">🔔<span class="bdg" id="zk-nbdg" style="display:none">0</span></button>'
+  wrap.innerHTML='<button class="nicon" id="zk-friends-btn" title="'+t.fr+'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5c451" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg><span class="bdg" id="zk-fbdg" style="display:none">0</span></button>'
+    +'<button class="nicon" id="zk-bell-btn" title="'+t.nt+'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5c451" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg><span class="bdg" id="zk-nbdg" style="display:none">0</span></button>'
     +'<div class="npanel" id="zk-fpanel"><h3>👥 '+t.fr+'</h3><div id="zk-fbody"><div class="nempty">…</div></div></div>'
     +'<div class="npanel" id="zk-npanel"><h3>🔔 '+t.nt+'</h3><div id="zk-nbody"></div></div>';
   var cta=n.querySelector('button.cta');
@@ -339,7 +339,7 @@ function mount(){
   document.getElementById('zk-bell-btn').onclick=function(){toggle('zk-npanel');renderNotifs(true);};
   (function(){
     var bell=document.getElementById('zk-bell-btn');if(!bell||document.getElementById('zk-bookmark-btn'))return;
-    var bm=document.createElement('button');bm.className='nicon';bm.id='zk-bookmark-btn';bm.title=t.my||'My games';bm.setAttribute('aria-label','saved games');bm.innerHTML='💾';
+    var bm=document.createElement('button');bm.className='nicon';bm.id='zk-bookmark-btn';bm.title=t.my||'My games';bm.setAttribute('aria-label','saved games');bm.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5c451" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"/></svg>';
     bm.onclick=zkBookmarkGo;
     bell.parentNode.insertBefore(bm,bell);
   })();
