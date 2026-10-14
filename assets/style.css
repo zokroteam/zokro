@@ -70,7 +70,7 @@ a.logo:hover .wdash{width:44px}
 [dir="rtl"] .ribbon{inset-inline-start:auto;transform:rotate(38deg)}
 /* footer */
 footer{margin-top:40px;border-top:1px solid var(--line);background:#060410}
-.f-in{max-width:1200px;margin:auto;padding:34px 20px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:22px}
+.f-in{max-width:1200px;margin:auto;padding:34px 20px;display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:22px}
 .f-in h4{margin:0 0 10px}.f-in a{display:block;color:var(--mut);text-decoration:none;font-size:13px;margin:7px 0}
 .copy{text-align:center;color:var(--mut);font-size:12px;padding-bottom:24px}
 .f-top{height:3px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--vio),transparent)}
@@ -242,3 +242,23 @@ kbd{background:#0b1020;border:1px solid var(--line);border-radius:6px;padding:2p
 /* GLOBAL GOLD BUTTON (panels, widgets) */
 .btn-gold{background:linear-gradient(90deg,#f5c451,#ff8a3d);color:#1a1000!important;font-weight:800;border:0;border-radius:12px;padding:10px 20px;cursor:pointer;font-size:14px;text-decoration:none;display:inline-block}
 .btn-gold:disabled{opacity:.6;cursor:wait}
+/* SIDEBAR LAYOUT (desktop fixed, mobile drawer) */
+#zkside{position:fixed;top:0;bottom:0;inset-inline-start:0;width:248px;background:#0c0918;border-inline-end:1px solid var(--line);padding:76px 14px 20px;overflow-y:auto;z-index:40;display:none}
+.sb-sec{margin-bottom:20px}
+.sb-sec h4{margin:0 0 8px;padding:0 12px;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--gold)}
+.sb-sec a,.sb-sec button{display:flex;width:100%;text-align:start;background:none;border:0;color:var(--txt);text-decoration:none;font-size:14px;font-weight:700;padding:9px 12px;border-radius:10px;cursor:pointer;font-family:inherit}
+.sb-sec a:hover,.sb-sec button:hover{background:#f5c45114;color:var(--gold)}
+.sb-sec a.on,.sb-sec button.on{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000}
+#sb-overlay{display:none}
+.hamb{display:none!important}
+@media(min-width:1024px){
+body{padding-inline-start:248px}
+#zkside{display:block}
+}
+@media(max-width:1023.98px){
+#zkside{display:block;transform:translateX(-110%);transition:transform .25s;box-shadow:0 0 60px #000}
+[dir="rtl"] #zkside{transform:translateX(110%)}
+body.sb-open #zkside{transform:none}
+body.sb-open #sb-overlay{display:block;position:fixed;inset:0;background:#000000aa;z-index:39}
+.hamb{display:inline-flex!important}
+}
