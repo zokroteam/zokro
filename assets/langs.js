@@ -202,6 +202,16 @@ function zkHeader(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zkHeader);
 else zkHeader();
+// Dynamic header: slightly transparent + blur while scrolling
+(function(){
+  function onS(){
+    var n=document.querySelector('nav.nav');if(!n)return;
+    if((window.scrollY||0)>10)n.classList.add('scrolled');else n.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll',onS,{passive:true});
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',onS);
+  else onS();
+})();
 // SIDEBAR on every page (desktop fixed rail, mobile drawer) + slim footer links live here too
 var ZK_SB={
 en:{games:'Games',all:'All games',daily:'Daily challenge',top:'Top players',fav:'Favorites',recent:'Recently played',vote:'Request a game',cats:'Categories',cAll:'All',cPuzzle:'Puzzle',c3d:'3D',cDaily:'Daily',cFav:'Favs',studio:'Studio',ab:'About us',ct:'Contact',rq:'Request a game',legal:'Legal',pv:'Privacy',tm:'Terms',contactUs:'Contact us',copy:'© 2026 Zokro Studio'},
