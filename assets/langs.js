@@ -18,15 +18,6 @@
   var LANGS=[
     {c:'en',f:'us',name:'English'},
     {c:'ar',f:'eg',name:'العربية'},
-    {c:'de',f:'de',name:'DEUTSCH'},
-    {c:'fr',f:'fr',name:'FRANÇAIS'},
-    {c:'es',f:'es',name:'ESPAÑOL'},
-    {c:'pt',f:'pt',name:'PORTUGUÊS'},
-    {c:'tr',f:'tr',name:'TÜRK'},
-    {c:'pl',f:'pl',name:'POLSKI'},
-    {c:'cs',f:'cz',name:'ČESKY'},
-    {c:'ru',f:'ru',name:'РУССКИЙ'},
-    {c:'ja',f:'jp',name:'日本語'}
   ];
   var cur=(document.documentElement.lang||'en').toLowerCase();
   var here=LANGS.filter(function(l){return l.c===cur;})[0]||LANGS[0];
@@ -96,8 +87,8 @@ document.addEventListener('input',function(e){
   if(e.target&&e.target.id==='q')setTimeout(zkApplyCat,0);
 });
 // Favorites hearts + fav chip + play history + suggested-for-you (all languages)
-var ZK_FAV_T={en:'Favs',ar:'المفضلة',de:'Favoriten',fr:'Favoris',es:'Favoritos',pt:'Favoritos',tr:'Favoriler',pl:'Ulubione',cs:'Oblíbené',ru:'Избранное',ja:'お気に入り'};
-var ZK_SUG_T={en:['♥ Suggested for you','Based on what you played.'],ar:['♥ مقترح لك','على حسب اللي لعبته قبل كده.'],de:['♥ Für dich','Basierend auf deinen Spielen.'],fr:['♥ Pour toi','Selon tes jeux.'],es:['♥ Para ti','Según lo que jugaste.'],pt:['♥ Para ti','Com base no que jogaste.'],tr:['♥ Sana özel','Oynadıklarına göre.'],pl:['♥ Dla ciebie','Na podstawie twoich gier.'],cs:['♥ Pro tebe','Podle toho, co jsi hrál.'],ru:['♥ Для тебя','На основе твоих игр.'],ja:['♥ おすすめ','遊んだゲームから。']};
+var ZK_FAV_T={en:'Favs',ar:'المفضلة'};
+var ZK_SUG_T={en:['♥ Suggested for you','Based on what you played.'],ar:['♥ مقترح لك','على حسب اللي لعبته قبل كده.']};
 function zkHist(){try{return JSON.parse(localStorage.getItem('zk_hist')||'[]');}catch(e){return [];}}
 function zkInitSocial(){
   var cards=document.querySelectorAll('#grid .card');
@@ -170,16 +161,7 @@ else zkInitSocial();
 (function(){
 var ZK_NAV_T={
 en:{fr:'Friends',nt:'Notifications',login:'Log in to see.',open:'Open profile',empty:'Nothing here yet.'},
-ar:{fr:'الأصدقاء',nt:'الإشعارات',login:'سجل دخول عشان تشوف.',open:'افتح البروفايل',empty:'مفيش حاجة لسه.'},
-de:{fr:'Freunde',nt:'Mitteilungen',login:'Log dich ein.',open:'Profil öffnen',empty:'Noch nichts hier.'},
-fr:{fr:'Amis',nt:'Notifications',login:'Connecte-toi.',open:'Ouvrir le profil',empty:'Rien pour le moment.'},
-es:{fr:'Amigos',nt:'Notificaciones',login:'Inicia sesión.',open:'Abrir perfil',empty:'Nada por aquí.'},
-pt:{fr:'Amigos',nt:'Notificações',login:'Entra para ver.',open:'Abrir perfil',empty:'Nada por aqui.'},
-tr:{fr:'Arkadaşlar',nt:'Bildirimler',login:'Giriş yap.',open:'Profili aç',empty:'Henüz bir şey yok.'},
-pl:{fr:'Znajomi',nt:'Powiadomienia',login:'Zaloguj się.',open:'Otwórz profil',empty:'Jeszcze nic.'},
-cs:{fr:'Přátelé',nt:'Oznámení',login:'Přihlas se.',open:'Otevřít profil',empty:'Zatím nic.'},
-ru:{fr:'Друзья',nt:'Уведомления',login:'Войди, чтобы увидеть.',open:'Открыть профиль',empty:'Пока пусто.'},
-ja:{fr:'フレンド',nt:'通知',login:'ログインして見る。',open:'プロフィールを開く',empty:'まだありません。'}};
+ar:{fr:'الأصدقاء',nt:'الإشعارات',login:'سجل دخول عشان تشوف.',open:'افتح البروفايل',empty:'مفيش حاجة لسه.'}};
 function T(){var l=(document.documentElement.lang||'en').toLowerCase();return ZK_NAV_T[l]||ZK_NAV_T.en;}
 function zkNotifs(){try{return JSON.parse(localStorage.getItem('zk_notifs')||'[]');}catch(e){return [];}}
 function zkUnread(){try{return parseInt(localStorage.getItem('zk_notif_un')||'0');}catch(e){return 0;}}
@@ -325,15 +307,6 @@ function buildFooter(){
   var T={
     en:{tag:'Independent games studio. New titles every week.',g:'Games',s:'Studio',l:'Legal',about:'About us',contact:'Contact',req:'Request a game',priv:'Privacy',terms:'Terms',news:'Get new games first:',ph:'your email',go:'Join',cr:'© 2026 Zokro Studio • zokro.fun • Made for players worldwide'},
     ar:{tag:'استوديو ألعاب مستقل. ألعاب جديدة كل أسبوع.',g:'الألعاب',s:'الاستوديو',l:'قانوني',about:'من نحن',contact:'اتصل بنا',req:'اطلب لعبة',priv:'الخصوصية',terms:'الشروط',news:'اعرف الألعاب الجديدة أول واحد:',ph:'إيميلك',go:'اشترك',cr:'© 2026 استوديو زوكرو • zokro.fun'},
-    de:{tag:'Unabhängiges Studio. Jede Woche neue Spiele.',g:'Spiele',s:'Studio',l:'Rechtliches',about:'Über uns',contact:'Kontakt',req:'Wunschspiel',priv:'Datenschutz',terms:'AGB',news:'Neue Spiele zuerst:',ph:'E-Mail',go:'OK',cr:'© 2026 Zokro Studio • zokro.fun'},
-    fr:{tag:'Studio indépendant. Nouveaux jeux chaque semaine.',g:'Jeux',s:'Studio',l:'Légal',about:'À propos',contact:'Contact',req:'Demander',priv:'Confidentialité',terms:'CGU',news:'Nouveautés en premier :',ph:'email',go:'OK',cr:'© 2026 Studio Zokro • zokro.fun'},
-    es:{tag:'Estudio independiente. Juegos nuevos cada semana.',g:'Juegos',s:'Estudio',l:'Legal',about:'Nosotros',contact:'Contacto',req:'Pedir',priv:'Privacidad',terms:'Términos',news:'Novedades primero:',ph:'email',go:'OK',cr:'© 2026 Zokro • zokro.fun'},
-    pt:{tag:'Estúdio independente. Jogos novos toda semana.',g:'Jogos',s:'Estúdio',l:'Legal',about:'Sobre',contact:'Contato',req:'Pedir',priv:'Privacidade',terms:'Termos',news:'Novidades primeiro:',ph:'email',go:'OK',cr:'© 2026 Zokro • zokro.fun'},
-    tr:{tag:'Bağımsız stüdyo. Her hafta yeni oyunlar.',g:'Oyunlar',s:'Stüdyo',l:'Yasal',about:'Hakkında',contact:'İletişim',req:'İste',priv:'Gizlilik',terms:'Koşullar',news:'Önce sen öğren:',ph:'e-posta',go:'OK',cr:'© 2026 Zokro • zokro.fun'},
-    pl:{tag:'Niezależne studio. Nowe gry co tydzień.',g:'Gry',s:'Studio',l:'Prawne',about:'O nas',contact:'Kontakt',req:'Poproś',priv:'Prywatność',terms:'Regulamin',news:'Nowości najpierw:',ph:'email',go:'OK',cr:'© 2026 Zokro • zokro.fun'},
-    cs:{tag:'Nezávislé studio. Nové hry každý týden.',g:'Hry',s:'Studio',l:'Právní',about:'O nás',contact:'Kontakt',req:'Přát',priv:'Soukromí',terms:'Podmínky',news:'Novinky jako první:',ph:'email',go:'OK',cr:'© 2026 Zokro • zokro.fun'},
-    ru:{tag:'Независимая студия. Новые игры каждую неделю.',g:'Игры',s:'Студия',l:'Право',about:'О нас',contact:'Контакты',req:'Заказ',priv:'Конфиденциальность',terms:'Условия',news:'Новинки первым:',ph:'email',go:'OK',cr:'© 2026 Zokro • zokro.fun'},
-    ja:{tag:'独立系スタジオ。毎週新作。',g:'ゲーム',s:'スタジオ',l:'法務',about:'会社概要',contact:'お問い合わせ',req:'リクエスト',priv:'プライバシー',terms:'利用規約',news:'新作を先取り:',ph:'メール',go:'OK',cr:'© 2026 Zokro • zokro.fun'}
   };
   var t=T[cur]||T.en;
   var ab=base+'en/about.html',ct=base+'en/contact.html',rq=base+'en/request.html',pv=base+'en/privacy.html',tm=base+'en/terms.html';
