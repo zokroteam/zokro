@@ -328,7 +328,7 @@ function mount(){
   var n=document.querySelector('nav.nav');if(!n||document.getElementById('zk-friends-btn'))return;
   var t=T();
   var wrap=document.createElement('div');wrap.className='hdr-icons';
-  wrap.innerHTML='<button class="pill-btn" id="zk-friends-btn" title="'+t.fr+'">👥<span class="lbl">'+t.fr+'</span><span class="bdg" id="zk-fbdg" style="display:none">0</span></button>'
+  wrap.innerHTML='<button class="nicon" id="zk-friends-btn" title="'+t.fr+'">👥<span class="bdg" id="zk-fbdg" style="display:none">0</span></button>'
     +'<button class="nicon" id="zk-bell-btn" title="'+t.nt+'">🔔<span class="bdg" id="zk-nbdg" style="display:none">0</span></button>'
     +'<div class="npanel" id="zk-fpanel"><h3>👥 '+t.fr+'</h3><div id="zk-fbody"><div class="nempty">…</div></div></div>'
     +'<div class="npanel" id="zk-npanel"><h3>🔔 '+t.nt+'</h3><div id="zk-nbody"></div></div>';
@@ -339,7 +339,7 @@ function mount(){
   document.getElementById('zk-bell-btn').onclick=function(){toggle('zk-npanel');renderNotifs(true);};
   (function(){
     var bell=document.getElementById('zk-bell-btn');if(!bell||document.getElementById('zk-bookmark-btn'))return;
-    var bm=document.createElement('button');bm.className='pill-btn';bm.id='zk-bookmark-btn';bm.title=t.my||'My games';bm.setAttribute('aria-label','saved games');bm.innerHTML='💾<span class="lbl">'+(t.my||'My games')+'</span>';
+    var bm=document.createElement('button');bm.className='nicon';bm.id='zk-bookmark-btn';bm.title=t.my||'My games';bm.setAttribute('aria-label','saved games');bm.innerHTML='💾';
     bm.onclick=zkBookmarkGo;
     bell.parentNode.insertBefore(bm,bell);
   })();
