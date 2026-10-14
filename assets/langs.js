@@ -309,6 +309,7 @@ function buildSidebar(){
     +'<div class="sb-foot">'
     +'<a class="sb-contact" href="'+ct+'">'+S.contactUs+'</a>'
     +'<div class="sb-links"><a href="'+ab+'">'+S.ab+'</a><a href="'+ct+'">'+S.ct+'</a><a href="'+rq+'">'+S.rq+'</a><a href="'+pv+'">'+S.pv+'</a><a href="'+tm+'">'+S.tm+'</a><a href="'+lb+'">'+S.top+'</a></div>'
+    +'<div class="sb-lang"><a href="'+base+'en/" class="'+(lang==='en'?'on':'')+'"><img src="https://flagcdn.com/w80/us.png" alt="en"><span>English</span></a><a href="'+base+'ar/" class="'+(lang==='ar'?'on':'')+'"><img src="https://flagcdn.com/w80/eg.png" alt="ar"><span>عربي</span></a></div>'
     +'<div class="sb-soc"><a href="https://facebook.com/zokrofun" title="Facebook">📘</a><a href="https://tiktok.com/@zokro" title="TikTok">🎵</a><a href="https://youtube.com/@zokro" title="YouTube">▶️</a><a href="https://x.com/zokro" title="X">𝕏</a><a href="https://instagram.com/zokrofun" title="Instagram">📸</a><a href="https://discord.gg/ZUUeYucQFT" title="Discord">💬</a></div>'
     +'<div class="sb-copy">'+S.copy+' • zokro.fun</div>'
     +'</div>';
