@@ -344,11 +344,19 @@ body.sb-collapsed .sb-foot{display:block}
 #sb-x:hover{border-color:var(--gold);color:var(--gold)}
 }
 @media(max-width:640px){
-.nav{flex-wrap:wrap;height:auto;min-height:60px;padding:8px 10px;row-gap:8px}
+.nav{flex-wrap:wrap;height:auto;min-height:60px;padding:8px;row-gap:8px;gap:6px}
+.hdr-left,.hdr-right{gap:6px;min-width:0}
 .hdr-center{order:3;flex:1 1 100%}
 .hdr-center .search{max-width:none}
-.nav button.cta{padding:8px 16px;font-size:12px}
-#langmenu .lbtn{padding:7px 10px;font-size:12px}
+.nav .logo img{height:30px!important}
+.nicon{width:34px;height:34px;font-size:15px}
+.nav button.cta{padding:8px 12px;font-size:12px;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#langmenu .lbtn{padding:6px 8px;font-size:12px}
+.hdr-icons{gap:6px}
+}
+@media(max-width:400px){
+#zk-bookmark-btn{display:none}
+.nav button.cta{max-width:80px}
 }
 /* === v12: dynamic rail — collapsed by default, hover/click to expand === */
 #langmenu .lbtn span:first-of-type{display:none}
