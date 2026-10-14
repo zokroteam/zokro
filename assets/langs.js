@@ -116,6 +116,11 @@ function zkInitSocial(){
     });
   })(cards[j]);
   zkSuggest();
+  try{
+    var qq=localStorage.getItem('zk_q');
+    if(qq){localStorage.removeItem('zk_q');var qi=document.getElementById('q');if(qi){qi.value=qq;if(typeof filter==='function')filter();zkApplyCat();var gs0=document.getElementById('games');if(gs0)gs0.scrollIntoView();}}
+    if(localStorage.getItem('zk_goto_fav')){localStorage.removeItem('zk_goto_fav');var fb=document.querySelector('.chips [data-fav]');if(fb)fb.click();var gs1=document.getElementById('games');if(gs1)gs1.scrollIntoView();}
+  }catch(e){}
 }
 function zkSuggest(){
   var grid=document.getElementById('grid');if(!grid)return;
@@ -148,6 +153,36 @@ function zkSuggest(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zkInitSocial);
 else zkInitSocial();
+// UNIFIED HEADER on every page (big search + bookmark + mobile play pill)
+var ZK_HDR={en:{search:'Search games...',play:'▶ Play'},ar:{search:'دوّر على لعبة...',play:'▶ العب'}};
+function zkHomeBase(){var b='./';try{var lm=document.querySelector('#langmenu');if(lm)b=lm.getAttribute('data-base')||'./';}catch(e){}return b;}
+function zkBookmarkGo(){
+  var chip=document.querySelector('.chips [data-fav]');
+  if(chip){chip.click();var g=document.getElementById('games');if(g)g.scrollIntoView();}
+  else{try{localStorage.setItem('zk_goto_fav','1');}catch(e){}var lg=(document.documentElement.lang||'en').toLowerCase();location.href=zkHomeBase()+lg+'/#games';}
+}
+function zkHeader(){
+  var nav=document.querySelector('nav.nav');if(!nav||nav.getAttribute('data-hdr'))return;
+  nav.setAttribute('data-hdr','1');
+  var lang=(document.documentElement.lang||'en').toLowerCase();
+  var H=ZK_HDR[lang]||ZK_HDR.en;
+  if(!document.getElementById('q')){
+    var s=document.createElement('div');s.className='search';
+    s.innerHTML='<input id="q" placeholder="'+H.search+'">';
+    var lm=document.querySelector('#langmenu');
+    if(lm&&lm.parentNode)lm.parentNode.insertBefore(s,lm);else nav.appendChild(s);
+    s.querySelector('input').addEventListener('keydown',function(e){
+      if(e.key==='Enter'){try{localStorage.setItem('zk_q',this.value);}catch(x){}var lg2=(document.documentElement.lang||'en').toLowerCase();location.href=zkHomeBase()+lg2+'/#games';}
+    });
+  }
+  if(!nav.querySelector('.playpill')&&nav.children.length>1){
+    var pill=document.createElement('button');pill.className='cta playpill';pill.textContent=H.play;
+    pill.onclick=function(){var g=document.getElementById('games');if(g)g.scrollIntoView();else{var lg3=(document.documentElement.lang||'en').toLowerCase();location.href=zkHomeBase()+lg3+'/#games';}};
+    nav.insertBefore(pill,nav.children[1]);
+  }
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zkHeader);
+else zkHeader();
 // AUTO-STAMP: every home/back link becomes a pill button, on any page, any language, forever
 (function(){
   function stamp(){
@@ -178,6 +213,12 @@ function mount(){
   var cta=n.querySelector('button.cta');if(cta)n.insertBefore(wrap,cta);else n.appendChild(wrap);
   document.getElementById('zk-friends-btn').onclick=function(){toggle('zk-fpanel');loadFriends();};
   document.getElementById('zk-bell-btn').onclick=function(){toggle('zk-npanel');renderNotifs(true);};
+  (function(){
+    var bell=document.getElementById('zk-bell-btn');if(!bell||document.getElementById('zk-bookmark-btn'))return;
+    var bm=document.createElement('button');bm.className='nicon';bm.id='zk-bookmark-btn';bm.title='♥';bm.setAttribute('aria-label','saved games');bm.innerHTML='🔖';
+    bm.onclick=zkBookmarkGo;
+    bell.parentNode.insertBefore(bm,bell);
+  })();
   document.addEventListener('click',function(e){
     if(e.target&&e.target.closest&&(e.target.closest('.npanel')||e.target.closest('.nicon')))return;
     closeAll();
