@@ -1,5 +1,18 @@
 // Shared language menu - one file feeds every page (real flag images work on Windows too)
 (function(){
+  // Google Analytics (GA4) - one place, every page
+  try{
+    if(!window.zkGa){
+      window.zkGa=1;
+      var gs=document.createElement('script');gs.async=true;
+      gs.src='https://www.googletagmanager.com/gtag/js?id=G-J9YHPDP39T';
+      document.head.appendChild(gs);
+      window.dataLayer=window.dataLayer||[];
+      window.gtag=function(){window.dataLayer.push(arguments);};
+      window.gtag('js',new Date());
+      window.gtag('config','G-J9YHPDP39T');
+    }
+  }catch(e){}
   var holder=document.querySelector('#langmenu');
   if(!holder)return;
   var LANGS=[
