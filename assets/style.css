@@ -335,6 +335,10 @@ body.sb-hidden #zkside{display:none!important}
 body.sb-hidden #zkside{display:flex!important}
 }
 @media(min-width:1024px){
+body{padding-inline-start:76px}
+.nav{margin-inline-start:-76px}
+body.sb-hidden{padding-inline-start:0}
+body.sb-hidden .nav{margin-inline-start:0}
 body.sb-collapsed #zkside{transition:width .18s ease}
 body.sb-collapsed #zkside:hover{width:260px;box-shadow:30px 0 60px #00000099;z-index:45}
 body.sb-collapsed #zkside:hover .sb-lb{display:inline}
