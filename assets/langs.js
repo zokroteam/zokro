@@ -116,6 +116,7 @@ function zkInitSocial(){
     });
   })(cards[j]);
   zkSuggest();
+  zkGoldIcons();
   try{
     var qq=localStorage.getItem('zk_q');
     if(qq){localStorage.removeItem('zk_q');var qi=document.getElementById('q');if(qi){qi.value=qq;if(typeof filter==='function')filter();zkApplyCat();var gs0=document.getElementById('games');if(gs0)gs0.scrollIntoView();}}
@@ -151,6 +152,24 @@ function zkSuggest(){
   var gamesSec=document.getElementById('games');
   if(gamesSec&&gamesSec.parentNode)gamesSec.parentNode.insertBefore(sec,gamesSec.nextSibling);
   paintFavs();
+  zkGoldIcons();
+}
+function zkGoldIcons(){
+  try{
+    var re=new RegExp('^((?:\\p{Extended_Pictographic}(?:\\uFE0F|\\uD83C[\\uDFFB-\\uDFFF])?(?:\\u200D\\p{Extended_Pictographic}(?:\\uFE0F|\\uD83C[\\uDFFB-\\uDFFF])?)*|[\\u2190-\\u21FF\\u23E9-\\u23EF\\u23F0\\u23F3\\u23F8-\\u23FA\\u25B6\\u25C0\\u25B2\\u25BC\\u25C6\\u25CF\\u2605\\u2606\\u2665\\u2666\\u2663\\u2660\\u2713-\\u2716\\u2728\\u2726\\u2B50]\\uFE0F?)\\s?)','u');
+    var els=document.querySelectorAll('.chips button,.cta,a.btn,a.backlink,h1,h2,h3,.fl,.count,.sb-contact,.npanel h3,.nitem,.lrow button,.topstrip');
+    for(var i=0;i<els.length;i++){var el=els[i];
+      if(el.getAttribute('data-gold'))continue;
+      var fn=el.firstChild;
+      if(!fn||fn.nodeType!==3)continue;
+      var m=re.exec(fn.nodeValue);
+      if(!m||!m[1])continue;
+      el.setAttribute('data-gold','1');
+      var sp=document.createElement('span');sp.className='em';sp.textContent=m[1];
+      fn.deleteData(0,m[1].length);
+      el.insertBefore(sp,fn);
+    }
+  }catch(e){}
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zkInitSocial);
 else zkInitSocial();
@@ -375,6 +394,7 @@ function renderNotifs(mark){
   body.innerHTML=h;
   if(mark){try{localStorage.setItem('zk_notif_un','0');}catch(e){}var b=document.getElementById('zk-nbdg');if(b)b.style.display='none';}
   else{var u=zkUnread(),bb=document.getElementById('zk-nbdg');if(bb){if(u>0){bb.textContent=u>9?'9+':u;bb.style.display='';}else bb.style.display='none';}}
+  zkGoldIcons();
 }
 function pollBadges(){
   if(!window.zkAuth||!window.zkAuth.ready||!window.zkAuth.user)return;
@@ -410,6 +430,7 @@ function loadFriends(){
       try{var lm=document.querySelector('#langmenu');var bs=lm?lm.getAttribute('data-base'):'./';base=bs+'en/profile.html#frsec';}catch(e){}
       h+='<a class="nitem" style="color:#f5c451;font-weight:800" href="'+base+'">'+t.open+' →</a>';
       body.innerHTML=h;
+      zkGoldIcons();
     }
     if(!ids.length){render({});return;}
     sb.from('profiles').select('id,username').in('id',ids).then(function(r2){

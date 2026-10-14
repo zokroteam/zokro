@@ -199,7 +199,7 @@ kbd{background:#0b1020;border:1px solid var(--line);border-radius:6px;padding:2p
 /* FAVORITE HEARTS on cards */
 .card .favb{position:absolute;top:10px;inset-inline-end:10px;z-index:3;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#00000088;font-size:15px;cursor:pointer;backdrop-filter:blur(4px);transition:.15s;padding:0}
 .card .favb:hover{transform:scale(1.15)}
-.card .favb.on{border-color:#ff5b7f;box-shadow:0 0 12px #ff5b7f77}
+.card .favb.on{border-color:var(--gold);box-shadow:0 0 12px #f5c45188}
 /* TOP PLAYERS STRIP on game pages */
 .topstrip{background:#151d33;border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin:14px 0}
 .topstrip>b{color:var(--gold);font-size:14px}
@@ -297,7 +297,10 @@ footer{display:none!important}
 a.sb-link{color:var(--txt)}
 .sb-link:hover{background:#f5c45114;color:var(--gold)}
 .sb-link.on{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000}
-.sb-ic{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sb-ic{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.06) drop-shadow(0 0 4px rgba(245,196,81,.55))}
+.em{filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.06) drop-shadow(0 0 4px rgba(245,196,81,.55))}
+.favb:not(.on){filter:grayscale(1);opacity:.45}
+.favb.on{filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.12) drop-shadow(0 0 7px rgba(245,196,81,.9))}
 .sb-lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sb-div{height:1px;background:var(--line);margin:8px 6px;opacity:.7}
 .sb-foot{border-top:1px solid var(--line);padding:8px 4px 12px;margin-top:auto}
