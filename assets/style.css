@@ -297,8 +297,10 @@ footer{display:none!important}
 a.sb-link{color:var(--txt)}
 .sb-link:hover{background:#f5c45114;color:var(--gold)}
 .sb-link.on{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a1000}
-.sb-ic{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.06) drop-shadow(0 0 4px rgba(245,196,81,.55))}
-.em{filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.06) drop-shadow(0 0 4px rgba(245,196,81,.55))}
+.sb-ic{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.06)}
+.em{filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.06)}
+a:hover .em,button:hover .em,.sb-link:hover .sb-ic{filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.12) drop-shadow(0 0 6px rgba(245,196,81,.8))}
+.cta .em,a.btn .em,.btn-gold .em,.sb-contact .em{filter:none}
 .favb:not(.on){filter:grayscale(1);opacity:.45}
 .favb.on{filter:grayscale(1) sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.12) drop-shadow(0 0 7px rgba(245,196,81,.9))}
 .sb-lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
