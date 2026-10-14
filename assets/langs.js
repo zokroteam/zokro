@@ -188,7 +188,7 @@ function zkHeader(){
   }
   var lm=document.querySelector('#langmenu');
   var left=document.createElement('div');left.className='hdr-left';
-  var hb=document.createElement('button');hb.className='nicon hamb hbtn';hb.id='zk-hamb';hb.innerHTML='☰';hb.setAttribute('aria-label','menu');
+  var hb=document.createElement('button');hb.className='nicon hamb hbtn';hb.id='zk-hamb';hb.innerHTML='<span></span><span></span><span></span>';hb.setAttribute('aria-label','menu');
   hb.onclick=window.zkToggleSide;
   left.appendChild(hb);
   if(logo)left.appendChild(logo);
@@ -279,7 +279,7 @@ function buildSidebar(){
   if(!hb){
     var nav=document.querySelector('nav.nav');
     if(nav){
-      hb=document.createElement('button');hb.className='nicon hamb hbtn';hb.id='zk-hamb';hb.innerHTML='☰';hb.setAttribute('aria-label','menu');
+      hb=document.createElement('button');hb.className='nicon hamb hbtn';hb.id='zk-hamb';hb.innerHTML='<span></span><span></span><span></span>';hb.setAttribute('aria-label','menu');
       var hl=nav.querySelector('.hdr-left');
       if(hl&&hl.firstChild)hl.insertBefore(hb,hl.firstChild);else if(hl)hl.appendChild(hb);else nav.insertBefore(hb,nav.firstChild);
     }

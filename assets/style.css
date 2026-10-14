@@ -272,7 +272,15 @@ footer{display:none!important}
 .hdr-center .search{flex:1;max-width:640px;margin:0}
 .hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0;min-width:0}
 .hamb{display:inline-flex!important}
-.hbtn{font-size:19px}
+.hbtn{font-size:0;position:relative}
+.hbtn span{position:absolute;left:11px;right:11px;height:2.5px;border-radius:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:left .22s,right .22s,box-shadow .22s}
+.hbtn span:nth-child(1){top:12px}
+.hbtn span:nth-child(2){top:18.5px;left:15px}
+.hbtn span:nth-child(3){top:25px}
+.hbtn:hover span{box-shadow:0 0 8px #f5c451aa}
+.hbtn:hover span:nth-child(2){left:11px}
+.hbtn:active span:nth-child(1){left:13px;right:13px}
+.hbtn:active span:nth-child(3){left:13px;right:13px}
 .hdr-icons{display:flex;align-items:center;gap:8px}
 .pill-btn{position:relative;display:inline-flex;align-items:center;gap:8px;background:#ffffff14;border:1px solid #ffffff26;color:#fff;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;font-family:inherit}
 .pill-btn:hover{border-color:var(--gold);color:var(--gold)}
