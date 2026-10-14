@@ -22,9 +22,10 @@
 <body>
 <nav class="nav"><a class="logo" href="../">ZOK<b>RO</b></a><div id="langmenu" data-base="../../"></div><script src="../../assets/langs.js?v=15"></script></nav>
 <div class="wrap">
-<a href="../">← All games</a>
+<a href="../" class="backlink">← All games</a>
 <h1>🌴 Guess the Oasis</h1>
 <p>⭐ 4.9 • 🧩 Puzzle • 📅 Daily riddle #<span id="dayNum"></span></p>
+<div class="topstrip" id="topstrip" style="display:none"><b>🏆 Top players</b><div id="toprow"></div></div>
 <div class="play">
 <p>Daily riddle. Unblur with hints, guess with fewest hints.</p>
 <h2 id="emoji" style="font-size:64px;filter:blur(8px)">🏜️🌴💧🐪</h2>
@@ -58,6 +59,7 @@ document.getElementById('opts').innerHTML=R.o.map(function(x){return '<button on
 let hi=1;
 function more(){if(hi<3){document.getElementById('emoji').style.filter='blur('+Math.max(0,8-hi*3)+'px)';document.getElementById('hint').textContent='Hint '+(hi+1)+'/3: '+R.h[hi];hi++;}}
 function guess(g){document.getElementById('emoji').style.filter='blur(0px)';const ok=g===R.a;const pts=ok?Math.max(100,400-hi*100):0;document.getElementById('res').textContent=ok?('✅ Correct with '+hi+' hint(s)! Score '+pts+' 🎉'):('❌ It was '+R.a+'! Try tomorrow.');if(ok){try{const k='zk_best_Guess the Oasis';if(pts>parseInt(localStorage.getItem(k)||'0'))localStorage.setItem(k,String(pts));if(window.zkSaveScore)window.zkSaveScore('Guess the Oasis',pts);}catch(e){}}}
+(function(){var G='Guess the Oasis';function e(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}var iv=setInterval(function(){if(!window.zkAuth||!window.zkAuth.ready)return;clearInterval(iv);window.zkAuth.client.from('scores').select('score,profiles(username,avatar)').eq('game',G).order('score',{ascending:false}).limit(3).then(function(r){var rows=r.data||[];if(!rows.length)return;var medals=['🥇','🥈','🥉'];var h='';rows.forEach(function(s,i){var p=s.profiles||{};h+='<span class="tcell">'+medals[i]+' '+e(p.username||'?')+' <b>'+parseInt(s.score||0)+'</b></span>';});document.getElementById('toprow').innerHTML=h;document.getElementById('topstrip').style.display='';});},600);})();
 </script>
 </body>
 </html>

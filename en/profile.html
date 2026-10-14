@@ -38,6 +38,7 @@
 .pick button.on{border-color:#f5c451;box-shadow:0 0 0 2px #f5c45155}
 .uprow{margin:10px 0 4px}
 .uprow input[type=file]{display:none}
+.frrow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#0d1531;border:1px solid #263154;border-radius:12px;padding:8px 12px;margin:6px 0;font-size:14px}
 #pmsg{font-size:13px;color:#f5c451;min-height:20px;font-weight:700}
 table{width:100%;margin-top:14px;border-collapse:collapse;background:#151d33;border:1px solid #263154;border-radius:16px;overflow:hidden}
 thead th{background:#f5c45114;color:#f5c451;font-size:12px;text-transform:uppercase;letter-spacing:1px}
@@ -56,6 +57,8 @@ tbody tr:hover{background:#f5c4510d}
 <div class="secttl"><h3 style="margin:0">🏆 My best scores</h3></div>
 <table id="scores"><thead><tr><th>Game</th><th>Score</th><th>Date</th></tr></thead><tbody id="scoresBody"></tbody></table>
 <p><a class="btn-gold" style="text-decoration:none;display:inline-block" href="leaderboard.html">🌍 Global leaderboard →</a></p>
+<div class="secttl"><h3 style="margin:0">👥 Friends</h3></div>
+<div class="pcard" style="margin-top:12px;padding:20px" id="fcard"><p>⏳ Loading friends...</p></div>
 <p><button class="btn-ghost" onclick="logout()">Log out</button></p>
 </div>
 <footer><p class="copy">© 2026 Zokro</p></footer>
@@ -83,6 +86,7 @@ var iv=setInterval(function(){
     window.zkAuth.user=u;
     loadProfile(sb,u);
     loadScores(sb,u);
+    loadFriends(sb,u);
   });
 },500);
 function loadProfile(sb,u){
@@ -171,6 +175,50 @@ function upPhoto(inp){
   };
   rd.readAsDataURL(f);
 }
+function avMini(av){if(av&&/^data:image|^https?:\/\//i.test(av))return '<img src="'+av+'" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle">';if(av&&av!=='🎮')return esc(av);return '<span class="zk-avinit" style="width:28px;height:28px;font-size:13px">?</span>';}
+function loadFriends(sb,me){
+  var box=document.getElementById('fcard');if(!box)return;
+  sb.from('friendships').select('*').or('user_id.eq.'+me+',friend_id.eq.'+me).then(function(r){
+    if(r.error){box.innerHTML='<p>⚠️ '+esc(r.error.message)+'</p>';return;}
+    var rows=r.data||[];
+    var incoming=rows.filter(function(x){return x.friend_id===me&&x.status==='pending';});
+    var accepted=rows.filter(function(x){return x.status==='accepted';});
+    var ids=[];
+    accepted.forEach(function(x){var f=x.user_id===me?x.friend_id:x.user_id;if(ids.indexOf(f)<0)ids.push(f);});
+    incoming.forEach(function(x){if(ids.indexOf(x.user_id)<0)ids.push(x.user_id);});
+    var profs={};
+    function render(){
+      var h='<div style="display:flex;gap:8px;margin-bottom:10px"><input id="frname" maxlength="20" placeholder="Add by username..." style="flex:1;min-width:0;font-size:14px;padding:10px;border-radius:12px;border:1px solid #263154;background:#0d1531;color:#fff;outline:none"> <button class="btn-gold" onclick="frAdd()">Add</button></div><p id="frmsg" style="font-size:13px;color:#f5c451;min-height:18px"></p>';
+      if(incoming.length){h+='<h4 style="margin:8px 0;color:#f5c451">Requests ('+incoming.length+')</h4>';incoming.forEach(function(x){var p=profs[x.user_id]||{username:'?'};h+='<div class="frrow"><span>'+avMini(p.avatar)+' '+esc(p.username)+'</span><span><button class="btn-gold" style="padding:6px 12px" onclick="frAccept('+x.id+')">✓</button> <button class="btn-ghost" style="padding:6px 12px" onclick="frDel('+x.id+')">✕</button></span></div>';});}
+      h+='<h4 style="margin:10px 0 4px;color:#f5c451">My friends ('+accepted.length+')</h4>';
+      if(!accepted.length)h+='<p style="color:#b8aed6;font-size:13px">No friends yet — add players from the leaderboard! 🌍</p>';
+      accepted.forEach(function(x){var fid=x.user_id===me?x.friend_id:x.user_id;var p=profs[fid]||{username:'?'};h+='<div class="frrow"><span>'+avMini(p.avatar)+' '+esc(p.username)+'</span><button class="btn-ghost" style="padding:6px 12px" onclick="frDel('+x.id+')">Remove</button></div>';});
+      box.innerHTML=h;
+    }
+    if(!ids.length){render();return;}
+    sb.from('profiles').select('id,username,avatar').in('id',ids).then(function(r2){
+      (r2.data||[]).forEach(function(p){profs[p.id]=p;});
+      render();
+    });
+  });
+}
+function frMsg(t){var m=document.getElementById('frmsg');if(m)m.textContent=t||'';}
+function frAdd(){
+  var v=document.getElementById('frname').value.trim();
+  if(!v){frMsg('⚠️ Type a username');return;}
+  var sb=window.zkAuth.client,me=window.zkAuth.user.id;
+  sb.from('profiles').select('id,username').eq('username',v).single().then(function(r){
+    if(r.error||!r.data){frMsg('❌ Player not found');return;}
+    if(r.data.id===me){frMsg('⚠️ That is you!');return;}
+    sb.from('friendships').insert({user_id:me,friend_id:r.data.id,status:'pending'}).then(function(r2){
+      if(r2.error){frMsg(r2.error.code==='23505'?'✅ Already requested or friends':'❌ '+r2.error.message);return;}
+      frMsg('✅ Request sent to '+v+'!');
+      setTimeout(function(){loadFriends(sb,me);},800);
+    });
+  });
+}
+function frAccept(id){var sb=window.zkAuth.client,me=window.zkAuth.user.id;sb.from('friendships').update({status:'accepted'}).eq('id',id).then(function(){loadFriends(sb,me);});}
+function frDel(id){var sb=window.zkAuth.client,me=window.zkAuth.user.id;sb.from('friendships').delete().eq('id',id).then(function(){loadFriends(sb,me);});}
 </script>
 </body>
 </html>

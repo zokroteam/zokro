@@ -5,7 +5,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.min.js"></script>
 </head>
 <body>
-<div id="ui">🧱 Level <b id="lvl">0</b>/12</div>
+<div id="ui">🧱 Level <b id="lvl">0</b>/12 • Daily #<span id="dd"></span></div>
 <div id="msg"></div>
 <button id="btn">DROP</button>
 <script>
@@ -59,11 +59,11 @@ function drop(){
 }
 function lose(){over=true;falling.push({m:box,vy:0,vx:axis==='x'?dir*4:0,vz:axis==='z'?dir*4:0});document.getElementById('msg').textContent='💥 Fell! Level '+lvl+' - tap to restart';zkPush('Stack the Dune 3D',lvl*100);setTimeout(()=>{addEventListener('pointerdown',()=>location.reload(),{once:true});},500);}
 function zkPush(g,s){try{const k='zk_best_'+g;if(s>parseInt(localStorage.getItem(k)||'0'))localStorage.setItem(k,String(s));if(parent&&parent.zkSaveScore)parent.zkSaveScore(g,s);}catch(e){}}
-let t=0;
+document.getElementById('dd').textContent=Math.floor(Date.now()/86400000);let t=0;
 (function loop(){
   requestAnimationFrame(loop);t+=0.016;
   if(!over){
-    const range=4.2,speed=2.4+Math.min(lvl*0.12,1.6);
+    const range=4.2,daySeed=(Math.floor(Date.now()/86400000)%100)/100,speed=2.2+daySeed*0.6+Math.min(lvl*0.12,1.6);
     if(axis==='x')box.position.x=prev.x+Math.sin(t*speed)*range;
     else box.position.z=prev.z+Math.sin(t*speed)*range;
     dir=Math.cos(t*speed)>=0?1:-1;

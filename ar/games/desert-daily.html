@@ -23,9 +23,10 @@
 <body>
 <nav class="nav"><a class="logo" href="../">ZOKRO</a><div id="langmenu" data-base="../../"></div><script src="../../assets/langs.js?v=15"></script></nav>
 <div class="wrap">
-<a href="../">→ كل الألعاب</a>
+<a href="../" class="backlink">→ كل الألعاب</a>
 <h1>💧 تحدي الصحراء اليومي</h1>
 <p>⭐ 4.8 • 📅 تحدي يومي • ⚡ 60 ثانية • 📱 شغال على الموبايل</p>
+<div class="topstrip" id="topstrip" style="display:none"><b>🏆 أوائل اللاعبين</b><div id="toprow"></div></div>
 <div class="play"><iframe src="desert-daily-play.html" title="لعبة تحدي الصحراء" loading="lazy"></iframe></div>
 <article>
 <h2>إزاي تلعب</h2>
@@ -38,5 +39,8 @@
 </article>
 </div>
 <footer><p>© 2026 زوكرو • لعبة زوكرو الأصلية</p></footer>
+<script>
+(function(){var G='Desert Daily';function e(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}var iv=setInterval(function(){if(!window.zkAuth||!window.zkAuth.ready)return;clearInterval(iv);window.zkAuth.client.from('scores').select('score,profiles(username,avatar)').eq('game',G).order('score',{ascending:false}).limit(3).then(function(r){var rows=r.data||[];if(!rows.length)return;var medals=['🥇','🥈','🥉'];var h='';rows.forEach(function(s,i){var p=s.profiles||{};h+='<span class="tcell">'+medals[i]+' '+e(p.username||'?')+' <b>'+parseInt(s.score||0)+'</b></span>';});document.getElementById('toprow').innerHTML=h;document.getElementById('topstrip').style.display='';});},600);})();
+</script>
 </body>
 </html>

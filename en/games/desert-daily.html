@@ -22,9 +22,10 @@
 <body>
 <nav class="nav"><a class="logo" href="../">ZOK<span>RO</span></a><div id="langmenu" data-base="../../"></div><script src="../../assets/langs.js?v=15"></script></nav>
 <div class="wrap">
-<a href="../">← All games</a>
+<a href="../" class="backlink">← All games</a>
 <h1>💧 Desert Daily - 60-Second Survival</h1>
 <p>⭐ 4.8 • 📅 Daily challenge • ⚡ 60 seconds • 📱 Mobile friendly</p>
+<div class="topstrip" id="topstrip" style="display:none"><b>🏆 Top players</b><div id="toprow"></div></div>
 <div class="play"><iframe src="desert-daily-play.html" title="Desert Daily game" loading="lazy"></iframe></div>
 <p><a class="btn" href="desert-daily-play.html">⛶ Fullscreen</a></p>
 <article>
@@ -41,5 +42,8 @@
 </article>
 </div>
 <footer><p>© 2026 Zokro • Original Zokro game (100% ours)</p></footer>
+<script>
+(function(){var G='Desert Daily';function e(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}var iv=setInterval(function(){if(!window.zkAuth||!window.zkAuth.ready)return;clearInterval(iv);window.zkAuth.client.from('scores').select('score,profiles(username,avatar)').eq('game',G).order('score',{ascending:false}).limit(3).then(function(r){var rows=r.data||[];if(!rows.length)return;var medals=['🥇','🥈','🥉'];var h='';rows.forEach(function(s,i){var p=s.profiles||{};h+='<span class="tcell">'+medals[i]+' '+e(p.username||'?')+' <b>'+parseInt(s.score||0)+'</b></span>';});document.getElementById('toprow').innerHTML=h;document.getElementById('topstrip').style.display='';});},600);})();
+</script>
 </body>
 </html>

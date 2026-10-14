@@ -38,6 +38,9 @@ tr.me{background:#f5c45114;box-shadow:inset 3px 0 0 #f5c451}
 .btn-gold{display:inline-block;background:linear-gradient(90deg,#f5c451,#ff8a3d);color:#1a1000!important;font-weight:800;border:0;border-radius:12px;padding:10px 22px;cursor:pointer;font-size:14px;text-decoration:none;margin-top:8px}
 .note{color:#b8aed6;font-size:13px;margin-top:14px;text-align:center}
 .note b{color:#f5c451}
+.fradd{background:transparent;color:#f5c451;border:1px solid #f5c45155;border-radius:10px;padding:2px 10px;margin-inline-start:8px;font-size:12px;font-weight:800;cursor:pointer}
+.fradd:hover{background:#f5c45122}
+.fradd:disabled{opacity:.6;cursor:default}
 </style>
 </head>
 <body>
@@ -58,6 +61,14 @@ tr.me{background:#f5c45114;box-shadow:inset 3px 0 0 #f5c451}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function avh(av,nm){av=av||'';if(/^data:image|^https?:\/\//i.test(av))return '<img src="'+av+'" alt="" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-inline-end:8px">';if(av&&av!=='🎮')return '<span style="margin-inline-end:8px">'+esc(av)+'</span>';var ch=(((nm||'?').trim().charAt(0))||'?').toUpperCase();return '<span class="zk-avinit" style="width:28px;height:28px;font-size:14px;margin-inline-end:8px">'+esc(ch)+'</span>';}
 function medal(i){if(i===0)return '<span class="medal g">🥇</span>';if(i===1)return '<span class="medal">🥈</span>';if(i===2)return '<span class="medal">🥉</span>';return '<span class="medal">'+(i+1)+'</span>';}
+function addFr(fid,btn){
+  if(!window.zkAuth||!window.zkAuth.user){alert('Log in first to add friends!');return;}
+  btn.disabled=true;
+  window.zkAuth.client.from('friendships').insert({user_id:window.zkAuth.user.id,friend_id:fid,status:'pending'}).then(function(r){
+    btn.textContent=(r.error&&r.error.code!=='23505')?'+ Friend':'✓ Sent';
+    if(r.error&&r.error.code!=='23505')btn.disabled=false;
+  });
+}
 var uid=null;
 function load(game,btn){
   document.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('on');});
@@ -77,7 +88,7 @@ function load(game,btn){
       rows.forEach(function(s,i){
         var p=s.profiles||{username:'?',avatar:''};
         var me=uid&&s.user_id===uid;
-        tb.innerHTML+='<tr'+(me?' class="me"':'')+'><td>'+medal(i)+'</td><td>'+avh(p.avatar,p.username)+esc(p.username)+(me?' <b style="color:#f5c451">(you)</b>':'')+'</td><td>'+parseInt(s.score||0)+'</td></tr>';
+        tb.innerHTML+='<tr'+(me?' class="me"':'')+'><td>'+medal(i)+'</td><td>'+avh(p.avatar,p.username)+esc(p.username)+(me?' <b style="color:#f5c451">(you)</b>':((uid&&s.user_id!==uid)?' <button class="fradd" onclick="addFr(\''+s.user_id+'\',this)">+ Friend</button>':''))+'</td><td>'+parseInt(s.score||0)+'</td></tr>';
       });
     });
   },400);
