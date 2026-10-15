@@ -61,10 +61,21 @@ function zkFavIdx(f,h){for(var i=0;i<f.length;i++)if(f[i].u===h)return i;return 
 function zkIsFav(h){if(!h)return false;return zkFavIdx(zkFavs(),h)>=0;}
 window.zkToggleFav=function(h,ev){if(ev){ev.preventDefault();ev.stopPropagation();}var f=zkFavs();var i=zkFavIdx(f,h);if(i>=0)f.splice(i,1);else{var html='';try{var c=document.querySelector('#grid .card[href="'+h+'"], #suggest .card[href="'+h+'"]');if(c)html=c.outerHTML;}catch(e){}f.push({u:h,html:html});}try{localStorage.setItem('zk_fav',JSON.stringify(f));}catch(e){}paintFavs();zkApplyCat();};
 function paintFavs(){var cards=document.querySelectorAll('#grid .card, #suggest .card');for(var i=0;i<cards.length;i++){var c=cards[i];var h=c.getAttribute('href');var b=c.querySelector('.favb');if(!b||!h)continue;var on=zkIsFav(h);b.textContent=on?'❤️':'🤍';if(on)b.classList.add('on');else b.classList.remove('on');}}
+window.zkLimit=120;
+window.zkMore=function(){window.zkLimit=(window.zkLimit||120)+120;zkApplyCat();};
+function zkMoreBtn(){
+  var b=document.getElementById('zkmore');
+  if(b)return b;
+  var g=document.getElementById('grid');if(!g)return null;
+  b=document.createElement('button');b.id='zkmore';b.className='cta';b.onclick=function(){window.zkMore();};
+  g.parentNode.insertBefore(b,g.nextSibling);
+  return b;
+}
 function zkApplyCat(){
   var q='';try{var qi=document.getElementById('q');q=qi?qi.value.toLowerCase():'';}catch(e){}
   var cats=['all','puzzle','action','sports','racing','adventure','girls','kids','strategy','arcade','3d','fav'];var want=cats[window.zkCat||0]||'all';
   var cards=document.querySelectorAll('#grid .card');if(!cards.length)return;
+  var lim=window.zkLimit||120,shown=0,total=0;
   for(var i=0;i<cards.length;i++){var c=cards[i];
     var dc=(c.getAttribute('data-cat')||'').toLowerCase();
     var okC;
@@ -72,7 +83,14 @@ function zkApplyCat(){
     else if(want==='fav')okC=zkIsFav(c.getAttribute('href'));
     else okC=dc.indexOf(want)>=0;
     var okQ=(!q||((c.getAttribute('data-n')||'')+' '+c.textContent).toLowerCase().indexOf(q)>=0);
-    c.style.display=(okC&&okQ)?'':'none';}
+    if(okC&&okQ){total++;if(shown<lim){c.style.display='';shown++;}else c.style.display='none';}
+    else c.style.display='none';}
+  var lang=(document.documentElement.lang||'en').toLowerCase();
+  var mb=zkMoreBtn();
+  if(mb){
+    if(total>shown){mb.style.display='';mb.textContent=(lang==='ar'?'عرض المزيد (':'Show more (')+(total-shown)+')';}
+    else mb.style.display='none';
+  }
 }
 document.addEventListener('click',function(e){
   var t=e.target;var b=(t&&t.closest)?t.closest('.chips button'):null;
