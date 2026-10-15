@@ -400,3 +400,12 @@ body.sb-collapsed #zkside:hover .sb-sec h4{display:block}
 body.sb-collapsed #zkside:hover .sb-link{justify-content:flex-start;padding:7px 10px}
 body.sb-collapsed #zkside:hover .sb-foot{display:block}
 }
+/* True fullscreen for game embeds: the FS button fullscreens .play, so the
+   iframe must fill the viewport (it has a fixed 560px/440px height otherwise) */
+.play:fullscreen{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;max-width:none!important;margin:0!important;border:0!important;border-radius:0!important;background:#000!important;z-index:9999}
+.play:fullscreen iframe{width:100vw!important;height:100vh!important}
+.play:-webkit-full-screen{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;max-width:none!important;margin:0!important;border:0!important;border-radius:0!important;background:#000!important;z-index:9999}
+.play:-webkit-full-screen iframe{width:100vw!important;height:100vh!important}
+.play:-moz-full-screen{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;max-width:none!important;margin:0!important;border:0!important;border-radius:0!important;background:#000!important;z-index:9999}
+.play:-moz-full-screen iframe{width:100vw!important;height:100vh!important}
+
