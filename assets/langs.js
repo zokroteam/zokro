@@ -59,10 +59,28 @@ window.zkCat=0;
 function zkFavs(){try{var f=JSON.parse(localStorage.getItem('zk_fav')||'[]');return f.map(function(x){return (typeof x==='string')?{u:x}:x;});}catch(e){return [];}}
 function zkFavIdx(f,h){for(var i=0;i<f.length;i++)if(f[i].u===h)return i;return -1;}
 function zkIsFav(h){if(!h)return false;return zkFavIdx(zkFavs(),h)>=0;}
-window.zkToggleFav=function(h,ev){if(ev){ev.preventDefault();ev.stopPropagation();}var f=zkFavs();var i=zkFavIdx(f,h);if(i>=0)f.splice(i,1);else{var html='';try{var c=document.querySelector('#grid .card[href="'+h+'"], #suggest .card[href="'+h+'"]');if(c)html=c.outerHTML;}catch(e){}f.push({u:h,html:html});}try{localStorage.setItem('zk_fav',JSON.stringify(f));}catch(e){}paintFavs();zkApplyCat();};
+window.zkToggleFav=function(h,ev){if(ev){ev.preventDefault();ev.stopPropagation();}var f=zkFavs();var i=zkFavIdx(f,h);if(i>=0)f.splice(i,1);else{var html='';try{var c=document.querySelector('#grid .card[href="'+h+'"], #suggest .card[href="'+h+'"]');if(c)html=c.outerHTML;}catch(e){}f.push({u:h,html:html});}try{localStorage.setItem('zk_fav',JSON.stringify(f));}catch(e){}paintFavs();window.zkUserPaged=true;zkEnsureCatalog();zkApplyCat();};
 function paintFavs(){var cards=document.querySelectorAll('#grid .card, #suggest .card');for(var i=0;i<cards.length;i++){var c=cards[i];var h=c.getAttribute('href');var b=c.querySelector('.favb');if(!b||!h)continue;var on=zkIsFav(h);b.textContent=on?'❤️':'🤍';if(on)b.classList.add('on');else b.classList.remove('on');}}
+// ---- v37: async game catalog (homepage ships ~600 static cards; rest loads on demand) ----
+window.zkCatalog=null;window.zkCatLoading=false;window.zkUserPaged=false;
+function zkEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function zkCardHTML(e){var lang=(document.documentElement.lang||'en').toLowerCase();
+  var go=lang==='ar'?'← العب':'Play →';
+  var rating=e[8]==='New'?'🆕 New':('★★★★★ '+e[8]);
+  var cov=e[5]?(e[5].indexOf('http')===0?e[5]:'../assets/covers/'+e[5]):null;
+  var artInner=e[4]+(cov?'<img class="cov" src="'+cov+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'');
+  return '<a class="card" data-cat="'+zkEsc(e[1])+'" data-n="'+zkEsc(e[2])+'" href="games/'+e[0]+'.html"><div class="art '+e[3]+'">'+artInner+'<span class="big-t">'+zkEsc(String(e[6]).toUpperCase())+'</span></div><div class="cbody"><h3>'+zkEsc(e[6])+'</h3><p>'+zkEsc(e[7])+'</p><div class="rowline"><span class="stars">'+rating+'</span><span class="go">'+go+'</span></div></div></a>';}
+window.zkDecorate=function(c){if(!c||c.getAttribute('data-deco'))return;c.setAttribute('data-deco','1');
+  if(c.getAttribute('data-cat')&&!c.querySelector('.favb')){var h=c.getAttribute('href');
+    if(h)c.insertAdjacentHTML('beforeend','<button class="favb" data-u="'+h+'" onclick="window.zkToggleFav(this.getAttribute(\'data-u\'),event)" aria-label="favorite">🤍</button>');}
+  c.addEventListener('click',function(){try{var hh=c.getAttribute('href');if(!hh)return;
+    var hist=zkHist().filter(function(x){return x!==hh;});hist.unshift(hh);hist=hist.slice(0,20);
+    localStorage.setItem('zk_hist',JSON.stringify(hist));}catch(e){}});};
+function zkCatURL(){var l=(document.documentElement.lang||'en').toLowerCase();var v=(typeof window.zkCatV==='undefined')?'':('?v='+window.zkCatV);return '../assets/catalog-'+(l==='ar'?'ar':'en')+'.json'+v;}
+function zkEnsureCatalog(){if(window.zkCatalog||window.zkCatLoading)return;window.zkCatLoading=true;
+  fetch(zkCatURL()).then(function(r){return r.json();}).then(function(j){window.zkCatalog=j||[];window.zkCatLoading=false;zkApplyCat();}).catch(function(){window.zkCatLoading=false;});}
 window.zkLimit=120;
-window.zkMore=function(){window.zkLimit=(window.zkLimit||120)+120;zkApplyCat();};
+window.zkMore=function(){window.zkUserPaged=true;window.zkLimit=(window.zkLimit||120)+120;zkEnsureCatalog();zkApplyCat();};
 function zkMoreBtn(){
   var b=document.getElementById('zkmore');
   if(b)return b;
@@ -74,18 +92,43 @@ function zkMoreBtn(){
 function zkApplyCat(){
   var q='';try{var qi=document.getElementById('q');q=qi?qi.value.toLowerCase():'';}catch(e){}
   var cats=['all','puzzle','action','sports','racing','adventure','girls','kids','strategy','arcade','3d','fav'];var want=cats[window.zkCat||0]||'all';
-  var cards=document.querySelectorAll('#grid .card');if(!cards.length)return;
-  var lim=window.zkLimit||120,shown=0,total=0;
-  for(var i=0;i<cards.length;i++){var c=cards[i];
-    var dc=(c.getAttribute('data-cat')||'').toLowerCase();
-    var okC;
-    if(want==='all')okC=true;
-    else if(want==='fav')okC=zkIsFav(c.getAttribute('href'));
-    else okC=dc.indexOf(want)>=0;
-    var okQ=(!q||((c.getAttribute('data-n')||'')+' '+c.textContent).toLowerCase().indexOf(q)>=0);
-    if(okC&&okQ){total++;if(shown<lim){c.style.display='';shown++;}else c.style.display='none';}
-    else c.style.display='none';}
+  var grid=document.getElementById('grid');if(!grid)return;
   var lang=(document.documentElement.lang||'en').toLowerCase();
+  var cards=grid.querySelectorAll('.card');if(!cards.length&&!window.zkCatalog)return;
+  var lim=window.zkLimit||120,shown=0,total=0;
+  var matchStatic=function(c){var dc=(c.getAttribute('data-cat')||'').toLowerCase();var okC;
+    if(want==='all')okC=true;else if(want==='fav')okC=zkIsFav(c.getAttribute('href'));else okC=dc.indexOf(want)>=0;
+    var okQ=(!q||((c.getAttribute('data-n')||'')+' '+c.textContent).toLowerCase().indexOf(q)>=0);
+    return okC&&okQ;};
+  for(var i=0;i<cards.length;i++){var c=cards[i];
+    if(matchStatic(c)){total++;if(shown<lim){c.style.display='';shown++;}else c.style.display='none';}
+    else c.style.display='none';}
+  var cat=window.zkCatalog;
+  if(cat&&cat.length){
+    var hayExtra=lang==='ar'?' العب':' play';
+    var matches=[];
+    for(var j=0;j<cat.length;j++){var e=cat[j];
+      var dc2=(e[1]||'').toLowerCase();var okC2;
+      if(want==='all')okC2=true;else if(want==='fav')okC2=zkIsFav('games/'+e[0]+'.html');else okC2=dc2.indexOf(want)>=0;
+      if(!okC2)continue;
+      if(q&&(String(e[2]||'')+' '+String(e[6]||'')+' '+String(e[7]||'')+hayExtra).toLowerCase().indexOf(q)<0)continue;
+      matches.push(e);}
+    total+=matches.length;
+    var have={};var dom=grid.querySelectorAll('.card');
+    for(var k=0;k<dom.length;k++){var hh=dom[k].getAttribute('href');if(hh)have[hh]=1;}
+    var injected=0;
+    for(var m=0;m<matches.length&&shown<lim;m++){var href='games/'+matches[m][0]+'.html';
+      if(have[href])continue;
+      var tmp=document.createElement('div');tmp.innerHTML=zkCardHTML(matches[m]);
+      var node=tmp.firstChild;if(!node)continue;
+      node.setAttribute('data-dyn','1');node.style.display='';grid.appendChild(node);window.zkDecorate(node);
+      have[href]=1;shown++;injected++;}
+    if(injected)paintFavs();
+    var all=grid.querySelectorAll('.card');
+    if(all.length>2500){for(var x=0;x<all.length;x++){var cc=all[x];
+      if(cc.getAttribute('data-dyn')&&cc.style.display==='none'&&grid.querySelectorAll('.card').length>2500)cc.remove();}}
+  }else if(window.zkUserPaged&&(total>shown||q||want!=='all')){zkEnsureCatalog();}
+  else if(!window.zkCatalog&&typeof window.zkCatTotal!=='undefined'&&window.zkCatTotal>total)total=window.zkCatTotal;
   var mb=zkMoreBtn();
   if(mb){
     if(total>shown){mb.style.display='';mb.textContent=(lang==='ar'?'عرض المزيد (':'Show more (')+(total-shown)+')';}
@@ -99,10 +142,10 @@ document.addEventListener('click',function(e){
   for(var i=0;i<btns.length;i++)btns[i].classList.remove('on');
   b.classList.add('on');
   window.zkCat=Array.prototype.indexOf.call(btns,b);
-  zkApplyCat();
+  window.zkUserPaged=true;zkEnsureCatalog();zkApplyCat();
 });
 document.addEventListener('input',function(e){
-  if(e.target&&e.target.id==='q')setTimeout(zkApplyCat,0);
+  if(e.target&&e.target.id==='q'){window.zkUserPaged=true;zkEnsureCatalog();setTimeout(zkApplyCat,0);}
 });
 // Favorites hearts + fav chip + play history + suggested-for-you (all languages)
 var ZK_FAV_T={en:'Favs',ar:'المفضلة'};
@@ -111,11 +154,7 @@ function zkHist(){try{return JSON.parse(localStorage.getItem('zk_hist')||'[]');}
 function zkInitSocial(){
   var cards=document.querySelectorAll('#grid .card');
   var i,j;
-  for(i=0;i<cards.length;i++){var c=cards[i];
-    if(!c.getAttribute('data-cat')||c.querySelector('.favb'))continue;
-    var h=c.getAttribute('href');if(!h)continue;
-    c.insertAdjacentHTML('beforeend','<button class="favb" data-u="'+h+'" onclick="window.zkToggleFav(this.getAttribute(\'data-u\'),event)" aria-label="favorite">🤍</button>');
-  }
+  for(i=0;i<cards.length;i++){window.zkDecorate(cards[i]);}
   paintFavs();
   var chips=document.querySelector('.chips');
   if(chips&&!chips.querySelector('[data-fav]')){
@@ -137,7 +176,7 @@ function zkInitSocial(){
   zkGoldIcons();
   try{
     var qq=localStorage.getItem('zk_q');
-    if(qq){localStorage.removeItem('zk_q');var qi=document.getElementById('q');if(qi){qi.value=qq;if(typeof filter==='function')filter();zkApplyCat();var gs0=document.getElementById('games');if(gs0)gs0.scrollIntoView();}}
+    if(qq){localStorage.removeItem('zk_q');var qi=document.getElementById('q');if(qi){qi.value=qq;if(typeof filter==='function')filter();window.zkUserPaged=true;zkEnsureCatalog();zkApplyCat();var gs0=document.getElementById('games');if(gs0)gs0.scrollIntoView();}}
     if(localStorage.getItem('zk_goto_fav')){localStorage.removeItem('zk_goto_fav');var fb=document.querySelector('.chips [data-fav]');if(fb)fb.click();var gs1=document.getElementById('games');if(gs1)gs1.scrollIntoView();}
     if(localStorage.getItem('zk_goto_cat')!==null&&localStorage.getItem('zk_goto_cat')!==''){var gc=parseInt(localStorage.getItem('zk_goto_cat'));localStorage.removeItem('zk_goto_cat');var cb=document.querySelectorAll('.chips button');if(cb.length>gc)cb[gc].click();var gs1b=document.getElementById('games');if(gs1b)gs1b.scrollIntoView();}
   }catch(e){}
@@ -191,6 +230,8 @@ function zkGoldIcons(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',zkInitSocial);
 else zkInitSocial();
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){zkApplyCat();});
+else zkApplyCat();
 // UNIFIED HEADER on every page (big search + bookmark + mobile play pill)
 var ZK_HDR={en:{search:'Search games...',play:'▶ Play'},ar:{search:'دوّر على لعبة...',play:'▶ العب'}};
 function zkHomeBase(){var b='./';try{var lm=document.querySelector('#langmenu');if(lm)b=lm.getAttribute('data-base')||'./';}catch(e){}return b;}
